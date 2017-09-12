@@ -79,9 +79,3 @@ libraries-override:
 #
 #  core/drupal.dialog: bootstrap/drupal.dialog
 #  core/drupal.dialog.ajax: bootstrap/drupal.dialog.ajax
-
-# Information added by Drupal.org packaging script on 2017-08-16
-version: '8.x-3.5+9-dev'
-core: '8.x'
-project: 'bootstrap'
-datestamp: 1502904869
