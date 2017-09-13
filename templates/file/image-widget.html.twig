@@ -14,10 +14,10 @@
 #}
 {% if data.preview %}
   <div{{ attributes.addClass('row') }}>
-    <div class="preview col-sm-2">
+    <div class="preview col-md-2">
       {{ data.preview }}
     </div>
-    <div class="data col-sm-10">
+    <div class="data col-md-10">
       {# Render widget data without the image preview that was output already. #}
       {{ data|without('preview') }}
     </div>
