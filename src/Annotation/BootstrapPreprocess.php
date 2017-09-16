@@ -1,18 +1,18 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Annotation\BootstrapPreprocess.
+ * Contains \Drupal\bootstrap_lite\Annotation\BootstrapPreprocess.
  */
 
-namespace Drupal\bootstrap\Annotation;
+namespace Drupal\bootstrap_lite\Annotation;
 
 /**
  * Defines a BootstrapPreprocess annotation object.
  *
  * Plugin Namespace: "Plugin/Preprocess".
  *
- * @see \Drupal\bootstrap\Plugin\PreprocessInterface
- * @see \Drupal\bootstrap\Plugin\PreprocessManager
+ * @see \Drupal\bootstrap_lite\Plugin\PreprocessInterface
+ * @see \Drupal\bootstrap_lite\Plugin\PreprocessManager
  * @see plugin_api
  *
  * @Annotation

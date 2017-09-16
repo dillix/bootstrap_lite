@@ -6,9 +6,9 @@ dependencies:
   module:
     - system
   theme:
-    - bootstrap
-id: bootstrap_account_menu
-theme: bootstrap
+    - bootstrap_lite
+id: bootstrap_lite_account_menu
+theme: bootstrap_lite
 region: navigation_collapsible
 weight: 11
 provider: null

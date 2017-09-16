@@ -1,23 +1,23 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Preprocess\BootstrapPanel.
+ * Contains \Drupal\bootstrap_lite\Plugin\Preprocess\BootstrapPanel.
  */
 
-namespace Drupal\bootstrap\Plugin\Preprocess;
+namespace Drupal\bootstrap_lite\Plugin\Preprocess;
 
-use Drupal\bootstrap\Annotation\BootstrapPreprocess;
-use Drupal\bootstrap\Utility\Element;
-use Drupal\bootstrap\Utility\Variables;
+use Drupal\bootstrap_lite\Annotation\BootstrapPreprocess;
+use Drupal\bootstrap_lite\Utility\Element;
+use Drupal\bootstrap_lite\Utility\Variables;
 use Drupal\Component\Render\MarkupInterface;
 use Drupal\Component\Utility\Html;
 
 /**
- * Pre-processes variables for the "bootstrap_panel" theme hook.
+ * Pre-processes variables for the "bootstrap_lite_panel" theme hook.
  *
  * @ingroup plugins_preprocess
  *
- * @BootstrapPreprocess("bootstrap_panel")
+ * @BootstrapPreprocess("bootstrap_lite_panel")
  */
 class BootstrapPanel extends PreprocessBase implements PreprocessInterface {
 
@@ -96,7 +96,7 @@ class BootstrapPanel extends PreprocessBase implements PreprocessInterface {
    */
   protected function preprocessVariables(Variables $variables) {
     // Retrieve the ID, generating one if needed.
-    $id = $variables->getAttribute('id', Html::getUniqueId($variables->offsetGet('id', 'bootstrap-panel')));
+    $id = $variables->getAttribute('id', Html::getUniqueId($variables->offsetGet('id', 'bootstrap-lite-panel')));
     unset($variables['id']);
 
     // Handle collapsible state.

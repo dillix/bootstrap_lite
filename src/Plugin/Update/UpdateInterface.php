@@ -1,12 +1,12 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Update\UpdateInterface.
+ * Contains \Drupal\bootstrap_lite\Plugin\Update\UpdateInterface.
  */
 
-namespace Drupal\bootstrap\Plugin\Update;
+namespace Drupal\bootstrap_lite\Plugin\Update;
 
-use Drupal\bootstrap\Theme;
+use Drupal\bootstrap_lite\Theme;
 
 /**
  * Defines the interface for an object oriented preprocess plugin.
@@ -59,7 +59,7 @@ interface UpdateInterface {
    * Used to determine whether or not the update should apply only to itself
    * (the theme that implemented the plugin) and none of its sub-themes.
    *
-   * @return \Drupal\bootstrap\Theme
+   * @return \Drupal\bootstrap_lite\Theme
    */
   public function getTheme();
 
@@ -82,7 +82,7 @@ interface UpdateInterface {
    * the update has failed, but do not wish to throw an exception, simply
    * return FALSE and a generic "Update failed" message will appear.
    *
-   * @param \Drupal\bootstrap\Theme $theme
+   * @param \Drupal\bootstrap_lite\Theme $theme
    *   The theme that the update is being applied to.
    * @param array $context
    *   The Batch API context array, passed by reference. Note: be very careful

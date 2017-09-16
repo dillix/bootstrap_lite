@@ -1,15 +1,15 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Preprocess\MenuLocalAction.
+ * Contains \Drupal\bootstrap_lite\Plugin\Preprocess\MenuLocalAction.
  */
 
-namespace Drupal\bootstrap\Plugin\Preprocess;
+namespace Drupal\bootstrap_lite\Plugin\Preprocess;
 
-use Drupal\bootstrap\Annotation\BootstrapPreprocess;
-use Drupal\bootstrap\Bootstrap;
-use Drupal\bootstrap\Utility\Element;
-use Drupal\bootstrap\Utility\Variables;
+use Drupal\bootstrap_lite\Annotation\BootstrapPreprocess;
+use Drupal\bootstrap_lite\BootstrapLite;
+use Drupal\bootstrap_lite\Utility\Element;
+use Drupal\bootstrap_lite\Utility\Variables;
 use Drupal\Component\Render\FormattableMarkup;
 
 /**
@@ -29,12 +29,12 @@ class MenuLocalAction extends PreprocessBase implements PreprocessInterface {
     $link += ['localized_options' => []];
     $link['localized_options']['set_active_class'] = TRUE;
 
-    $icon = Bootstrap::glyphiconFromString($link['title']);
+    $icon = BootstrapLite::glyphiconFromString($link['title']);
     $options = isset($link['localized_options']) ? $link['localized_options'] : [];
 
     if (isset($link['url'])) {
       // Turn link into a mini-button and colorize based on title.
-      $class = Bootstrap::cssClassFromString($link['title'], 'default');
+      $class = BootstrapLite::cssClassFromString($link['title'], 'default');
       if (!isset($options['attributes']['class'])) {
         $options['attributes']['class'] = [];
       }

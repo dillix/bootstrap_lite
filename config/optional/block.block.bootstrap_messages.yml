@@ -4,9 +4,9 @@ dependencies:
   module:
     - system
   theme:
-    - bootstrap
-id: bootstrap_messages
-theme: bootstrap
+    - bootstrap_lite
+id: bootstrap_lite_messages
+theme: bootstrap_lite
 region: header
 weight: -50
 provider: null

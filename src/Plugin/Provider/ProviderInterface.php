@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Provider\ProviderInterface.
+ * Contains \Drupal\bootstrap_lite\Plugin\Provider\ProviderInterface.
  */
 
-namespace Drupal\bootstrap\Plugin\Provider;
+namespace Drupal\bootstrap_lite\Plugin\Provider;
 
 use Drupal\Component\Plugin\DerivativeInspectionInterface;
 use Drupal\Component\Plugin\PluginInspectionInterface;

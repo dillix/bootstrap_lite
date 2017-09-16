@@ -4,9 +4,9 @@ dependencies:
   module:
     - system
   theme:
-    - bootstrap
-id: bootstrap_powered
-theme: bootstrap
+    - bootstrap_lite
+id: bootstrap_lite_powered
+theme: bootstrap_lite
 region: footer
 weight: -10
 provider: null

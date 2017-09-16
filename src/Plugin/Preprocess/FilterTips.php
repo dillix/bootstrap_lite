@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Preprocess\FilterTips.
+ * Contains \Drupal\bootstrap_lite\Plugin\Preprocess\FilterTips.
  */
 
-namespace Drupal\bootstrap\Plugin\Preprocess;
+namespace Drupal\bootstrap_lite\Plugin\Preprocess;
 
-use Drupal\bootstrap\Annotation\BootstrapPreprocess;
-use Drupal\bootstrap\Utility\Variables;
+use Drupal\bootstrap_lite\Annotation\BootstrapPreprocess;
+use Drupal\bootstrap_lite\Utility\Variables;
 use Drupal\Core\Url;
 
 /**

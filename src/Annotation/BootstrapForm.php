@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Annotation\BootstrapForm.
+ * Contains \Drupal\bootstrap_lite\Annotation\BootstrapForm.
  */
 
-namespace Drupal\bootstrap\Annotation;
+namespace Drupal\bootstrap_lite\Annotation;
 
 use Drupal\Component\Annotation\PluginID;
 
@@ -13,8 +13,8 @@ use Drupal\Component\Annotation\PluginID;
  *
  * Plugin Namespace: "Plugin/Form".
  *
- * @see \Drupal\bootstrap\Plugin\FormInterface
- * @see \Drupal\bootstrap\Plugin\FormManager
+ * @see \Drupal\bootstrap_lite\Plugin\FormInterface
+ * @see \Drupal\bootstrap_lite\Plugin\FormManager
  * @see plugin_api
  *
  * @Annotation

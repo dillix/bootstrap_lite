@@ -1,0 +1,145 @@
+<?php
+/**
+ * @file
+ * The primary PHP file for the Drupal Bootstrap Lite base theme.
+ *
+ * This file should only contain light helper functions and point to stubs in
+ * other files containing more complex functions.
+ *
+ * The stubs should point to files within the `./includes` directory named after
+ * the function itself minus the theme prefix. If the stub contains a group of
+ * functions, then please organize them so they are related in some way and name
+ * the file appropriately to at least hint at what it contains.
+ *
+ * All [pre]process functions, theme functions and template files lives inside
+ * the `./templates` directory. This is a highly automated and complex system
+ * designed to only load the necessary files when a given theme hook is invoked.
+ *
+ * @see bootstrap_lite_theme()
+ * @see \Drupal\bootstrap_lite\Registry
+ */
+
+use Drupal\bootstrap_lite\BootstrapLite;
+
+/**
+ * Initialize the active theme.
+ */
+BootstrapLite::initialize();
+
+/**
+ * {@inheritdoc}
+ *
+ * @see hook_bootstrap_colorize_text_alter().
+ */
+function bootstrap_lite_bootstrap_lite_colorize_text_alter(&$data, &$context1 = NULL, &$context2 = NULL) {
+  BootstrapLite::alter(__FUNCTION__, $data, $context1, $context2);
+}
+
+/**
+ * {@inheritdoc}
+ *
+ * @see hook_bootstrap_iconize_text_alter().
+ */
+function bootstrap_lite_bootstrap_lite_iconize_text_alter(&$data, &$context1 = NULL, &$context2 = NULL) {
+  BootstrapLite::alter(__FUNCTION__, $data, $context1, $context2);
+}
+
+/**
+ * {@inheritdoc}
+ *
+ * @see hook_bootstrap_layouts_class_options_alter().
+ */
+function bootstrap_lite_bootstrap_lite_layouts_class_options_alter(&$data, &$context1 = NULL, &$context2 = NULL) {
+  BootstrapLite::alter(__FUNCTION__, $data, $context1, $context2);
+}
+
+/**
+ * {@inheritdoc}
+ *
+ * @see \Drupal\bootstrap_lite\Plugin\Alter\ElementInfo::alter()
+ */
+function bootstrap_lite_element_info_alter(&$data, &$context1 = NULL, &$context2 = NULL) {
+  BootstrapLite::alter(__FUNCTION__, $data, $context1, $context2);
+}
+
+/**
+ * {@inheritdoc}
+ *
+ * @see \Drupal\bootstrap_lite\Theme::alter()
+ */
+function bootstrap_lite_form_alter(&$data, &$context1 = NULL, &$context2 = NULL) {
+  BootstrapLite::alter(__FUNCTION__, $data, $context1, $context2);
+}
+
+/**
+ * {@inheritdoc}
+ *
+ * @see \Drupal\bootstrap_lite\Plugin\Form\SystemThemeSettings::alterForm()
+ */
+function bootstrap_lite_form_system_theme_settings_alter(&$data, &$context1 = NULL, &$context2 = NULL) {
+  BootstrapLite::alter(__FUNCTION__, $data, $context1, $context2);
+}
+
+/**
+ * {@inheritdoc}
+ */
+function bootstrap_lite_js_settings_alter(&$data, &$context1 = NULL, &$context2 = NULL) {
+  BootstrapLite::alter(__FUNCTION__, $data, $context1, $context2);
+}
+
+/**
+ * {@inheritdoc}
+ *
+ * @see \Drupal\bootstrap_lite\Plugin\Alter\LibraryInfo::alter()
+ */
+function bootstrap_lite_library_info_alter(&$data, &$context1 = NULL, &$context2 = NULL) {
+  BootstrapLite::alter(__FUNCTION__, $data, $context1, $context2);
+}
+
+/**
+ * {@inheritdoc}
+ *
+ * @see \Drupal\bootstrap_lite\Plugin\Alter\PageAttachments::alter()
+ */
+function bootstrap_lite_page_attachments_alter(&$data, &$context1 = NULL, &$context2 = NULL) {
+  BootstrapLite::alter(__FUNCTION__, $data, $context1, $context2);
+}
+
+/**
+ * {@inheritdoc}
+ *
+ * @see \Drupal\bootstrap_lite\BootstrapLite::preprocess()
+ */
+function bootstrap_lite_preprocess(&$variables, $hook, $info) {
+  BootstrapLite::preprocess($variables, $hook, $info);
+}
+
+/**
+ * {@inheritdoc}
+ *
+ * @see \Drupal\bootstrap_lite\BootstrapLite::getInfo()
+ */
+function bootstrap_lite_theme() {
+  return BootstrapLite::getThemeHooks();
+}
+
+/**
+ * {@inheritdoc}
+ *
+ * @see \Drupal\bootstrap_lite\Plugin\Alter\ThemeRegistry::alter()
+ *
+ * @todo Remove once a proper replacement for the theme.registry service can be
+ * created in a bootstrap_core sub-module.
+ */
+function bootstrap_lite_theme_registry_alter(&$data, &$context1 = NULL, &$context2 = NULL) {
+  BootstrapLite::alter(__FUNCTION__, $data, $context1, $context2);
+}
+
+/**
+ * {@inheritdoc}
+ *
+ * @see \Drupal\bootstrap_lite\Plugin\Alter\ThemeSuggestions::alter()
+ */
+function bootstrap_lite_theme_suggestions_alter(&$data, &$context1 = NULL, &$context2 = NULL) {
+  BootstrapLite::alter(__FUNCTION__, $data, $context1, $context2);
+}

@@ -146,7 +146,7 @@
         e.preventDefault();
       });
 
-      // Bind Bootstrap events with Drupal core events.
+      // Bind Bootstrap Lite events with Drupal core events.
       $fieldset
         .append(summary)
         .on('show.bs.collapse', function () {

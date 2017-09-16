@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Alter\AlterInterface.
+ * Contains \Drupal\bootstrap_lite\Plugin\Alter\AlterInterface.
  */
 
-namespace Drupal\bootstrap\Plugin\Alter;
+namespace Drupal\bootstrap_lite\Plugin\Alter;
 
 /**
  * Defines the interface for an object oriented alter.

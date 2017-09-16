@@ -1,15 +1,15 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Setting\Schemas.
+ * Contains \Drupal\bootstrap_lite\Plugin\Setting\Schemas.
  */
 
-namespace Drupal\bootstrap\Plugin\Setting;
+namespace Drupal\bootstrap_lite\Plugin\Setting;
 
-use Drupal\bootstrap\Annotation\BootstrapSetting;
-use Drupal\bootstrap\Bootstrap;
-use Drupal\bootstrap\Plugin\Form\SystemThemeSettings;
-use Drupal\bootstrap\Utility\Element;
+use Drupal\bootstrap_lite\Annotation\BootstrapSetting;
+use Drupal\bootstrap_lite\BootstrapLite;
+use Drupal\bootstrap_lite\Plugin\Form\SystemThemeSettings;
+use Drupal\bootstrap_lite\Utility\Element;
 use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Form\FormStateInterface;
 
@@ -69,7 +69,7 @@ class Schemas extends SettingBase {
       $form['update']['actions']['update'] = [
         '#type' => 'submit',
         '#value' => t('Update theme'),
-        '#icon' => Bootstrap::glyphicon('open'),
+        '#icon' => BootstrapLite::glyphicon('open'),
         // @todo Setting a class like this is undesirable, create a suggestion.
         '#attributes' => [
           'class' => ['btn-primary'],
@@ -113,7 +113,7 @@ class Schemas extends SettingBase {
           'init_message' => \Drupal::translation()->formatPlural(count($operations), 'Initializing 1 theme update for @theme_title...', 'Initializing @count theme updates for @theme_title...', $variables),
           'progress_message' => t('Processing update @current of @total...', $variables),
           'error_message' => t('An error was encountered while attempting to update the @theme_title theme.', $variables),
-          'file' => Bootstrap::autoloadFixInclude(),
+          'file' => BootstrapLite::autoloadFixInclude(),
         ]);
       }
     }
@@ -132,13 +132,13 @@ class Schemas extends SettingBase {
    */
   public static function batchProcessUpdate($theme_name, $update_id, array &$context) {
     // Reconstruct the theme object this update is being applied to.
-    $theme = Bootstrap::getTheme($theme_name);
+    $theme = BootstrapLite::getTheme($theme_name);
 
     // Reconstruct the update plugin that is being applied.
     list($provider, $plugin_id) = explode(':', $update_id);
-    $provider = Bootstrap::getTheme($provider);
+    $provider = BootstrapLite::getTheme($provider);
 
-    /** @type \Drupal\bootstrap\Plugin\Update\UpdateInterface $update */
+    /** @type \Drupal\bootstrap_lite\Plugin\Update\UpdateInterface $update */
     $update = $provider->getUpdateManager()->createInstance($plugin_id, ['theme' => $provider]);
 
     // Initialize results with theme name and installed schemas.
@@ -183,14 +183,14 @@ class Schemas extends SettingBase {
    *   A boolean indicating whether the batch has completed successfully.
    * @param array $results
    *   The value(s) set in $context['results'] in
-   *   \Drupal\bootstrap\Plugin\Setting\Update::batchProcess().
+   *   \Drupal\bootstrap_lite\Plugin\Setting\Update::batchProcess().
    * @param $operations
    *   If $success is FALSE, contains the operations that remained unprocessed.
    */
   public static function batchFinished($success, $results, $operations) {
-    /** @type \Drupal\bootstrap\Theme $theme */
+    /** @type \Drupal\bootstrap_lite\Theme $theme */
     // Reconstruct the theme object this update is being applied to.
-    $theme = Bootstrap::getTheme($results['theme_name']);
+    $theme = BootstrapLite::getTheme($results['theme_name']);
 
     // Save the current state of the installed schemas.
     $theme->setSetting('schemas', $results['schemas']);

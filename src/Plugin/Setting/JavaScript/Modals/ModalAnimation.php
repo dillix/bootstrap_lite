@@ -1,14 +1,14 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Setting\JavaScript\Modals\ModalAnimation.
+ * Contains \Drupal\bootstrap_lite\Plugin\Setting\JavaScript\Modals\ModalAnimation.
  */
 
-namespace Drupal\bootstrap\Plugin\Setting\JavaScript\Modals;
+namespace Drupal\bootstrap_lite\Plugin\Setting\JavaScript\Modals;
 
-use Drupal\bootstrap\Annotation\BootstrapSetting;
-use Drupal\bootstrap\Plugin\Setting\SettingBase;
-use Drupal\bootstrap\Utility\Element;
+use Drupal\bootstrap_lite\Annotation\BootstrapSetting;
+use Drupal\bootstrap_lite\Plugin\Setting\SettingBase;
+use Drupal\bootstrap_lite\Utility\Element;
 use Drupal\Core\Annotation\Translation;
 use Drupal\Core\Form\FormStateInterface;
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace Drupal\bootstrap\Plugin\Preprocess;
+namespace Drupal\bootstrap_lite\Plugin\Preprocess;
 
-use Drupal\bootstrap\Utility\Variables;
+use Drupal\bootstrap_lite\Utility\Variables;
 
 /**
- * Pre-processes for the "item_list__bootstrap_carousel_indicators" theme hook.
+ * Pre-processes for the "item_list__bootstrap_lite_carousel_indicators" theme hook.
  *
  * @ingroup plugins_preprocess
  *
- * @BootstrapPreprocess("item_list__bootstrap_carousel_indicators")
+ * @BootstrapPreprocess("item_list__bootstrap_lite_carousel_indicators")
  */
 class ItemListBootstrapCarouselIndicators extends PreprocessBase implements PreprocessInterface {
 

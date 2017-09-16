@@ -1,15 +1,15 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Alter\ThemeRegistry.
+ * Contains \Drupal\bootstrap_lite\Plugin\Alter\ThemeRegistry.
  */
 
 // Name of the base theme must be lowercase for it to be autoload discoverable.
-namespace Drupal\bootstrap\Plugin\Alter;
+namespace Drupal\bootstrap_lite\Plugin\Alter;
 
-use Drupal\bootstrap\Annotation\BootstrapAlter;
-use Drupal\bootstrap\Bootstrap;
-use Drupal\bootstrap\Plugin\PreprocessManager;
+use Drupal\bootstrap_lite\Annotation\BootstrapAlter;
+use Drupal\bootstrap_lite\BootstrapLite;
+use Drupal\bootstrap_lite\Plugin\PreprocessManager;
 use Drupal\Core\Theme\Registry;
 
 /**
@@ -27,11 +27,11 @@ use Drupal\Core\Theme\Registry;
 class ThemeRegistry extends Registry implements AlterInterface {
 
   /**
-   * The currently set Bootstrap theme object.
+   * The currently set Bootstrap Lite theme object.
    *
    * Cannot use "$theme" because this is the Registry's ActiveTheme object.
    *
-   * @var \Drupal\bootstrap\Theme
+   * @var \Drupal\bootstrap_lite\Theme
    */
   protected $currentTheme;
 
@@ -44,7 +44,7 @@ class ThemeRegistry extends Registry implements AlterInterface {
     // to properly construct the extended Registry object, we must pass the
     // arguments it would normally get from the service container to "fake" it.
     if (!isset($configuration['theme'])) {
-      $configuration['theme'] = Bootstrap::getTheme();
+      $configuration['theme'] = BootstrapLite::getTheme();
     }
     $this->currentTheme = $configuration['theme'];
     parent::__construct(
@@ -68,7 +68,7 @@ class ThemeRegistry extends Registry implements AlterInterface {
     ksort($cache);
 
     // Add extra variables to all theme hooks.
-    $extra_variables = Bootstrap::extraVariables();
+    $extra_variables = BootstrapLite::extraVariables();
     foreach (array_keys($cache) as $hook) {
       // Skip theme hooks that don't set variables.
       if (!isset($cache[$hook]['variables'])) {
@@ -128,12 +128,12 @@ class ThemeRegistry extends Registry implements AlterInterface {
           }
           // Due to a limitation in \Drupal\Core\Theme\ThemeManager::render,
           // callbacks must be functions and not classes. We always specify
-          // "bootstrap_preprocess" here and then assign the plugin ID to a
+          // "bootstrap_lite_preprocess" here and then assign the plugin ID to a
           // separate property that we can later intercept and properly invoke.
           // @todo Revisit if/when preprocess callbacks can be any callable.
-          Bootstrap::addCallback($info['preprocess functions'], 'bootstrap_preprocess', $definition['replace'], $definition['action']);
+          BootstrapLite::addCallback($info['preprocess functions'], 'bootstrap_lite_preprocess', $definition['replace'], $definition['action']);
           $info['preprocess functions'] = array_unique($info['preprocess functions']);
-          $info['bootstrap preprocess'] = $plugin_id;
+          $info['bootstrap_lite preprocess'] = $plugin_id;
         }
       });
 

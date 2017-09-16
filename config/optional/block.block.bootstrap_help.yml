@@ -4,9 +4,9 @@ dependencies:
   module:
     - help
   theme:
-    - bootstrap
-id: bootstrap_help
-theme: bootstrap
+    - bootstrap_lite
+id: bootstrap_lite_help
+theme: bootstrap_lite
 region: help
 weight: -30
 provider: null

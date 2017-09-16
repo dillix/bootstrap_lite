@@ -1,17 +1,17 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Setting\Advanced\Cdn\CdnProvider.
+ * Contains \Drupal\bootstrap_lite\Plugin\Setting\Advanced\Cdn\CdnProvider.
  */
 
-namespace Drupal\bootstrap\Plugin\Setting\Advanced\Cdn;
+namespace Drupal\bootstrap_lite\Plugin\Setting\Advanced\Cdn;
 
-use Drupal\bootstrap\Annotation\BootstrapSetting;
-use Drupal\bootstrap\Bootstrap;
-use Drupal\bootstrap\Plugin\Provider\ProviderInterface;
-use Drupal\bootstrap\Plugin\ProviderManager;
-use Drupal\bootstrap\Plugin\Setting\SettingBase;
-use Drupal\bootstrap\Utility\Element;
+use Drupal\bootstrap_lite\Annotation\BootstrapSetting;
+use Drupal\bootstrap_lite\BootstrapLite;
+use Drupal\bootstrap_lite\Plugin\Provider\ProviderInterface;
+use Drupal\bootstrap_lite\Plugin\ProviderManager;
+use Drupal\bootstrap_lite\Plugin\Setting\SettingBase;
+use Drupal\bootstrap_lite\Utility\Element;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Annotation\Translation;
 use Drupal\Core\Form\FormStateInterface;
@@ -42,14 +42,14 @@ class CdnProvider extends SettingBase {
   /**
    * The current provider.
    *
-   * @var \Drupal\bootstrap\Plugin\Provider\ProviderInterface
+   * @var \Drupal\bootstrap_lite\Plugin\Provider\ProviderInterface
    */
   protected $provider;
 
   /**
    * The current provider manager instance.
    *
-   * @var \Drupal\bootstrap\Plugin\ProviderManager
+   * @var \Drupal\bootstrap_lite\Plugin\ProviderManager
    */
   protected $providerManager;
 
@@ -100,15 +100,15 @@ class CdnProvider extends SettingBase {
    *   The current state of the form.
    */
   public static function ajaxCallback(array $form, FormStateInterface $form_state) {
-    return $form['advanced']['cdn'][$form_state->getValue('cdn_provider', Bootstrap::getTheme()->getSetting('cdn_provider'))];
+    return $form['advanced']['cdn'][$form_state->getValue('cdn_provider', BootstrapLite::getTheme()->getSetting('cdn_provider'))];
   }
 
   /**
    * Creates the necessary containers for each provider.
    *
-   * @param \Drupal\bootstrap\Utility\Element $group
+   * @param \Drupal\bootstrap_lite\Utility\Element $group
    *   The group element instance.
-   * @param \Drupal\bootstrap\Plugin\Provider\ProviderInterface $provider
+   * @param \Drupal\bootstrap_lite\Plugin\Provider\ProviderInterface $provider
    *   The provider instance.
    */
   private function createProviderGroup(Element $group, ProviderInterface $provider) {

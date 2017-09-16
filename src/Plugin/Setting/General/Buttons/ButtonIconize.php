@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Setting\General\Buttons\ButtonIconize.
+ * Contains \Drupal\bootstrap_lite\Plugin\Setting\General\Buttons\ButtonIconize.
  */
 
-namespace Drupal\bootstrap\Plugin\Setting\General\Buttons;
+namespace Drupal\bootstrap_lite\Plugin\Setting\General\Buttons;
 
-use Drupal\bootstrap\Annotation\BootstrapSetting;
-use Drupal\bootstrap\Plugin\Setting\SettingBase;
+use Drupal\bootstrap_lite\Annotation\BootstrapSetting;
+use Drupal\bootstrap_lite\Plugin\Setting\SettingBase;
 use Drupal\Core\Annotation\Translation;
 
 /**
@@ -26,7 +26,7 @@ use Drupal\Core\Annotation\Translation;
  *     "button" = @Translation("Buttons"),
  *   },
  *   see = {
- *     "http://drupal-bootstrap.org/apis/hook_bootstrap_iconize_text_alter" = @Translation("hook_bootstrap_iconize_text_alter()"),
+ *     "http://drupal-bootstrap.org/apis/hook_bootstrap_iconize_text_alter" = @Translation("hook_bootstrap_lite_iconize_text_alter()"),
  *   },
  * )
  */

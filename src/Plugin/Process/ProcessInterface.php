@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Process\ProcessInterface.
+ * Contains \Drupal\bootstrap_lite\Plugin\Process\ProcessInterface.
  */
 
-namespace Drupal\bootstrap\Plugin\Process;
+namespace Drupal\bootstrap_lite\Plugin\Process;
 
 use Drupal\Core\Form\FormStateInterface;
 
@@ -19,7 +19,7 @@ interface ProcessInterface {
    * Process a specific form element type.
    *
    * Implementations of this method should check to see if the element has a
-   * property named #bootstrap_ignore_process and check if it is set to TRUE.
+   * property named #bootstrap_lite_ignore_process and check if it is set to TRUE.
    * If it is, the method should immediately return with the unaltered element.
    *
    * @param array $element
@@ -32,7 +32,7 @@ interface ProcessInterface {
    * @return array
    *   The altered element array.
    *
-   * @see \Drupal\bootstrap\Plugin\Alter\ElementInfo::alter
+   * @see \Drupal\bootstrap_lite\Plugin\Alter\ElementInfo::alter
    */
   public static function process(array $element, FormStateInterface $form_state, array &$complete_form);
 

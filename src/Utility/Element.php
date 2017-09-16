@@ -1,12 +1,12 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Utility\Element.
+ * Contains \Drupal\bootstrap_lite\Utility\Element.
  */
 
-namespace Drupal\bootstrap\Utility;
+namespace Drupal\bootstrap_lite\Utility;
 
-use Drupal\bootstrap\Bootstrap;
+use Drupal\bootstrap_lite\BootstrapLite;
 use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Component\Render\MarkupInterface;
 use Drupal\Component\Utility\Xss;
@@ -64,7 +64,7 @@ class Element extends DrupalAttributes {
    * @param string $key
    *   The name of the child element to retrieve.
    *
-   * @return \Drupal\bootstrap\Utility\Element
+   * @return \Drupal\bootstrap_lite\Utility\Element
    *   The child element object.
    *
    * @throws \InvalidArgumentException
@@ -72,7 +72,7 @@ class Element extends DrupalAttributes {
    */
   public function &__get($key) {
     if (\Drupal\Core\Render\Element::property($key)) {
-      throw new \InvalidArgumentException('Cannot dynamically retrieve element property. Please use \Drupal\bootstrap\Utility\Element::getProperty instead.');
+      throw new \InvalidArgumentException('Cannot dynamically retrieve element property. Please use \Drupal\bootstrap_lite\Utility\Element::getProperty instead.');
     }
     $instance = new self($this->offsetGet($key, []));
     return $instance;
@@ -93,7 +93,7 @@ class Element extends DrupalAttributes {
    */
   public function __set($key, $value) {
     if (\Drupal\Core\Render\Element::property($key)) {
-      throw new \InvalidArgumentException('Cannot dynamically retrieve element property. Use \Drupal\bootstrap\Utility\Element::setProperty instead.');
+      throw new \InvalidArgumentException('Cannot dynamically retrieve element property. Use \Drupal\bootstrap_lite\Utility\Element::setProperty instead.');
     }
     $this->offsetSet($key, ($value instanceof Element ? $value->getArray() : $value));
   }
@@ -114,7 +114,7 @@ class Element extends DrupalAttributes {
    */
   public function __isset($name) {
     if (\Drupal\Core\Render\Element::property($name)) {
-      throw new \InvalidArgumentException('Cannot dynamically check if an element has a property. Use \Drupal\bootstrap\Utility\Element::unsetProperty instead.');
+      throw new \InvalidArgumentException('Cannot dynamically check if an element has a property. Use \Drupal\bootstrap_lite\Utility\Element::unsetProperty instead.');
     }
     return parent::__isset($name);
   }
@@ -132,7 +132,7 @@ class Element extends DrupalAttributes {
    */
   public function __unset($name) {
     if (\Drupal\Core\Render\Element::property($name)) {
-      throw new \InvalidArgumentException('Cannot dynamically unset an element property. Use \Drupal\bootstrap\Utility\Element::hasProperty instead.');
+      throw new \InvalidArgumentException('Cannot dynamically unset an element property. Use \Drupal\bootstrap_lite\Utility\Element::hasProperty instead.');
     }
     parent::__unset($name);
   }
@@ -192,7 +192,7 @@ class Element extends DrupalAttributes {
    * @param bool $sort
    *   Boolean to indicate whether the children should be sorted by weight.
    *
-   * @return \Drupal\bootstrap\Utility\Element[]
+   * @return \Drupal\bootstrap_lite\Utility\Element[]
    *   An array child elements.
    */
   public function children($sort = FALSE) {
@@ -226,7 +226,7 @@ class Element extends DrupalAttributes {
     ];
 
     // Set the class to "btn-default" if it shouldn't be colorized.
-    $class = $button && !Bootstrap::getTheme()->getSetting('button_colorize') ? 'btn-default' : FALSE;
+    $class = $button && !BootstrapLite::getTheme()->getSetting('button_colorize') ? 'btn-default' : FALSE;
 
     // Search for an existing class.
     if (!$class || !$override) {
@@ -241,7 +241,7 @@ class Element extends DrupalAttributes {
     // Find a class based on the value of "value", "title" or "button_type".
     if (!$class) {
       $value = $this->getProperty('value', $this->getProperty('title', ''));
-      $class = "$prefix-" . Bootstrap::cssClassFromString($value, $button ? $this->getProperty('button_type', 'default') : 'default');
+      $class = "$prefix-" . BootstrapLite::cssClassFromString($value, $button ? $this->getProperty('button_type', 'default') : 'default');
     }
 
     // Remove any existing classes and add the specified class.
@@ -256,14 +256,14 @@ class Element extends DrupalAttributes {
   }
 
   /**
-   * Creates a new \Drupal\bootstrap\Utility\Element instance.
+   * Creates a new \Drupal\bootstrap_lite\Utility\Element instance.
    *
    * @param array|string $element
    *   A render array element or a string.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   A current FormState instance, if any.
    *
-   * @return \Drupal\bootstrap\Utility\Element
+   * @return \Drupal\bootstrap_lite\Utility\Element
    *   The newly created element instance.
    */
   public static function create(&$element = [], FormStateInterface $form_state = NULL) {
@@ -271,17 +271,17 @@ class Element extends DrupalAttributes {
   }
 
   /**
-   * Creates a new standalone \Drupal\bootstrap\Utility\Element instance.
+   * Creates a new standalone \Drupal\bootstrap_lite\Utility\Element instance.
    *
    * It does not reference the original element passed. If an Element instance
    * is passed, it will clone it so it doesn't affect the original element.
    *
-   * @param array|string|\Drupal\bootstrap\Utility\Element $element
+   * @param array|string|\Drupal\bootstrap_lite\Utility\Element $element
    *   A render array element, string or Element instance.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   A current FormState instance, if any.
    *
-   * @return \Drupal\bootstrap\Utility\Element
+   * @return \Drupal\bootstrap_lite\Utility\Element
    *   The newly created element instance.
    */
   public static function createStandalone($element = [], FormStateInterface $form_state = NULL) {
@@ -592,7 +592,7 @@ class Element extends DrupalAttributes {
     static $classes;
     if (!isset($classes)) {
       $classes = [];
-      if ($button_size = Bootstrap::getTheme()->getSettingPlugin('button_size')) {
+      if ($button_size = BootstrapLite::getTheme()->getSettingPlugin('button_size')) {
         $classes = array_keys($button_size->getOptions());
       }
     }
@@ -609,7 +609,7 @@ class Element extends DrupalAttributes {
 
     // Attempt to get the default button size, if set.
     if (!$class) {
-      $class = Bootstrap::getTheme()->getSetting('button_size');
+      $class = BootstrapLite::getTheme()->getSetting('button_size');
     }
 
     // Remove any existing classes and add the specified class.
@@ -651,14 +651,14 @@ class Element extends DrupalAttributes {
    *
    * @return $this
    *
-   * @see \Drupal\bootstrap\Bootstrap::glyphicon()
+   * @see \Drupal\bootstrap_lite\BootstrapLite::glyphicon()
    */
   public function setIcon(array $icon = NULL) {
-    if ($this->isButton() && !Bootstrap::getTheme()->getSetting('button_iconize')) {
+    if ($this->isButton() && !BootstrapLite::getTheme()->getSetting('button_iconize')) {
       return $this;
     }
     if ($value = $this->getProperty('value', $this->getProperty('title'))) {
-      $icon = isset($icon) ? $icon : Bootstrap::glyphiconFromString($value);
+      $icon = isset($icon) ? $icon : BootstrapLite::glyphiconFromString($value);
       $this->setProperty('icon', $icon);
     }
     return $this;
@@ -689,7 +689,7 @@ class Element extends DrupalAttributes {
   /**
    * Converts an element description into a tooltip based on certain criteria.
    *
-   * @param array|\Drupal\bootstrap\Utility\Element|NULL $target_element
+   * @param array|\Drupal\bootstrap_lite\Utility\Element|NULL $target_element
    *   The target element render array the tooltip is to be attached to, passed
    *   by reference or an existing Element object. If not set, it will default
    *   this Element instance.
@@ -703,7 +703,7 @@ class Element extends DrupalAttributes {
   public function smartDescription(&$target_element = NULL, $input_only = TRUE, $length = NULL) {
     static $theme;
     if (!isset($theme)) {
-      $theme = Bootstrap::getTheme();
+      $theme = BootstrapLite::getTheme();
     }
 
     // Determine if tooltips are enabled.

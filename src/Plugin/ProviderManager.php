@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\ProviderManager.
+ * Contains \Drupal\bootstrap_lite\Plugin\ProviderManager.
  */
 
-namespace Drupal\bootstrap\Plugin;
+namespace Drupal\bootstrap_lite\Plugin;
 
-use Drupal\bootstrap\Plugin\Provider\ProviderInterface;
-use Drupal\bootstrap\Theme;
+use Drupal\bootstrap_lite\Plugin\Provider\ProviderInterface;
+use Drupal\bootstrap_lite\Theme;
 
 /**
  * Manages discovery and instantiation of Bootstrap CDN providers.
@@ -20,16 +20,16 @@ class ProviderManager extends PluginManager {
    *
    * @var string
    */
-  const FILE_PATH = 'public://bootstrap/provider';
+  const FILE_PATH = 'public://bootstrap_lite/provider';
 
   /**
-   * Constructs a new \Drupal\bootstrap\Plugin\ProviderManager object.
+   * Constructs a new \Drupal\bootstrap_lite\Plugin\ProviderManager object.
    *
-   * @param \Drupal\bootstrap\Theme $theme
+   * @param \Drupal\bootstrap_lite\Theme $theme
    *   The theme to use for discovery.
    */
   public function __construct(Theme $theme) {
-    parent::__construct($theme, 'Plugin/Provider', 'Drupal\bootstrap\Plugin\Provider\ProviderInterface', 'Drupal\bootstrap\Annotation\BootstrapProvider');
+    parent::__construct($theme, 'Plugin/Provider', 'Drupal\bootstrap_lite\Plugin\Provider\ProviderInterface', 'Drupal\bootstrap_lite\Annotation\BootstrapProvider');
     $this->setCacheBackend(\Drupal::cache('discovery'), 'theme:' . $theme->getName() . ':provider', $this->getCacheTags());
   }
 

@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Annotation\BootstrapSetting.
+ * Contains \Drupal\bootstrap_lite\Annotation\BootstrapSetting.
  */
 
-namespace Drupal\bootstrap\Annotation;
+namespace Drupal\bootstrap_lite\Annotation;
 
 use Doctrine\Common\Annotations\Annotation\Attribute;
 use Doctrine\Common\Annotations\Annotation\Attributes;
@@ -15,8 +15,8 @@ use Drupal\Component\Annotation\Plugin;
  *
  * Plugin Namespace: "Plugin/Setting".
  *
- * @see \Drupal\bootstrap\Plugin\SettingInterface
- * @see \Drupal\bootstrap\Plugin\SettingManager
+ * @see \Drupal\bootstrap_lite\Plugin\SettingInterface
+ * @see \Drupal\bootstrap_lite\Plugin\SettingManager
  * @see plugin_api
  *
  * @Annotation

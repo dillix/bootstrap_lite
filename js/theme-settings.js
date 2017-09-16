@@ -4,9 +4,9 @@
   "use strict";
 
   /**
-   * Provide vertical tab summaries for Bootstrap settings.
+   * Provide vertical tab summaries for Bootstrap Lite settings.
    */
-  Drupal.behaviors.bootstrapSettingSummaries = {
+  Drupal.behaviors.bootstrapLiteSettingSummaries = {
     attach: function (context) {
       var $context = $(context);
 
@@ -88,7 +88,7 @@
               summary.push($jsDelivrVersion.text());
             }
             var $jsDelivrTheme = $context.find('select[name="cdn_jsdelivr_theme"] :selected');
-            if ($jsDelivrTheme.length && $jsDelivrTheme.val() !== 'bootstrap') {
+            if ($jsDelivrTheme.length && $jsDelivrTheme.val() !== 'bootstrap_lite') {
               summary.push($jsDelivrTheme.text());
             }
           }
@@ -99,19 +99,19 @@
   };
 
   /**
-   * Provide Bootstrap Bootswatch preview.
+   * Provide Bootstrap Lite Bootswatch preview.
    */
-  Drupal.behaviors.bootstrapBootswatchPreview = {
+  Drupal.behaviors.bootstrapLiteBootswatchPreview = {
     attach: function (context) {
       var $context = $(context);
-      var $preview = $context.find('#bootstrap-theme-preview');
-      $preview.once('bootstrap-theme-preview').each(function () {
-        // Construct the "Bootstrap Theme" preview here since it's not actually
+      var $preview = $context.find('#bootstrap-lite-theme-preview');
+      $preview.once('bootstrap-lite-theme-preview').each(function () {
+        // Construct the "Bootstrap Lite Theme" preview here since it's not actually
         // a Bootswatch theme, but rather one provided by Bootstrap itself.
         // Unfortunately getbootstrap.com does not have HTTPS enabled, so the
         // preview image cannot be protocol relative.
         // @todo Make protocol relative if/when Bootstrap enables HTTPS.
-        $preview.append('<a id="bootstrap-theme-preview-bootstrap_theme" class="bootswatch-preview element-invisible" href="http://getbootstrap.com/examples/theme/" target="_blank"><img class="img-responsive" src="http://getbootstrap.com/examples/screenshots/theme.jpg" alt="' + Drupal.t('Preview of the Bootstrap theme') + '" /></a>');
+        $preview.append('<a id="bootstrap-lite-theme-preview-bootstrap_lite_theme" class="bootswatch-preview element-invisible" href="http://getbootstrap.com/examples/theme/" target="_blank"><img class="img-responsive" src="http://getbootstrap.com/examples/screenshots/theme.jpg" alt="' + Drupal.t('Preview of the Bootstrap Lite theme') + '" /></a>');
 
         // Retrieve the Bootswatch theme preview images.
         // @todo This should be moved into PHP.
@@ -121,14 +121,14 @@
           success: function (json) {
             var themes = json.themes;
             for (var i = 0, len = themes.length; i < len; i++) {
-              $preview.append('<a id="bootstrap-theme-preview-' + themes[i].name.toLowerCase() + '" class="bootswatch-preview element-invisible" href="' + themes[i].preview + '" target="_blank"><img class="img-responsive" src="' + themes[i].thumbnail.replace(/^http:/, 'https:') + '" alt="' + Drupal.t('Preview of the @title Bootswatch theme', { '@title': themes[i].name }) + '" /></a>');
+              $preview.append('<a id="bootstrap-lite-theme-preview-' + themes[i].name.toLowerCase() + '" class="bootswatch-preview element-invisible" href="' + themes[i].preview + '" target="_blank"><img class="img-responsive" src="' + themes[i].thumbnail.replace(/^http:/, 'https:') + '" alt="' + Drupal.t('Preview of the @title Bootswatch theme', { '@title': themes[i].name }) + '" /></a>');
             }
           },
           complete: function () {
             $preview.parent().find('select[name="cdn_jsdelivr_theme"]').bind('change', function () {
               $preview.find('.bootswatch-preview').addClass('visually-hidden');
               if ($(this).val().length) {
-                $preview.find('#bootstrap-theme-preview-' + $(this).val()).removeClass('visually-hidden');
+                $preview.find('#bootstrap-lite-theme-preview-' + $(this).val()).removeClass('visually-hidden');
               }
             }).change();
           }
@@ -138,14 +138,14 @@
   };
 
   /**
-   * Provide Bootstrap navbar preview.
+   * Provide Bootstrap Lite navbar preview.
    */
-  Drupal.behaviors.bootstrapContainerPreview = {
+  Drupal.behaviors.bootstrapLiteContainerPreview = {
     attach: function (context) {
       var $context = $(context);
       var $container = $context.find('#edit-container');
       $container.once('container-preview').each(function () {
-        $container.find('[name="fluid_container"]').on('change.bootstrap', function () {
+        $container.find('[name="fluid_container"]').on('change.bootstrap_lite', function () {
           if ($(this).is(':checked')) {
             $context.find('.container').removeClass('container').addClass('container-fluid');
           }
@@ -158,9 +158,9 @@
   };
 
   /**
-   * Provide Bootstrap navbar preview.
+   * Provide Bootstrap Lite navbar preview.
    */
-  Drupal.behaviors.bootstrapNavbarPreview = {
+  Drupal.behaviors.bootstrapLiteNavbarPreview = {
     attach: function (context) {
       var $context = $(context);
       var $preview = $context.find('#edit-navbar');

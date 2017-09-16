@@ -1,14 +1,14 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Process\TextFormat.
+ * Contains \Drupal\bootstrap_lite\Plugin\Process\TextFormat.
  */
 
-namespace Drupal\bootstrap\Plugin\Process;
+namespace Drupal\bootstrap_lite\Plugin\Process;
 
-use Drupal\bootstrap\Annotation\BootstrapProcess;
-use Drupal\bootstrap\Bootstrap;
-use Drupal\bootstrap\Utility\Element;
+use Drupal\bootstrap_lite\Annotation\BootstrapProcess;
+use Drupal\bootstrap_lite\BootstrapLite;
+use Drupal\bootstrap_lite\Utility\Element;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
@@ -41,8 +41,8 @@ class TextFormat extends ProcessBase implements ProcessInterface {
       // Help (link).
       $element->format->help->about
         ->setAttribute('title', t('Opens in new window'))
-        ->setProperty('icon', Bootstrap::glyphicon('question-sign'));
-      if (Bootstrap::getTheme()->getSetting('tooltip_enabled')) {
+        ->setProperty('icon', BootstrapLite::glyphicon('question-sign'));
+      if (BootstrapLite::getTheme()->getSetting('tooltip_enabled')) {
         $element->format->help->about->setAttribute('data-toggle', 'tooltip');
       }
     }

@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\ThemeSettings.
+ * Contains \Drupal\bootstrap_lite\ThemeSettings.
  */
 
-namespace Drupal\bootstrap;
+namespace Drupal\bootstrap_lite;
 
 use Drupal\Component\Utility\DiffArray;
 use Drupal\Component\Utility\NestedArray;
@@ -31,7 +31,7 @@ class ThemeSettings extends Config {
   /**
    * The current theme object.
    *
-   * @var \Drupal\bootstrap\Theme
+   * @var \Drupal\bootstrap_lite\Theme
    */
   protected $theme;
 
@@ -135,7 +135,7 @@ class ThemeSettings extends Config {
   /**
    * Retrieves a specific theme's stored config settings.
    *
-   * @param \Drupal\bootstrap\Theme $theme
+   * @param \Drupal\bootstrap_lite\Theme $theme
    *   A theme object.
    * @param bool $active_theme
    *   Flag indicating whether or not $theme is the active theme.

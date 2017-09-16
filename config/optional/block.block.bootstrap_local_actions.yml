@@ -2,9 +2,9 @@ langcode: en
 status: true
 dependencies:
   theme:
-    - bootstrap
-id: bootstrap_local_actions
-theme: bootstrap
+    - bootstrap_lite
+id: bootstrap_lite_local_actions
+theme: bootstrap_lite
 region: header
 weight: 20
 provider: null

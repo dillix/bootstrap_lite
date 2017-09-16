@@ -1,14 +1,14 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Form\NodePreviewFormSelect.
+ * Contains \Drupal\bootstrap_lite\Plugin\Form\NodePreviewFormSelect.
  */
 
-namespace Drupal\bootstrap\Plugin\Form;
+namespace Drupal\bootstrap_lite\Plugin\Form;
 
-use Drupal\bootstrap\Annotation\BootstrapForm;
-use Drupal\bootstrap\Bootstrap;
-use Drupal\bootstrap\Utility\Element;
+use Drupal\bootstrap_lite\Annotation\BootstrapForm;
+use Drupal\bootstrap_lite\BootstrapLite;
+use Drupal\bootstrap_lite\Utility\Element;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
@@ -32,7 +32,7 @@ class NodePreviewFormSelect extends FormBase {
     $form->backlink->addClass(isset($options['attributes']['class']) ? $options['attributes']['class'] : []);
     $form->backlink->addClass(['btn', 'btn-info', 'pull-left']);
     $form->backlink->setButtonSize();
-    $form->backlink->setIcon(Bootstrap::glyphicon('chevron-left'));
+    $form->backlink->setIcon(BootstrapLite::glyphicon('chevron-left'));
 
     // Ensure the UUID is set.
     if ($uuid = $form->uuid->getProperty('value')) {

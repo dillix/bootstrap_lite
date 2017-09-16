@@ -1,14 +1,14 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Preprocess\PreprocessBase.
+ * Contains \Drupal\bootstrap_lite\Plugin\Preprocess\PreprocessBase.
  */
 
-namespace Drupal\bootstrap\Plugin\Preprocess;
+namespace Drupal\bootstrap_lite\Plugin\Preprocess;
 
-use Drupal\bootstrap\Plugin\PluginBase;
-use Drupal\bootstrap\Utility\Element;
-use Drupal\bootstrap\Utility\Variables;
+use Drupal\bootstrap_lite\Plugin\PluginBase;
+use Drupal\bootstrap_lite\Utility\Element;
+use Drupal\bootstrap_lite\Utility\Variables;
 use Drupal\Core\Template\Attribute;
 
 /**
@@ -35,7 +35,7 @@ class PreprocessBase extends PluginBase implements PreprocessInterface {
   /**
    * The Variables object.
    *
-   * @type \Drupal\bootstrap\Utility\Variables
+   * @type \Drupal\bootstrap_lite\Utility\Variables
    */
   protected $variables;
 
@@ -99,9 +99,9 @@ class PreprocessBase extends PluginBase implements PreprocessInterface {
   /**
    * Preprocess the variables array if an element is present.
    *
-   * @param \Drupal\bootstrap\Utility\Element $element
+   * @param \Drupal\bootstrap_lite\Utility\Element $element
    *   The Element object.
-   * @param \Drupal\bootstrap\Utility\Variables $variables
+   * @param \Drupal\bootstrap_lite\Utility\Variables $variables
    *   The Variables object.
    */
   protected function preprocessElement(Element $element, Variables $variables) {}
@@ -109,7 +109,7 @@ class PreprocessBase extends PluginBase implements PreprocessInterface {
   /**
    * Preprocess the variables array.
    *
-   * @param \Drupal\bootstrap\Utility\Variables $variables
+   * @param \Drupal\bootstrap_lite\Utility\Variables $variables
    *   The Variables object.
    */
   protected function preprocessVariables(Variables $variables) {}

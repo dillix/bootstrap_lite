@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Utility\DrupalAttributes.
+ * Contains \Drupal\bootstrap_lite\Utility\DrupalAttributes.
  */
 
-namespace Drupal\bootstrap\Utility;
+namespace Drupal\bootstrap_lite\Utility;
 
 use Drupal\Core\Template\Attribute;
 
@@ -13,9 +13,9 @@ use Drupal\Core\Template\Attribute;
  *
  * @ingroup utility
  *
- * @see \Drupal\bootstrap\Utility\Attributes
- * @see \Drupal\bootstrap\Utility\Element
- * @see \Drupal\bootstrap\Utility\Variables
+ * @see \Drupal\bootstrap_lite\Utility\Attributes
+ * @see \Drupal\bootstrap_lite\Utility\Element
+ * @see \Drupal\bootstrap_lite\Utility\Variables
  */
 class DrupalAttributes extends ArrayObject {
 
@@ -113,7 +113,7 @@ class DrupalAttributes extends ArrayObject {
   /**
    * Stored attribute instances.
    *
-   * @var \Drupal\bootstrap\Utility\Attributes[]
+   * @var \Drupal\bootstrap_lite\Utility\Attributes[]
    */
   protected $attributes = [];
 
@@ -137,7 +137,7 @@ class DrupalAttributes extends ArrayObject {
    *
    * @return $this
    *
-   * @see \Drupal\bootstrap\Utility\Attributes::addClass()
+   * @see \Drupal\bootstrap_lite\Utility\Attributes::addClass()
    */
   public function addClass($class, $type = DrupalAttributes::ATTRIBUTES) {
     $this->getAttributes($type)->addClass($class);
@@ -160,7 +160,7 @@ class DrupalAttributes extends ArrayObject {
    * @return mixed
    *   A specific attribute value, passed by reference.
    *
-   * @see \Drupal\bootstrap\Utility\Attributes::getAttribute()
+   * @see \Drupal\bootstrap_lite\Utility\Attributes::getAttribute()
    */
   public function &getAttribute($name, $default = NULL, $type = DrupalAttributes::ATTRIBUTES) {
     return $this->getAttributes($type)->getAttribute($name, $default);
@@ -172,7 +172,7 @@ class DrupalAttributes extends ArrayObject {
    * @param string $type
    *   (optional) The type of attributes to use for this method.
    *
-   * @return \Drupal\bootstrap\Utility\Attributes
+   * @return \Drupal\bootstrap_lite\Utility\Attributes
    *   An attributes object for $type.
    */
   public function getAttributes($type = DrupalAttributes::ATTRIBUTES) {
@@ -198,7 +198,7 @@ class DrupalAttributes extends ArrayObject {
    * @return array
    *   The classes array, passed by reference.
    *
-   * @see \Drupal\bootstrap\Utility\Attributes::getClasses()
+   * @see \Drupal\bootstrap_lite\Utility\Attributes::getClasses()
    */
   public function &getClasses($type = DrupalAttributes::ATTRIBUTES) {
     return $this->getAttributes($type)->getClasses();
@@ -218,7 +218,7 @@ class DrupalAttributes extends ArrayObject {
    * @return bool
    *   TRUE or FALSE
    *
-   * @see \Drupal\bootstrap\Utility\Attributes::hasAttribute()
+   * @see \Drupal\bootstrap_lite\Utility\Attributes::hasAttribute()
    */
   public function hasAttribute($name, $type = DrupalAttributes::ATTRIBUTES) {
     return $this->getAttributes($type)->hasAttribute($name);
@@ -238,7 +238,7 @@ class DrupalAttributes extends ArrayObject {
    * @return bool
    *   TRUE or FALSE
    *
-   * @see \Drupal\bootstrap\Utility\Attributes::hasClass()
+   * @see \Drupal\bootstrap_lite\Utility\Attributes::hasClass()
    */
   public function hasClass($class, $type = DrupalAttributes::ATTRIBUTES) {
     return $this->getAttributes($type)->hasClass($class);
@@ -257,7 +257,7 @@ class DrupalAttributes extends ArrayObject {
    *
    * @return $this
    *
-   * @see \Drupal\bootstrap\Utility\Attributes::removeAttribute()
+   * @see \Drupal\bootstrap_lite\Utility\Attributes::removeAttribute()
    */
   public function removeAttribute($name, $type = DrupalAttributes::ATTRIBUTES) {
     $this->getAttributes($type)->removeAttribute($name);
@@ -277,7 +277,7 @@ class DrupalAttributes extends ArrayObject {
    *
    * @return $this
    *
-   * @see \Drupal\bootstrap\Utility\Attributes::removeClass()
+   * @see \Drupal\bootstrap_lite\Utility\Attributes::removeClass()
    */
   public function removeClass($class, $type = DrupalAttributes::ATTRIBUTES) {
     $this->getAttributes($type)->removeClass($class);
@@ -299,7 +299,7 @@ class DrupalAttributes extends ArrayObject {
    *
    * @return $this
    *
-   * @see \Drupal\bootstrap\Utility\Attributes::replaceClass()
+   * @see \Drupal\bootstrap_lite\Utility\Attributes::replaceClass()
    */
   public function replaceClass($old, $new, $type = DrupalAttributes::ATTRIBUTES) {
     $this->getAttributes($type)->replaceClass($old, $new);
@@ -321,7 +321,7 @@ class DrupalAttributes extends ArrayObject {
    *
    * @return $this
    *
-   * @see \Drupal\bootstrap\Utility\Attributes::setAttribute()
+   * @see \Drupal\bootstrap_lite\Utility\Attributes::setAttribute()
    */
   public function setAttribute($name, $value, $type = DrupalAttributes::ATTRIBUTES) {
     $this->getAttributes($type)->setAttribute($name, $value);
@@ -341,7 +341,7 @@ class DrupalAttributes extends ArrayObject {
    *
    * @return $this
    *
-   * @see \Drupal\bootstrap\Utility\Attributes::setAttributes()
+   * @see \Drupal\bootstrap_lite\Utility\Attributes::setAttributes()
    */
   public function setAttributes(array $values, $type = DrupalAttributes::ATTRIBUTES) {
     $this->getAttributes($type)->setAttributes($values);

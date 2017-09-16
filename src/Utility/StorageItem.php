@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Utility\StorageItem.
+ * Contains \Drupal\bootstrap_lite\Utility\StorageItem.
  */
 
-namespace Drupal\bootstrap\Utility;
+namespace Drupal\bootstrap_lite\Utility;
 
 use Drupal\Core\KeyValueStore\MemoryStorage;
 
@@ -19,7 +19,7 @@ use Drupal\Core\KeyValueStore\MemoryStorage;
  *
  * @ingroup utility
  *
- * @see \Drupal\bootstrap\Utility\Storage
+ * @see \Drupal\bootstrap_lite\Utility\Storage
  */
 class StorageItem extends MemoryStorage implements \Iterator {
 
@@ -31,9 +31,9 @@ class StorageItem extends MemoryStorage implements \Iterator {
   protected $initialized = FALSE;
 
   /**
-   * The \Drupal\bootstrap\Storage instance this item belongs to.
+   * The \Drupal\bootstrap_lite\Storage instance this item belongs to.
    *
-   * @var \Drupal\bootstrap\Utility\Storage
+   * @var \Drupal\bootstrap_lite\Utility\Storage
    */
   protected $storage;
 

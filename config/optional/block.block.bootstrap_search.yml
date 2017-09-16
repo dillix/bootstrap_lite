@@ -4,9 +4,9 @@ dependencies:
   module:
     - search
   theme:
-    - bootstrap
-id: bootstrap_search
-theme: bootstrap
+    - bootstrap_lite
+id: bootstrap_lite_search
+theme: bootstrap_lite
 region: sidebar_second
 weight: -1
 provider: null

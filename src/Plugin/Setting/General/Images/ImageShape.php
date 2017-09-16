@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Setting\General\Images\ImageShape.
+ * Contains \Drupal\bootstrap_lite\Plugin\Setting\General\Images\ImageShape.
  */
 
-namespace Drupal\bootstrap\Plugin\Setting\General\Images;
+namespace Drupal\bootstrap_lite\Plugin\Setting\General\Images;
 
-use Drupal\bootstrap\Annotation\BootstrapSetting;
-use Drupal\bootstrap\Plugin\Setting\SettingBase;
+use Drupal\bootstrap_lite\Annotation\BootstrapSetting;
+use Drupal\bootstrap_lite\Plugin\Setting\SettingBase;
 use Drupal\Core\Annotation\Translation;
 
 /**

@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Preprocess\ProgressBar.
+ * Contains \Drupal\bootstrap_lite\Plugin\Preprocess\ProgressBar.
  */
 
-namespace Drupal\bootstrap\Plugin\Preprocess;
+namespace Drupal\bootstrap_lite\Plugin\Preprocess;
 
-use Drupal\bootstrap\Annotation\BootstrapPreprocess;
-use Drupal\bootstrap\Utility\Variables;
+use Drupal\bootstrap_lite\Annotation\BootstrapPreprocess;
+use Drupal\bootstrap_lite\Utility\Variables;
 use Drupal\Component\Utility\Html;
 
 /**

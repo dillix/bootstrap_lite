@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Form\SearchBlockForm.
+ * Contains \Drupal\bootstrap_lite\Plugin\Form\SearchBlockForm.
  */
 
-namespace Drupal\bootstrap\Plugin\Form;
+namespace Drupal\bootstrap_lite\Plugin\Form;
 
-use Drupal\bootstrap\Annotation\BootstrapForm;
-use Drupal\bootstrap\Utility\Element;
+use Drupal\bootstrap_lite\Annotation\BootstrapForm;
+use Drupal\bootstrap_lite\Utility\Element;
 use Drupal\Core\Form\FormStateInterface;
 
 /**

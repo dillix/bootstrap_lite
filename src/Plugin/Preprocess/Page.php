@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Preprocess\Page.
+ * Contains \Drupal\bootstrap_lite\Plugin\Preprocess\Page.
  */
 
-namespace Drupal\bootstrap\Plugin\Preprocess;
+namespace Drupal\bootstrap_lite\Plugin\Preprocess;
 
-use Drupal\bootstrap\Annotation\BootstrapPreprocess;
-use Drupal\bootstrap\Utility\Variables;
+use Drupal\bootstrap_lite\Annotation\BootstrapPreprocess;
+use Drupal\bootstrap_lite\Utility\Variables;
 
 /**
  * Pre-processes variables for the "page" theme hook.

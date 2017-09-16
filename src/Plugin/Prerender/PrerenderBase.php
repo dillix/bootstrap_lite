@@ -1,12 +1,12 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Prerender\PrerenderBase.
+ * Contains \Drupal\bootstrap_lite\Plugin\Prerender\PrerenderBase.
  */
 
-namespace Drupal\bootstrap\Plugin\Prerender;
+namespace Drupal\bootstrap_lite\Plugin\Prerender;
 
-use Drupal\bootstrap\Utility\Element;
+use Drupal\bootstrap_lite\Utility\Element;
 
 /**
  * Defines the interface for an object oriented preprocess plugin.
@@ -26,7 +26,7 @@ class PrerenderBase implements PrerenderInterface {
   /**
    * Pre-render element callback.
    *
-   * @param \Drupal\bootstrap\Utility\Element $element
+   * @param \Drupal\bootstrap_lite\Utility\Element $element
    *   The element object.
    */
   public static function preRenderElement(Element $element) {}

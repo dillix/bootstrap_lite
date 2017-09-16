@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Annotation\BootstrapUpdate.
+ * Contains \Drupal\bootstrap_lite\Annotation\BootstrapUpdate.
  */
 
-namespace Drupal\bootstrap\Annotation;
+namespace Drupal\bootstrap_lite\Annotation;
 
 use Drupal\Component\Annotation\Plugin;
 
@@ -13,8 +13,8 @@ use Drupal\Component\Annotation\Plugin;
  *
  * Plugin Namespace: "Plugin/Update".
  *
- * @see \Drupal\bootstrap\Plugin\UpdateInterface
- * @see \Drupal\bootstrap\Plugin\UpdateManager
+ * @see \Drupal\bootstrap_lite\Plugin\UpdateInterface
+ * @see \Drupal\bootstrap_lite\Plugin\UpdateManager
  * @see plugin_api
  *
  * @Annotation

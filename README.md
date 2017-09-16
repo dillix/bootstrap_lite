@@ -1,5 +1,5 @@
 <!-- @file Project Page -->
-# Bootstrap
+# Bootstrap Lite
 
 > Sleek, intuitive, and powerful mobile first front-end framework for faster and
 > easier web development. Bootstrap has become one of the most popular front-end
@@ -29,16 +29,5 @@ or the markdown files inside the `./docs` directory.
 
 **Drupal 8**
 - [Bootstrap Layouts](https://www.drupal.org/project/bootstrap_layouts)
-
-**Drupal 7**
-- [Bootstrap Core](https://www.drupal.org/project/bootstrap_core)
-- [jQuery Update](https://www.drupal.org/project/jquery_update)
-- [Icon API](https://www.drupal.org/project/icon)
-- [Picture](https://www.drupal.org/project/picture)
-- [Views](https://www.drupal.org/project/views) _(partial support)_
-- [Webform](https://www.drupal.org/project/webform) _(partial support)_
-
-### 5 Year Evolution (gource)
-https://youtu.be/Cvq6MPJp2dI
 
 [Bootstrap Framework]: http://getbootstrap.com

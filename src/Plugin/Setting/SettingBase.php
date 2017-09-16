@@ -1,14 +1,14 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Setting\SettingBase.
+ * Contains \Drupal\bootstrap_lite\Plugin\Setting\SettingBase.
  */
 
-namespace Drupal\bootstrap\Plugin\Setting;
+namespace Drupal\bootstrap_lite\Plugin\Setting;
 
-use Drupal\bootstrap\Bootstrap;
-use Drupal\bootstrap\Plugin\PluginBase;
-use Drupal\bootstrap\Utility\Element;
+use Drupal\bootstrap_lite\BootstrapLite;
+use Drupal\bootstrap_lite\Plugin\PluginBase;
+use Drupal\bootstrap_lite\Utility\Element;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 
@@ -74,10 +74,10 @@ class SettingBase extends PluginBase implements SettingInterface {
   /**
    * {@inheritdoc}
    *
-   * @deprecated Will be removed in a future release. Use \Drupal\bootstrap\Plugin\Setting\SettingInterface::getGroupElement
+   * @deprecated Will be removed in a future release. Use \Drupal\bootstrap_lite\Plugin\Setting\SettingInterface::getGroupElement
    */
   public function getGroup(array &$form, FormStateInterface $form_state) {
-    Bootstrap::deprecated();
+    BootstrapLite::deprecated();
     return $this->getGroupElement(Element::create($form), $form_state);
   }
 
@@ -98,7 +98,7 @@ class SettingBase extends PluginBase implements SettingInterface {
         }
         $group = Element::create($group->$key->getArray());
         if ($first) {
-          $group->setProperty('group', 'bootstrap');
+          $group->setProperty('group', 'bootstrap_lite');
         }
         else {
           $group->setProperty('open', FALSE);
@@ -122,10 +122,10 @@ class SettingBase extends PluginBase implements SettingInterface {
   /**
    * {@inheritdoc}
    *
-   * @deprecated Will be removed in a future release. Use \Drupal\bootstrap\Plugin\Setting\SettingInterface::getSettingElement
+   * @deprecated Will be removed in a future release. Use \Drupal\bootstrap_lite\Plugin\Setting\SettingInterface::getSettingElement
    */
   public function getElement(array &$form, FormStateInterface $form_state) {
-    Bootstrap::deprecated();
+    BootstrapLite::deprecated();
     return $this->getSettingElement(Element::create($form), $form_state);
   }
 

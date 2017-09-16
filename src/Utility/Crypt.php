@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Utility\Crypt.
+ * Contains \Drupal\bootstrap_lite\Utility\Crypt.
  */
 
-namespace Drupal\bootstrap\Utility;
+namespace Drupal\bootstrap_lite\Utility;
 
 /**
  * Extends \Drupal\Component\Utility\Crypt.

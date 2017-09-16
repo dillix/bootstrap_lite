@@ -1,15 +1,15 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Prerender\Link.
+ * Contains \Drupal\bootstrap_lite\Plugin\Prerender\Link.
  */
 
-namespace Drupal\bootstrap\Plugin\Prerender;
+namespace Drupal\bootstrap_lite\Plugin\Prerender;
 
-use Drupal\bootstrap\Annotation\BootstrapConstant;
-use Drupal\bootstrap\Annotation\BootstrapPrerender;
-use Drupal\bootstrap\Bootstrap;
-use Drupal\bootstrap\Utility\Element;
+use Drupal\bootstrap_lite\Annotation\BootstrapConstant;
+use Drupal\bootstrap_lite\Annotation\BootstrapPrerender;
+use Drupal\bootstrap_lite\BootstrapLite;
+use Drupal\bootstrap_lite\Utility\Element;
 use Drupal\Component\Render\FormattableMarkup;
 
 /**
@@ -19,7 +19,7 @@ use Drupal\Component\Render\FormattableMarkup;
  *
  * @BootstrapPrerender("link",
  *   action = @BootstrapConstant(
- *     "\Drupal\bootstrap\Bootstrap::CALLBACK_PREPEND"
+ *     "\Drupal\bootstrap_lite\BootstrapLite::CALLBACK_PREPEND"
  *   )
  * )
  *
@@ -44,7 +44,7 @@ class Link extends PrerenderBase {
           ->setAttribute('title', $title)
           ->addClass('icon-only')
           ->setProperty('title', $icon);
-        if (Bootstrap::getTheme()->getSetting('tooltip_enabled')) {
+        if (BootstrapLite::getTheme()->getSetting('tooltip_enabled')) {
           $element->setAttribute('data-toggle', 'tooltip');
         }
         return;

@@ -1,8 +1,8 @@
 /**
  * @file
- * Theme hooks for the Drupal Bootstrap base theme.
+ * Theme hooks for the Drupal Bootstrap Lite base theme.
  */
-(function ($, Drupal, Bootstrap) {
+(function ($, Drupal, BootstrapLite) {
 
   /**
    * Fallback for theming an icon if the Icon API module is not installed.
@@ -39,7 +39,7 @@
    * @param {Attributes} attributes
    *   Attributes object for the icon.
    */
-  Drupal.icon.bundles.bootstrap = function (icon, attributes) {
+  Drupal.icon.bundles.bootstrap_lite = function (icon, attributes) {
     attributes.addClass(['glyphicon', 'glyphicon-' + icon]);
   };
 
@@ -54,7 +54,7 @@
      * @returns {string}
      */
     ajaxThrobber: function () {
-      return Drupal.theme.bootstrapIcon('refresh', {'class': ['ajax-throbber', 'glyphicon-spin'] });
+      return Drupal.theme.bootstrapLiteIcon('refresh', {'class': ['ajax-throbber', 'glyphicon-spin'] });
     },
 
     /**
@@ -80,7 +80,7 @@
       var label = attributes.get('value', '');
       attributes.remove('context').remove('value');
       if (!attributes.hasClass(['btn-default', 'btn-primary', 'btn-success', 'btn-info', 'btn-warning', 'btn-danger', 'btn-link'])) {
-        attributes.addClass('btn-' + Bootstrap.checkPlain(context));
+        attributes.addClass('btn-' + BootstrapLite.checkPlain(context));
       }
       return '<button' + attributes + '>' + label + '</button>';
     },
@@ -165,10 +165,10 @@
      *
      * @returns {string}
      */
-    bootstrapIcon: function (name, attributes) {
-      return Drupal.theme('icon', 'bootstrap', name, attributes);
+    bootstrapLiteIcon: function (name, attributes) {
+      return Drupal.theme('icon', 'bootstrap_lite', name, attributes);
     }
 
   });
 
-})(window.jQuery, window.Drupal, window.Drupal.bootstrap);
+})(window.jQuery, window.Drupal, window.Drupal.bootstrap_lite);

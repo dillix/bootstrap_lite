@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Utility\Variables.
+ * Contains \Drupal\bootstrap_lite\Utility\Variables.
  */
 
-namespace Drupal\bootstrap\Utility;
+namespace Drupal\bootstrap_lite\Utility;
 
 /**
  * Class to help modify template variables.
@@ -16,7 +16,7 @@ class Variables extends DrupalAttributes {
   /**
    * An element object.
    *
-   * @var \Drupal\bootstrap\Utility\Element|FALSE
+   * @var \Drupal\bootstrap_lite\Utility\Element|FALSE
    */
   public $element = FALSE;
 
@@ -37,12 +37,12 @@ class Variables extends DrupalAttributes {
   }
 
   /**
-   * Creates a new \Drupal\bootstrap\Utility\Variables instance.
+   * Creates a new \Drupal\bootstrap_lite\Utility\Variables instance.
    *
    * @param array $variables
    *   A theme hook variables array.
    *
-   * @return \Drupal\bootstrap\Utility\Variables
+   * @return \Drupal\bootstrap_lite\Utility\Variables
    *   The newly created variables instance.
    */
   public static function create(array &$variables) {

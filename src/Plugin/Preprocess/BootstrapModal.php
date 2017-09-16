@@ -1,21 +1,21 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Preprocess\BootstrapModal.
+ * Contains \Drupal\bootstrap_lite\Plugin\Preprocess\BootstrapModal.
  */
 
-namespace Drupal\bootstrap\Plugin\Preprocess;
+namespace Drupal\bootstrap_lite\Plugin\Preprocess;
 
-use Drupal\bootstrap\Annotation\BootstrapPreprocess;
-use Drupal\bootstrap\Utility\Variables;
+use Drupal\bootstrap_lite\Annotation\BootstrapPreprocess;
+use Drupal\bootstrap_lite\Utility\Variables;
 use Drupal\Component\Utility\Html;
 
 /**
- * Pre-processes variables for the "bootstrap_modal" theme hook.
+ * Pre-processes variables for the "bootstrap_lite_modal" theme hook.
  *
  * @ingroup plugins_preprocess
  *
- * @BootstrapPreprocess("bootstrap_modal")
+ * @BootstrapPreprocess("bootstrap_lite_modal")
  */
 class BootstrapModal extends PreprocessBase implements PreprocessInterface {
 
@@ -25,12 +25,12 @@ class BootstrapModal extends PreprocessBase implements PreprocessInterface {
   protected function preprocessVariables(Variables $variables) {
     // Immediately log an error and return if Bootstrap modals are not enabled.
     if (!$this->theme->getSetting('modal_enabled')) {
-      \Drupal::logger('bootstrap')->error(t('Bootstrap modals are not enabled.'));
+      \Drupal::logger('bootstrap_lite')->error(t('Bootstrap Lite modals are not enabled.'));
       return;
     }
 
     // Retrieve the ID, generating one if needed.
-    $id = $variables->getAttribute('id', Html::getUniqueId($variables->offsetGet('id', 'bootstrap-modal')));
+    $id = $variables->getAttribute('id', Html::getUniqueId($variables->offsetGet('id', 'bootstrap-lite-modal')));
     $variables->setAttribute('id', $id);
     unset($variables['id']);
 

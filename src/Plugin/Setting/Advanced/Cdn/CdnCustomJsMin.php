@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Setting\Advanced\Cdn\CdnCustomJsMin.
+ * Contains \Drupal\bootstrap_lite\Plugin\Setting\Advanced\Cdn\CdnCustomJsMin.
  */
 
-namespace Drupal\bootstrap\Plugin\Setting\Advanced\Cdn;
+namespace Drupal\bootstrap_lite\Plugin\Setting\Advanced\Cdn;
 
-use Drupal\bootstrap\Annotation\BootstrapSetting;
-use Drupal\bootstrap\Plugin\Setting\SettingBase;
+use Drupal\bootstrap_lite\Annotation\BootstrapSetting;
+use Drupal\bootstrap_lite\Plugin\Setting\SettingBase;
 use Drupal\Core\Annotation\Translation;
 
 /**
@@ -21,7 +21,7 @@ use Drupal\Core\Annotation\Translation;
  *   type = "textfield",
  *   weight = 4,
  *   title = @Translation("Minified Bootstrap JavaScript URL"),
- *   defaultValue = "https://cdn.jsdelivr.net/bootstrap/3.3.7/js/bootstrap.min.js",
+ *   defaultValue = "https://cdn.jsdelivr.net/bootstrap/4.0.0/js/bootstrap.min.js",
  *   description = @Translation("Additionally, you can provide the minimized version of the file. It will be used instead if site aggregation is enabled."),
  *   groups = {
  *     "advanced" = @Translation("Advanced"),

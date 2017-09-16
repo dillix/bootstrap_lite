@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Setting\Advanced\IncludeDeprecated.
+ * Contains \Drupal\bootstrap_lite\Plugin\Setting\Advanced\IncludeDeprecated.
  */
 
-namespace Drupal\bootstrap\Plugin\Setting\Advanced;
+namespace Drupal\bootstrap_lite\Plugin\Setting\Advanced;
 
-use Drupal\bootstrap\Annotation\BootstrapSetting;
-use Drupal\bootstrap\Plugin\Setting\SettingBase;
+use Drupal\bootstrap_lite\Annotation\BootstrapSetting;
+use Drupal\bootstrap_lite\Plugin\Setting\SettingBase;
 use Drupal\Core\Annotation\Translation;
 
 /**

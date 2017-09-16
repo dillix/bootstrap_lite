@@ -1,14 +1,14 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Preprocess\FormElement.
+ * Contains \Drupal\bootstrap_lite\Plugin\Preprocess\FormElement.
  */
 
-namespace Drupal\bootstrap\Plugin\Preprocess;
+namespace Drupal\bootstrap_lite\Plugin\Preprocess;
 
-use Drupal\bootstrap\Annotation\BootstrapPreprocess;
-use Drupal\bootstrap\Utility\Element;
-use Drupal\bootstrap\Utility\Variables;
+use Drupal\bootstrap_lite\Annotation\BootstrapPreprocess;
+use Drupal\bootstrap_lite\Utility\Element;
+use Drupal\bootstrap_lite\Utility\Variables;
 
 /**
  * Pre-processes variables for the "form_element" theme hook.
@@ -63,7 +63,7 @@ class FormElement extends PreprocessBase implements PreprocessInterface {
 
     // Remove the #field_prefix and #field_suffix values set in
     // template_preprocess_form_element(). These are handled at the input level.
-    // @see \Drupal\bootstrap\Plugin\Preprocess\Input::preprocess().
+    // @see \Drupal\bootstrap_lite\Plugin\Preprocess\Input::preprocess().
     unset($variables['prefix']);
     unset($variables['suffix']);
   }

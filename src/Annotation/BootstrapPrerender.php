@@ -1,18 +1,18 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Annotation\BootstrapPrerender.
+ * Contains \Drupal\bootstrap_lite\Annotation\BootstrapPrerender.
  */
 
-namespace Drupal\bootstrap\Annotation;
+namespace Drupal\bootstrap_lite\Annotation;
 
 /**
  * Defines a BootstrapPrerender annotation object.
  *
  * Plugin Namespace: "Plugin/Prerender".
  *
- * @see \Drupal\bootstrap\Plugin\PrerenderInterface
- * @see \Drupal\bootstrap\Plugin\PrerenderManager
+ * @see \Drupal\bootstrap_lite\Plugin\PrerenderInterface
+ * @see \Drupal\bootstrap_lite\Plugin\PrerenderManager
  * @see plugin_api
  *
  * @Annotation

@@ -1,14 +1,14 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Alter\LibraryInfo.
+ * Contains \Drupal\bootstrap_lite\Plugin\Alter\LibraryInfo.
  */
 
-namespace Drupal\bootstrap\Plugin\Alter;
+namespace Drupal\bootstrap_lite\Plugin\Alter;
 
-use Drupal\bootstrap\Annotation\BootstrapAlter;
-use Drupal\bootstrap\Bootstrap;
-use Drupal\bootstrap\Plugin\PluginBase;
+use Drupal\bootstrap_lite\Annotation\BootstrapAlter;
+use Drupal\bootstrap_lite\BootstrapLite;
+use Drupal\bootstrap_lite\Plugin\PluginBase;
 use Drupal\Component\Utility\NestedArray;
 
 /**
@@ -35,7 +35,7 @@ class LibraryInfo extends PluginBase implements AlterInterface {
       });
     }
 
-    if ($extension === 'bootstrap') {
+    if ($extension === 'bootstrap_lite') {
       // Alter the "livereload.js" placeholder with the correct URL.
       if ($livereload) {
         $libraries['livereload']['js'][$livereload] = $libraries['livereload']['js']['livereload.js'];
@@ -56,10 +56,10 @@ class LibraryInfo extends PluginBase implements AlterInterface {
 
       // Add a specific version and theme CSS overrides file.
       // @todo This should be retrieved by the Provider API.
-      $version = $this->theme->getSetting('cdn_' . $provider->getPluginId() . '_version') ?: Bootstrap::FRAMEWORK_VERSION;
+      $version = $this->theme->getSetting('cdn_' . $provider->getPluginId() . '_version') ?: BootstrapLite::FRAMEWORK_VERSION;
       $libraries['theme']['version'] = $version;
-      $provider_theme = $this->theme->getSetting('cdn_' . $provider->getPluginId() . '_theme') ?: 'bootstrap';
-      $provider_theme = $provider_theme === 'bootstrap' || $provider_theme === 'bootstrap_theme' ? '' : "-$provider_theme";
+      $provider_theme = $this->theme->getSetting('cdn_' . $provider->getPluginId() . '_theme') ?: 'bootstrap_lite';
+      $provider_theme = $provider_theme === 'bootstrap_lite' || $provider_theme === 'bootstrap_lite_theme' ? '' : "-$provider_theme";
 
       foreach ($this->theme->getAncestry(TRUE) as $ancestor) {
         $overrides = $ancestor->getPath() . "/css/$version/overrides$provider_theme.min.css";
@@ -82,8 +82,8 @@ class LibraryInfo extends PluginBase implements AlterInterface {
     elseif ($extension === 'core') {
       // Replace core dialog/jQuery UI implementations with Bootstrap Modals.
       if ($this->theme->getSetting('modal_enabled')) {
-        $libraries['drupal.dialog']['override'] = 'bootstrap/drupal.dialog';
-        $libraries['drupal.dialog.ajax']['override'] = 'bootstrap/drupal.dialog.ajax';
+        $libraries['drupal.dialog']['override'] = 'bootstrap_lite/drupal.dialog';
+        $libraries['drupal.dialog.ajax']['override'] = 'bootstrap_lite/drupal.dialog.ajax';
       }
     }
   }

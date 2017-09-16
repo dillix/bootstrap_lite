@@ -1,14 +1,14 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Setting\JavaScript\Popovers\PopoverAnimation.
+ * Contains \Drupal\bootstrap_lite\Plugin\Setting\JavaScript\Popovers\PopoverAnimation.
  */
 
-namespace Drupal\bootstrap\Plugin\Setting\JavaScript\Popovers;
+namespace Drupal\bootstrap_lite\Plugin\Setting\JavaScript\Popovers;
 
-use Drupal\bootstrap\Annotation\BootstrapSetting;
-use Drupal\bootstrap\Plugin\Setting\SettingBase;
-use Drupal\bootstrap\Utility\Element;
+use Drupal\bootstrap_lite\Annotation\BootstrapSetting;
+use Drupal\bootstrap_lite\Plugin\Setting\SettingBase;
+use Drupal\bootstrap_lite\Utility\Element;
 use Drupal\Core\Annotation\Translation;
 use Drupal\Core\Form\FormStateInterface;
 

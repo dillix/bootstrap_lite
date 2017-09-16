@@ -1,12 +1,12 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\PluginBase.
+ * Contains \Drupal\bootstrap_lite\Plugin\PluginBase.
  */
 
-namespace Drupal\bootstrap\Plugin;
+namespace Drupal\bootstrap_lite\Plugin;
 
-use Drupal\bootstrap\Bootstrap;
+use Drupal\bootstrap_lite\BootstrapLite;
 
 /**
  * Base class for an update.
@@ -18,7 +18,7 @@ class PluginBase extends \Drupal\Core\Plugin\PluginBase {
   /**
    * The currently set theme object.
    *
-   * @var \Drupal\bootstrap\Theme
+   * @var \Drupal\bootstrap_lite\Theme
    */
   protected $theme;
 
@@ -27,7 +27,7 @@ class PluginBase extends \Drupal\Core\Plugin\PluginBase {
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition) {
     if (!isset($configuration['theme'])) {
-      $configuration['theme'] = Bootstrap::getTheme();
+      $configuration['theme'] = BootstrapLite::getTheme();
     }
     $this->theme = $configuration['theme'];
     parent::__construct($configuration, $plugin_id, $plugin_definition);

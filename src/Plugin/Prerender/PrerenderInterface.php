@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Prerender\PrerenderInterface.
+ * Contains \Drupal\bootstrap_lite\Plugin\Prerender\PrerenderInterface.
  */
 
-namespace Drupal\bootstrap\Plugin\Prerender;
+namespace Drupal\bootstrap_lite\Plugin\Prerender;
 
 /**
  * Defines the interface for an object oriented preprocess plugin.

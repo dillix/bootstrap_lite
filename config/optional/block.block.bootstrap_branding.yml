@@ -4,9 +4,9 @@ dependencies:
   module:
     - system
   theme:
-    - bootstrap
-id: bootstrap_branding
-theme: bootstrap
+    - bootstrap_lite
+id: bootstrap_lite_branding
+theme: bootstrap_lite
 region: navigation
 weight: 0
 provider: null

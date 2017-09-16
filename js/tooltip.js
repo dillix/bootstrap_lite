@@ -1,17 +1,17 @@
 /**
  * @file
- * Bootstrap Tooltips.
+ * Bootstrap Lite Tooltips.
  */
 
 var Drupal = Drupal || {};
 
-(function ($, Drupal, Bootstrap) {
+(function ($, Drupal, BootstrapLite) {
   "use strict";
 
   /**
-   * Extend the Bootstrap Tooltip plugin constructor class.
+   * Extend the Bootstrap Lite Tooltip plugin constructor class.
    */
-  Bootstrap.extendPlugin('tooltip', function (settings) {
+  BootstrapLite.extendPlugin('tooltip', function (settings) {
     return {
       DEFAULTS: {
         animation: !!settings.tooltip_animation,
@@ -26,11 +26,11 @@ var Drupal = Drupal || {};
   });
 
   /**
-   * Bootstrap Tooltips.
+   * Bootstrap Lite Tooltips.
    *
    * @todo This should really be properly delegated if selector option is set.
    */
-  Drupal.behaviors.bootstrapTooltips = {
+  Drupal.behaviors.bootstrapLiteTooltips = {
     attach: function (context) {
       var elements = $(context).find('[data-toggle="tooltip"]').toArray();
       for (var i = 0; i < elements.length; i++) {
@@ -45,4 +45,4 @@ var Drupal = Drupal || {};
     }
   };
 
-})(window.jQuery, window.Drupal, window.Drupal.bootstrap);
+})(window.jQuery, window.Drupal, window.Drupal.bootstrap_lite);

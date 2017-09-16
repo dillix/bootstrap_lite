@@ -1,9 +1,9 @@
 <?php
 
-namespace Drupal\bootstrap\Plugin\Prerender;
+namespace Drupal\bootstrap_lite\Plugin\Prerender;
 
-use Drupal\bootstrap\Annotation\BootstrapPrerender;
-use Drupal\bootstrap\Utility\Element;
+use Drupal\bootstrap_lite\Annotation\BootstrapPrerender;
+use Drupal\bootstrap_lite\Utility\Element;
 
 /**
  * Pre-render callback for the "captcha" element type.
@@ -12,7 +12,7 @@ use Drupal\bootstrap\Utility\Element;
  *
  * @BootstrapPrerender("captcha",
  *   action = @BootstrapConstant(
- *     "\Drupal\bootstrap\Bootstrap::CALLBACK_PREPEND"
+ *     "\Drupal\bootstrap_lite\BootstrapLite::CALLBACK_PREPEND"
  *   )
  * )
  */

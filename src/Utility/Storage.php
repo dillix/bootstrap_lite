@@ -1,12 +1,12 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Utility\Storage.
+ * Contains \Drupal\bootstrap_lite\Utility\Storage.
  */
 
-namespace Drupal\bootstrap\Utility;
+namespace Drupal\bootstrap_lite\Utility;
 
-use Drupal\bootstrap\Bootstrap;
+use Drupal\bootstrap_lite\BootstrapLite;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\KeyValueStore\MemoryStorage;
 
@@ -27,7 +27,7 @@ use Drupal\Core\KeyValueStore\MemoryStorage;
  *
  * @ingroup utility
  *
- * @see \Drupal\bootstrap\Utility\StorageItem
+ * @see \Drupal\bootstrap_lite\Utility\StorageItem
  */
 class Storage extends MemoryStorage implements \Iterator {
 
@@ -76,7 +76,7 @@ class Storage extends MemoryStorage implements \Iterator {
   /**
    * {@inheritdoc}
    */
-  public function __construct($cid, $bin = 'default', $expire = Cache::PERMANENT, $tags = [Bootstrap::CACHE_TAG]) {
+  public function __construct($cid, $bin = 'default', $expire = Cache::PERMANENT, $tags = [BootstrapLite::CACHE_TAG]) {
     $this->cid = "theme_registry:storage:$cid";
     $this->bin = $bin;
     $this->changed = FALSE;
@@ -197,7 +197,7 @@ class Storage extends MemoryStorage implements \Iterator {
    *
    * @internal
    *
-   * @see \Drupal\bootstrap\Utility\Storage::__construct
+   * @see \Drupal\bootstrap_lite\Utility\Storage::__construct
    */
   public function save() {
     if ($this->changed) {

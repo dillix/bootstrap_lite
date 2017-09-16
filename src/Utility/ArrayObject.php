@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Utility\ArrayObject.
+ * Contains \Drupal\bootstrap_lite\Utility\ArrayObject.
  */
 
-namespace Drupal\bootstrap\Utility;
+namespace Drupal\bootstrap_lite\Utility;
 
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Cache\RefinableCacheableDependencyInterface;
@@ -188,7 +188,7 @@ class ArrayObject implements \IteratorAggregate, \ArrayAccess, \Serializable, \C
    */
   public function exchangeArray($data) {
     if (!is_array($data) && is_object($data) && !($data instanceof ArrayObject)) {
-      throw new \InvalidArgumentException('Passed variable is not an array or an instance of \Drupal\bootstrap\Utility\ArrayObject.');
+      throw new \InvalidArgumentException('Passed variable is not an array or an instance of \Drupal\bootstrap_lite\Utility\ArrayObject.');
     }
     if (is_object($data) && $data instanceof ArrayObject) {
       $data = $data->getArrayCopy();

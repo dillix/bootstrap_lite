@@ -1,17 +1,17 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap.
+ * Contains \Drupal\bootstrap_lite.
  */
 
-namespace Drupal\bootstrap;
+namespace Drupal\bootstrap_lite;
 
-use Drupal\bootstrap\Plugin\ProviderManager;
-use Drupal\bootstrap\Plugin\SettingManager;
-use Drupal\bootstrap\Plugin\UpdateManager;
-use Drupal\bootstrap\Utility\Crypt;
-use Drupal\bootstrap\Utility\Storage;
-use Drupal\bootstrap\Utility\StorageItem;
+use Drupal\bootstrap_lite\Plugin\ProviderManager;
+use Drupal\bootstrap_lite\Plugin\SettingManager;
+use Drupal\bootstrap_lite\Plugin\UpdateManager;
+use Drupal\bootstrap_lite\Utility\Crypt;
+use Drupal\bootstrap_lite\Utility\Storage;
+use Drupal\bootstrap_lite\Utility\StorageItem;
 use Drupal\Core\Extension\Extension;
 use Drupal\Core\Extension\ThemeHandlerInterface;
 use Drupal\Core\Site\Settings;
@@ -27,10 +27,10 @@ class Theme {
   /**
    * Ignores the following directories during file scans of a theme.
    *
-   * @see \Drupal\bootstrap\Theme::IGNORE_ASSETS
-   * @see \Drupal\bootstrap\Theme::IGNORE_CORE
-   * @see \Drupal\bootstrap\Theme::IGNORE_DOCS
-   * @see \Drupal\bootstrap\Theme::IGNORE_DEV
+   * @see \Drupal\bootstrap_lite\Theme::IGNORE_ASSETS
+   * @see \Drupal\bootstrap_lite\Theme::IGNORE_CORE
+   * @see \Drupal\bootstrap_lite\Theme::IGNORE_DOCS
+   * @see \Drupal\bootstrap_lite\Theme::IGNORE_DEV
    */
   const IGNORE_DEFAULT = -1;
 
@@ -60,11 +60,11 @@ class Theme {
   const IGNORE_TEMPLATES = 0x16;
 
   /**
-   * Flag indicating if the theme is Bootstrap based.
+   * Flag indicating if the theme is Bootstrap Lite based.
    *
    * @var bool
    */
-  protected $bootstrap;
+  protected $bootstrap_lite;
 
   /**
    * Flag indicating if the theme is in "development" mode.
@@ -137,7 +137,7 @@ class Theme {
   /**
    * The update plugin manager.
    *
-   * @var \Drupal\bootstrap\Plugin\UpdateManager
+   * @var \Drupal\bootstrap_lite\Plugin\UpdateManager
    */
   protected $updateManager;
 
@@ -183,9 +183,9 @@ class Theme {
     $this->themeHandler = $theme_handler;
     $this->themes = $this->themeHandler->listInfo();
     $this->info = isset($this->themes[$this->name]->info) ? $this->themes[$this->name]->info : [];
-    $this->bootstrap = $this->subthemeOf('bootstrap');
+    $this->bootstrap_lite = $this->subthemeOf('bootstrap_lite');
 
-    // Only install the theme if it's Bootstrap based and there are no schemas
+    // Only install the theme if it's Bootstrap Lite based and there are no schemas
     // currently set.
     if ($this->isBootstrap() && !$this->getSetting('schemas')) {
       try {
@@ -210,7 +210,7 @@ class Theme {
    * Unserialize method.
    */
   public function __wakeup() {
-    $theme_handler = Bootstrap::getThemeHandler();
+    $theme_handler = BootstrapLite::getThemeHandler();
     $theme = $theme_handler->getTheme($this->name);
     $this->__construct($theme, $theme_handler);
   }
@@ -232,7 +232,7 @@ class Theme {
    *   The theme settings for drupalSettings.
    */
   public function drupalSettings() {
-    // Immediately return if theme is not Bootstrap based.
+    // Immediately return if theme is not Bootstrap Lite based.
     if (!$this->isBootstrap()) {
       return [];
     }
@@ -275,11 +275,11 @@ class Theme {
    *   - ignore_flags: (int|FALSE) A bitmask to indicate which directories (if
    *     any) should be skipped during the scan. Must also not contain a
    *     "nomask" property in $options. Value can be any of the following:
-   *     - \Drupal\bootstrap::IGNORE_CORE
-   *     - \Drupal\bootstrap::IGNORE_ASSETS
-   *     - \Drupal\bootstrap::IGNORE_DOCS
-   *     - \Drupal\bootstrap::IGNORE_DEV
-   *     - \Drupal\bootstrap::IGNORE_THEME
+   *     - \Drupal\bootstrap_lite::IGNORE_CORE
+   *     - \Drupal\bootstrap_lite::IGNORE_ASSETS
+   *     - \Drupal\bootstrap_lite::IGNORE_DOCS
+   *     - \Drupal\bootstrap_lite::IGNORE_DEV
+   *     - \Drupal\bootstrap_lite::IGNORE_THEME
    *     Pass FALSE to iterate over all directories in $dir.
    *
    * @return array
@@ -348,14 +348,14 @@ class Theme {
    *   Whether or not to return the array of themes in reverse order, where the
    *   active theme is the first entry.
    *
-   * @return \Drupal\bootstrap\Theme[]
-   *   An associative array of \Drupal\bootstrap objects (theme), keyed
+   * @return \Drupal\bootstrap_lite\Theme[]
+   *   An associative array of \Drupal\bootstrap_lite objects (theme), keyed
    *   by machine name.
    */
   public function getAncestry($reverse = FALSE) {
     $ancestry = $this->themeHandler->getBaseThemes($this->themes, $this->getName());
     foreach (array_keys($ancestry) as $name) {
-      $ancestry[$name] = Bootstrap::getTheme($name, $this->themeHandler);
+      $ancestry[$name] = BootstrapLite::getTheme($name, $this->themeHandler);
     }
     $ancestry[$this->getName()] = $this;
     return $reverse ? array_reverse($ancestry) : $ancestry;
@@ -372,7 +372,7 @@ class Theme {
    * @param mixed $default
    *   Optional. The default value to use if $name does not exist.
    *
-   * @return mixed|\Drupal\bootstrap\Utility\StorageItem
+   * @return mixed|\Drupal\bootstrap_lite\Utility\StorageItem
    *   The cached value for $name.
    */
   public function getCache($name, array $context = [], $default = []) {
@@ -437,13 +437,13 @@ class Theme {
   /**
    * Retrieves pending updates for the theme.
    *
-   * @return \Drupal\bootstrap\Plugin\Update\UpdateInterface[]
+   * @return \Drupal\bootstrap_lite\Plugin\Update\UpdateInterface[]
    *   An array of update plugin objects.
    */
   public function getPendingUpdates() {
     $pending = [];
 
-    // Only continue if the theme is Bootstrap based.
+    // Only continue if the theme is Bootstrap Lite based.
     if ($this->isBootstrap()) {
       $current_theme = $this->getName();
       $schemas = $this->getSetting('schemas', []);
@@ -471,11 +471,11 @@ class Theme {
    * @param string $provider
    *   A CDN provider name. Defaults to the provider set in the theme settings.
    *
-   * @return \Drupal\bootstrap\Plugin\Provider\ProviderInterface|FALSE
+   * @return \Drupal\bootstrap_lite\Plugin\Provider\ProviderInterface|FALSE
    *   A provider instance or FALSE if there is no provider.
    */
   public function getProvider($provider = NULL) {
-    // Only continue if the theme is Bootstrap based.
+    // Only continue if the theme is Bootstrap Lite based.
     if ($this->isBootstrap()) {
       $provider = $provider ?: $this->getSetting('cdn_provider');
       $provider_manager = new ProviderManager($this);
@@ -489,13 +489,13 @@ class Theme {
   /**
    * Retrieves all CDN providers.
    *
-   * @return \Drupal\bootstrap\Plugin\Provider\ProviderInterface[]
+   * @return \Drupal\bootstrap_lite\Plugin\Provider\ProviderInterface[]
    *   All provider instances.
    */
   public function getProviders() {
     $providers = [];
 
-    // Only continue if the theme is Bootstrap based.
+    // Only continue if the theme is Bootstrap Lite based.
     if ($this->isBootstrap()) {
       $provider_manager = new ProviderManager($this);
       foreach (array_keys($provider_manager->getDefinitions()) as $provider) {
@@ -538,7 +538,7 @@ class Theme {
    * @param string $name
    *   Optional. The name of a specific setting plugin instance to return.
    *
-   * @return \Drupal\bootstrap\Plugin\Setting\SettingInterface|\Drupal\bootstrap\Plugin\Setting\SettingInterface[]|NULL
+   * @return \Drupal\bootstrap_lite\Plugin\Setting\SettingInterface|\Drupal\bootstrap_lite\Plugin\Setting\SettingInterface[]|NULL
    *   If $name was provided, it will either return a specific setting plugin
    *   instance or NULL if not set. If $name was omitted it will return an array
    *   of setting plugin instances, keyed by their name.
@@ -546,7 +546,7 @@ class Theme {
   public function getSettingPlugin($name = NULL) {
     $settings = [];
 
-    // Only continue if the theme is Bootstrap based.
+    // Only continue if the theme is Bootstrap Lite based.
     if ($this->isBootstrap()) {
       $setting_manager = new SettingManager($this);
       foreach (array_keys($setting_manager->getDefinitions()) as $setting) {
@@ -566,20 +566,20 @@ class Theme {
   /**
    * Retrieves the theme's setting plugin instances.
    *
-   * @return \Drupal\bootstrap\Plugin\Setting\SettingInterface[]
+   * @return \Drupal\bootstrap_lite\Plugin\Setting\SettingInterface[]
    *   An associative array of setting objects, keyed by their name.
    *
-   * @deprecated Will be removed in a future release. Use \Drupal\bootstrap\Theme::getSettingPlugin instead.
+   * @deprecated Will be removed in a future release. Use \Drupal\bootstrap_lite\Theme::getSettingPlugin instead.
    */
   public function getSettingPlugins() {
-    Bootstrap::deprecated();
+    BootstrapLite::deprecated();
     return $this->getSettingPlugin();
   }
 
   /**
    * Retrieves the theme's cache from the database.
    *
-   * @return \Drupal\bootstrap\Utility\Storage
+   * @return \Drupal\bootstrap_lite\Utility\Storage
    *   The cache object.
    */
   public function getStorage() {
@@ -604,11 +604,11 @@ class Theme {
   /**
    * Retrieves the update plugin manager for the theme.
    *
-   * @return \Drupal\bootstrap\Plugin\UpdateManager|FALSE
-   *   The Update plugin manager or FALSE if theme is not Bootstrap based.
+   * @return \Drupal\bootstrap_lite\Plugin\UpdateManager|FALSE
+   *   The Update plugin manager or FALSE if theme is not Bootstrap Lite based.
    */
   public function getUpdateManager() {
-    // Immediately return if theme is not Bootstrap based.
+    // Immediately return if theme is not Bootstrap Lite based.
     if (!$this->isBootstrap()) {
       return FALSE;
     }
@@ -665,10 +665,10 @@ class Theme {
   }
 
   /**
-   * Installs a Bootstrap based theme.
+   * Installs a Bootstrap Lite based theme.
    */
   protected function install() {
-    // Immediately return if theme is not Bootstrap based.
+    // Immediately return if theme is not Bootstrap Lite based.
     if (!$this->isBootstrap()) {
       return;
     }
@@ -681,13 +681,13 @@ class Theme {
   }
 
   /**
-   * Indicates whether the theme is bootstrap based.
+   * Indicates whether the theme is Bootstrap Lite based.
    *
    * @return bool
    *   TRUE or FALSE
    */
   public function isBootstrap() {
-    return $this->bootstrap;
+    return $this->bootstrap_lite;
   }
 
   /**
@@ -696,7 +696,7 @@ class Theme {
    * @return bool
    *   TRUE or FALSE
    *
-   * @see \Drupal\bootstrap\Theme::dev
+   * @see \Drupal\bootstrap_lite\Theme::dev
    */
   public function isDev() {
     return $this->dev;
@@ -707,7 +707,7 @@ class Theme {
    *
    * @return string
    *
-   * @see \Drupal\bootstrap\Theme::livereload
+   * @see \Drupal\bootstrap_lite\Theme::livereload
    */
   public function livereloadUrl() {
     return $this->livereload;
@@ -738,7 +738,7 @@ class Theme {
   /**
    * Retrieves the theme settings instance.
    *
-   * @return \Drupal\bootstrap\ThemeSettings
+   * @return \Drupal\bootstrap_lite\ThemeSettings
    *   All settings.
    */
   public function settings() {
@@ -753,7 +753,7 @@ class Theme {
   /**
    * Determines whether or not a theme is a sub-theme of another.
    *
-   * @param string|\Drupal\bootstrap\Theme $theme
+   * @param string|\Drupal\bootstrap_lite\Theme $theme
    *   The name or theme Extension object to check.
    *
    * @return bool

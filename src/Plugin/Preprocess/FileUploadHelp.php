@@ -1,15 +1,15 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Preprocess\FileUploadHelp.
+ * Contains \Drupal\bootstrap_lite\Plugin\Preprocess\FileUploadHelp.
  */
 
-namespace Drupal\bootstrap\Plugin\Preprocess;
+namespace Drupal\bootstrap_lite\Plugin\Preprocess;
 
-use Drupal\bootstrap\Annotation\BootstrapPreprocess;
-use Drupal\bootstrap\Bootstrap;
-use Drupal\bootstrap\Utility\Element;
-use Drupal\bootstrap\Utility\Variables;
+use Drupal\bootstrap_lite\Annotation\BootstrapPreprocess;
+use Drupal\bootstrap_lite\BootstrapLite;
+use Drupal\bootstrap_lite\Utility\Element;
+use Drupal\bootstrap_lite\Utility\Variables;
 use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Field\FieldFilteredMarkup;
@@ -83,7 +83,7 @@ class FileUploadHelp extends PreprocessBase implements PreprocessInterface {
         '#type' => 'link',
         '#title' => t('Upload requirements'),
         '#url' => Url::fromUserInput("#$id"),
-        '#icon' => Bootstrap::glyphicon('question-sign'),
+        '#icon' => BootstrapLite::glyphicon('question-sign'),
         '#attributes' => [
           'class' => ['icon-before'],
           'data-toggle' => 'popover',

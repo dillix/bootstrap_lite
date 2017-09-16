@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Preprocess\PreprocessInterface.
+ * Contains \Drupal\bootstrap_lite\Plugin\Preprocess\PreprocessInterface.
  */
 
-namespace Drupal\bootstrap\Plugin\Preprocess;
+namespace Drupal\bootstrap_lite\Plugin\Preprocess;
 
 /**
  * Defines the interface for an object oriented preprocess plugin.

@@ -1,16 +1,16 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Alter\ElementInfo.
+ * Contains \Drupal\bootstrap_lite\Plugin\Alter\ElementInfo.
  */
 
-namespace Drupal\bootstrap\Plugin\Alter;
+namespace Drupal\bootstrap_lite\Plugin\Alter;
 
-use Drupal\bootstrap\Annotation\BootstrapAlter;
-use Drupal\bootstrap\Bootstrap;
-use Drupal\bootstrap\Plugin\PluginBase;
-use Drupal\bootstrap\Plugin\PrerenderManager;
-use Drupal\bootstrap\Plugin\ProcessManager;
+use Drupal\bootstrap_lite\Annotation\BootstrapAlter;
+use Drupal\bootstrap_lite\BootstrapLite;
+use Drupal\bootstrap_lite\Plugin\PluginBase;
+use Drupal\bootstrap_lite\Plugin\PrerenderManager;
+use Drupal\bootstrap_lite\Plugin\ProcessManager;
 
 /**
  * Implements hook_element_info_alter().
@@ -28,7 +28,7 @@ class ElementInfo extends PluginBase implements AlterInterface {
     // Sort the types for easier debugging.
     ksort($types, SORT_NATURAL);
 
-    $extra_variables = Bootstrap::extraVariables();
+    $extra_variables = BootstrapLite::extraVariables();
     $process_manager = new ProcessManager($this->theme);
     $pre_render_manager = new PrerenderManager($this->theme);
 
@@ -72,13 +72,13 @@ class ElementInfo extends PluginBase implements AlterInterface {
         $element['#process'][] = [get_class($process_manager), 'process'];
         $definitions = $process_manager->getDefinitionsLike($regex);
         foreach ($definitions as $definition) {
-          Bootstrap::addCallback($element['#process'], [$definition['class'], 'process'], $definition['replace'], $definition['action']);
+          BootstrapLite::addCallback($element['#process'], [$definition['class'], 'process'], $definition['replace'], $definition['action']);
         }
 
         // Add necessary #pre_render callbacks.
         $element['#pre_render'][] = [get_class($pre_render_manager), 'preRender'];
         foreach ($pre_render_manager->getDefinitionsLike($regex) as $definition) {
-          Bootstrap::addCallback($element['#pre_render'], [$definition['class'], 'preRender'], $definition['replace'], $definition['action']);
+          BootstrapLite::addCallback($element['#pre_render'], [$definition['class'], 'preRender'], $definition['replace'], $definition['action']);
         }
       }
     }

@@ -1,14 +1,14 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Setting\Components\Breadcrumbs\BreadcrumbTitle.
+ * Contains \Drupal\bootstrap_lite\Plugin\Setting\Components\Breadcrumbs\BreadcrumbTitle.
  */
 
-namespace Drupal\bootstrap\Plugin\Setting\Components\Breadcrumbs;
+namespace Drupal\bootstrap_lite\Plugin\Setting\Components\Breadcrumbs;
 
-use Drupal\bootstrap\Annotation\BootstrapSetting;
-use Drupal\bootstrap\Plugin\Setting\SettingBase;
-use Drupal\bootstrap\Utility\Element;
+use Drupal\bootstrap_lite\Annotation\BootstrapSetting;
+use Drupal\bootstrap_lite\Plugin\Setting\SettingBase;
+use Drupal\bootstrap_lite\Utility\Element;
 use Drupal\Core\Annotation\Translation;
 use Drupal\Core\Form\FormStateInterface;
 

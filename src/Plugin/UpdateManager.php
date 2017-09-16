@@ -1,25 +1,25 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\UpdateManager.
+ * Contains \Drupal\bootstrap_lite\Plugin\UpdateManager.
  */
 
-namespace Drupal\bootstrap\Plugin;
+namespace Drupal\bootstrap_lite\Plugin;
 
-use Drupal\bootstrap\Theme;
+use Drupal\bootstrap_lite\Theme;
 use Drupal\Component\Utility\SortArray;
 
 /**
- * Manages discovery and instantiation of Bootstrap updates.
+ * Manages discovery and instantiation of Bootstrap Lite updates.
  *
  * @ingroup plugins_update
  */
 class UpdateManager extends PluginManager {
 
   /**
-   * Constructs a new \Drupal\bootstrap\Plugin\UpdateManager object.
+   * Constructs a new \Drupal\bootstrap_lite\Plugin\UpdateManager object.
    *
-   * @param \Drupal\bootstrap\Theme $theme
+   * @param \Drupal\bootstrap_lite\Theme $theme
    *   The theme to use for discovery.
    */
   public function __construct(Theme $theme) {
@@ -31,8 +31,8 @@ class UpdateManager extends PluginManager {
 
     $this->theme = $theme;
     $this->subdir = 'Plugin/Update';
-    $this->pluginDefinitionAnnotationName = 'Drupal\bootstrap\Annotation\BootstrapUpdate';
-    $this->pluginInterface = 'Drupal\bootstrap\Plugin\Update\UpdateInterface';
+    $this->pluginDefinitionAnnotationName = 'Drupal\bootstrap_lite\Annotation\BootstrapUpdate';
+    $this->pluginInterface = 'Drupal\bootstrap_lite\Plugin\Update\UpdateInterface';
     $this->themeHandler = \Drupal::service('theme_handler');
     $this->themeManager = \Drupal::service('theme.manager');
     $this->setCacheBackend(\Drupal::cache('discovery'), 'theme:' . $theme->getName() . ':update', $this->getCacheTags());
@@ -75,7 +75,7 @@ class UpdateManager extends PluginManager {
    *   Toggle determining whether or not to include private updates, intended
    *   for only the theme that created it. Defaults to: FALSE.
    *
-   * @return \Drupal\bootstrap\Plugin\Update\UpdateInterface[]
+   * @return \Drupal\bootstrap_lite\Plugin\Update\UpdateInterface[]
    *   An associative array containing update objects, keyed by their version.
    */
   public function getPendingUpdates($private = FALSE) {
@@ -96,7 +96,7 @@ class UpdateManager extends PluginManager {
    *   Toggle determining whether or not to include private updates, intended
    *   for only the theme that created it. Defaults to: FALSE.
    *
-   * @return \Drupal\bootstrap\Plugin\Update\UpdateInterface[]
+   * @return \Drupal\bootstrap_lite\Plugin\Update\UpdateInterface[]
    *   An associative array containing update objects, keyed by their version.
    */
   public function getUpdates($private = FALSE) {
@@ -144,7 +144,7 @@ class UpdateManager extends PluginManager {
    *
    * @deprecated 8.x-3.0-rc2, will be removed before 8.x-3.0 is released.
    *
-   * @see \Drupal\bootstrap\Plugin\UpdateManager::getLatestSchema
+   * @see \Drupal\bootstrap_lite\Plugin\UpdateManager::getLatestSchema
    */
   public function getLatestVersion() {
     return $this->getLatestSchema();

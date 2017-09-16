@@ -6,9 +6,9 @@ dependencies:
   module:
     - system
   theme:
-    - bootstrap
-id: bootstrap_tools
-theme: bootstrap
+    - bootstrap_lite
+id: bootstrap_lite_tools
+theme: bootstrap_lite
 region: sidebar_second
 weight: 0
 provider: null

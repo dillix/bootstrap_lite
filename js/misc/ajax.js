@@ -35,7 +35,7 @@
       $glyphicon.addClass('glyphicon-spin');
 
       // Add any message as a tooltip to the glyphicon.
-      if (drupalSettings.bootstrap.tooltip_enabled) {
+      if (drupalSettings.bootstrap_lite.tooltip_enabled) {
         $glyphicon
           .removeAttr('data-toggle')
           .removeAttr('data-original-title')
@@ -66,7 +66,7 @@
     var $glyphicon = this.findGlyphicon(element);
     if ($glyphicon[0]) {
       $glyphicon.removeClass('glyphicon-spin');
-      if (drupalSettings.bootstrap.tooltip_enabled) {
+      if (drupalSettings.bootstrap_lite.tooltip_enabled) {
         $glyphicon
           .removeAttr('data-toggle')
           .removeAttr('data-original-title')

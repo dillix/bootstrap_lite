@@ -1,14 +1,14 @@
 /**
  * @file
- * Bootstrap Modals.
+ * Bootstrap Lite Modals.
  */
-(function ($, Drupal, Bootstrap) {
+(function ($, Drupal, BootstrapLite) {
   "use strict";
 
   /**
-   * Extend the Bootstrap Modal plugin constructor class.
+   * Extend the Bootstrap Lite Modal plugin constructor class.
    */
-  Bootstrap.extendPlugin('modal', function (settings) {
+  BootstrapLite.extendPlugin('modal', function (settings) {
     return {
       DEFAULTS: {
         animation: !!settings.modal_animation,
@@ -21,11 +21,11 @@
   });
 
   /**
-   * Replace the Bootstrap Modal jQuery plugin definition.
+   * Replace the Bootstrap Lite Modal jQuery plugin definition.
    *
    * Replacing this is needed so that the "option" method can return values.
    */
-  Bootstrap.replacePlugin('modal', function () {
+  BootstrapLite.replacePlugin('modal', function () {
     var Modal = this;
 
     // Extract the arguments.
@@ -55,7 +55,7 @@
    */
   $.extend(Drupal.theme, /** @lend Drupal.theme */ {
     /**
-     * Theme function for a Bootstrap Modal.
+     * Theme function for a Bootstrap Lite Modal.
      *
      * @param {object}[variables]
      *   An object with the following keys:
@@ -64,8 +64,8 @@
      * @return {string}
      *   The HTML for the modal.
      */
-    bootstrapModal: function (variables) {
-      var settings = drupalSettings.bootstrap || {};
+    bootstrapLiteModal: function (variables) {
+      var settings = drupalSettings.bootstrap_lite || {};
       var defaults = {
         body: '',
         closeButton: true,
@@ -100,13 +100,13 @@
       output += '<div class="modal-content">';
 
       // Build the header wrapper and title.
-      output += Drupal.theme.bootstrapModalHeader(variables.title, variables.closeButton);
+      output += Drupal.theme.bootstrapLiteModalHeader(variables.title, variables.closeButton);
 
       // Build the body.
-      output += Drupal.theme.bootstrapModalBody(variables.id + '--body', variables.body, variables.description);
+      output += Drupal.theme.bootstrapLiteModalBody(variables.id + '--body', variables.body, variables.description);
 
       // Build the footer.
-      output += Drupal.theme.bootstrapModalFooter(variables.footer);
+      output += Drupal.theme.bootstrapLiteModalFooter(variables.footer);
 
       // Close the modal-content wrapper.
       output += '</div>';
@@ -122,7 +122,7 @@
     },
 
     /**
-     * Theme function for a Bootstrap Modal body markup.
+     * Theme function for a Bootstrap Lite Modal body markup.
      *
      * @param {string} id
      *   A unique ID for the modal body div.
@@ -142,7 +142,7 @@
      * @return {string}
      *   The HTML for the modal close button.
      */
-    bootstrapModalBody: function (id, body, description) {
+    bootstrapLiteModalBody: function (id, body, description) {
       var output = '';
       output += '<div id="' + id + '" class="modal-body">';
       if (!description || !$.isPlainObject(description)) {
@@ -166,17 +166,17 @@
     },
 
     /**
-     * Theme function for a Bootstrap Modal close button.
+     * Theme function for a Bootstrap Lite Modal close button.
      *
      * @return {string}
      *   The HTML for the modal close button.
      */
-    bootstrapModalClose: function () {
+    bootstrapLiteModalClose: function () {
       return '<button type="button" class="close" data-dismiss="modal" aria-label="' + Drupal.t('Close') + '"><span aria-hidden="true">&times;</span></button>';
     },
 
     /**
-     * Theme function for a Bootstrap Modal footer.
+     * Theme function for a Bootstrap Lite Modal footer.
      *
      * @param {string} [footer]
      *   The HTML markup to place in the footer.
@@ -186,12 +186,12 @@
      * @return {string}
      *   The HTML for the modal footer.
      */
-    bootstrapModalFooter: function (footer, force) {
+    bootstrapLiteModalFooter: function (footer, force) {
       return footer || force ? '<div class="modal-footer">' + (footer || '') + '</div>' : '';
     },
 
     /**
-     * Theme function for a Bootstrap Modal header.
+     * Theme function for a Bootstrap Lite Modal header.
      *
      * @param {string} [title]
      *   The title for the header.
@@ -201,13 +201,13 @@
      * @return {string}
      *   The HTML for the modal header.
      */
-    bootstrapModalHeader: function (title, closeButton) {
+    bootstrapLiteModalHeader: function (title, closeButton) {
       var output = '';
       if (title) {
         closeButton = closeButton !== void(0) ? closeButton : true;
         output += '<div class="modal-header">';
         if (closeButton) {
-          output += Drupal.theme.bootstrapModalClose();
+          output += Drupal.theme.bootstrapLiteModalClose();
         }
         output += '<h4 class="modal-title">' + Drupal.checkPlain(title) + '</h4>';
         output += '</div>';
@@ -216,4 +216,4 @@
     }
   })
 
-})(window.jQuery, window.Drupal, window.Drupal.bootstrap);
+})(window.jQuery, window.Drupal, window.Drupal.bootstrap_lite);

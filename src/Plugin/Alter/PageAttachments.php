@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Alter\PageAttachments.
+ * Contains \Drupal\bootstrap_lite\Plugin\Alter\PageAttachments.
  */
 
-namespace Drupal\bootstrap\Plugin\Alter;
+namespace Drupal\bootstrap_lite\Plugin\Alter;
 
-use Drupal\bootstrap\Annotation\BootstrapAlter;
-use Drupal\bootstrap\Plugin\PluginBase;
+use Drupal\bootstrap_lite\Annotation\BootstrapAlter;
+use Drupal\bootstrap_lite\Plugin\PluginBase;
 
 /**
  * Implements hook_page_attachments_alter().
@@ -23,15 +23,15 @@ class PageAttachments extends PluginBase implements AlterInterface {
    */
   public function alter(&$attachments, &$context1 = NULL, &$context2 = NULL) {
     if ($this->theme->livereloadUrl()) {
-      $attachments['#attached']['library'][] = 'bootstrap/livereload';
+      $attachments['#attached']['library'][] = 'bootstrap_lite/livereload';
     }
     if ($this->theme->getSetting('popover_enabled')) {
-      $attachments['#attached']['library'][] = 'bootstrap/popover';
+      $attachments['#attached']['library'][] = 'bootstrap_lite/popover';
     }
     if ($this->theme->getSetting('tooltip_enabled')) {
-      $attachments['#attached']['library'][] = 'bootstrap/tooltip';
+      $attachments['#attached']['library'][] = 'bootstrap_lite/tooltip';
     }
-    $attachments['#attached']['drupalSettings']['bootstrap'] = $this->theme->drupalSettings();
+    $attachments['#attached']['drupalSettings']['bootstrap_lite'] = $this->theme->drupalSettings();
   }
 
 }

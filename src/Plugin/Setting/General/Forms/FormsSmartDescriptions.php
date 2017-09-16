@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Setting\General\Forms\FormsSmartDescriptions.
+ * Contains \Drupal\bootstrap_lite\Plugin\Setting\General\Forms\FormsSmartDescriptions.
  */
 
-namespace Drupal\bootstrap\Plugin\Setting\General\Forms;
+namespace Drupal\bootstrap_lite\Plugin\Setting\General\Forms;
 
-use Drupal\bootstrap\Annotation\BootstrapSetting;
-use Drupal\bootstrap\Plugin\Setting\SettingBase;
+use Drupal\bootstrap_lite\Annotation\BootstrapSetting;
+use Drupal\bootstrap_lite\Plugin\Setting\SettingBase;
 use Drupal\Core\Annotation\Translation;
 
 /**

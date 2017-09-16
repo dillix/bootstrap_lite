@@ -1,12 +1,12 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Utility\Unicode.
+ * Contains \Drupal\bootstrap_lite\Utility\Unicode.
  */
 
-namespace Drupal\bootstrap\Utility;
+namespace Drupal\bootstrap_lite\Utility;
 
-use Drupal\bootstrap\Bootstrap;
+use Drupal\bootstrap_lite\BootstrapLite;
 use Drupal\Component\Utility\Xss;
 
 /**
@@ -30,7 +30,7 @@ class Unicode extends \Drupal\Component\Utility\Unicode {
    *   The extracted hook name.
    */
   public static function extractHook($string, $suffix = NULL, $prefix = NULL) {
-    $regex = '^(' . implode('|', array_keys(Bootstrap::getTheme()->getAncestry())) . ')';
+    $regex = '^(' . implode('|', array_keys(BootstrapLite::getTheme()->getAncestry())) . ')';
     $regex .= $prefix ? '_' . $prefix : '';
     $regex .= $suffix ? '_|_' . $suffix . '$' : '';
     return preg_replace("/$regex/", '', $string);
@@ -47,7 +47,7 @@ class Unicode extends \Drupal\Component\Utility\Unicode {
    * @return string
    *   The converted callback as a string or an array if $array is specified.
    *
-   * @see \Drupal\bootstrap\Bootstrap::addCallback()
+   * @see \Drupal\bootstrap_lite\BootstrapLite::addCallback()
    */
   public static function convertCallback($callback, $array = FALSE) {
     if (is_array($callback)) {

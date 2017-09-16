@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Provider\ProviderBase.
+ * Contains \Drupal\bootstrap_lite\Plugin\Provider\ProviderBase.
  */
 
-namespace Drupal\bootstrap\Plugin\Provider;
+namespace Drupal\bootstrap_lite\Plugin\Provider;
 
-use Drupal\bootstrap\Plugin\PluginBase;
-use Drupal\bootstrap\Plugin\ProviderManager;
+use Drupal\bootstrap_lite\Plugin\PluginBase;
+use Drupal\bootstrap_lite\Plugin\ProviderManager;
 use Drupal\Component\Serialization\Json;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;

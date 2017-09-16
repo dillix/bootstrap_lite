@@ -1,6 +1,6 @@
 /**
  * @file
- * Theme hooks for the Drupal Bootstrap base theme.
+ * Theme hooks for the Drupal Bootstrap Lite base theme.
  */
 (function ($, Drupal) {
 

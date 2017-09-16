@@ -4,10 +4,10 @@
  * This contains deprecated functions that will be removed in a future release.
  */
 
-use Drupal\bootstrap\Bootstrap;
-use Drupal\bootstrap\Plugin\ProviderManager;
-use Drupal\bootstrap\Utility\Element;
-use Drupal\bootstrap\Utility\Unicode;
+use Drupal\bootstrap_lite\BootstrapLite;
+use Drupal\bootstrap_lite\Plugin\ProviderManager;
+use Drupal\bootstrap_lite\Utility\Element;
+use Drupal\bootstrap_lite\Utility\Unicode;
 use Drupal\Component\Utility\NestedArray;
 
 /**
@@ -17,16 +17,16 @@ use Drupal\Component\Utility\NestedArray;
  *
  * @code
  *   // Before.
- *   echo BOOTSTRAP_CDN_PROVIDER_PATH;
+ *   echo BOOTSTRAP_LITE_CDN_PROVIDER_PATH;
  *
  *   // After.
- *   use Drupal\bootstrap\Plugin\ProviderManager;
+ *   use Drupal\bootstrap_lite\Plugin\ProviderManager;
  *   echo ProviderManager::FILE_PATH;
  * @endcode
  *
- * @see \Drupal\bootstrap\Plugin\ProviderManager::FILE_PATH
+ * @see \Drupal\bootstrap_lite\Plugin\ProviderManager::FILE_PATH
  */
-define('BOOTSTRAP_CDN_PROVIDER_PATH', ProviderManager::FILE_PATH);
+define('BOOTSTRAP_LITE_CDN_PROVIDER_PATH', ProviderManager::FILE_PATH);
 
 /**
  * The current supported Bootstrap framework major version number.
@@ -35,16 +35,16 @@ define('BOOTSTRAP_CDN_PROVIDER_PATH', ProviderManager::FILE_PATH);
  *
  * @code
  *   // Before.
- *   echo BOOTSTRAP_VERSION_MAJOR;
+ *   echo BOOTSTRAP_LITE_VERSION_MAJOR;
  *
  *   // After.
- *   use Drupal\bootstrap\Bootstrap;
- *   echo substr(Bootstrap::FRAMEWORK_VERSION, 0, 1);
+ *   use Drupal\bootstrap_lite\BootstrapLite;
+ *   echo substr(BootstrapLite::FRAMEWORK_VERSION, 0, 1);
  * @endcode
  *
- * @see \Drupal\bootstrap\Bootstrap::FRAMEWORK_VERSION
+ * @see \Drupal\bootstrap_lite\BootstrapLite::FRAMEWORK_VERSION
  */
-define('BOOTSTRAP_VERSION_MAJOR', substr(Bootstrap::FRAMEWORK_VERSION, 0, 1));
+define('BOOTSTRAP_LITE_VERSION_MAJOR', substr(BootstrapLite::FRAMEWORK_VERSION, 0, 1));
 
 /**
  * The current supported Bootstrap framework minor version number.
@@ -53,16 +53,16 @@ define('BOOTSTRAP_VERSION_MAJOR', substr(Bootstrap::FRAMEWORK_VERSION, 0, 1));
  *
  * @code
  *   // Before.
- *   echo BOOTSTRAP_VERSION_MINOR;
+ *   echo BOOTSTRAP_LITE_VERSION_MINOR;
  *
  *   // After.
- *   use Drupal\bootstrap\Bootstrap;
- *   echo substr(Bootstrap::FRAMEWORK_VERSION, 2, 1);
+ *   use Drupal\bootstrap_lite\BootstrapLite;
+ *   echo substr(BootstrapLite::FRAMEWORK_VERSION, 2, 1);
  * @endcode
  *
- * @see \Drupal\bootstrap\Bootstrap::FRAMEWORK_VERSION
+ * @see \Drupal\bootstrap_lite\BootstrapLite::FRAMEWORK_VERSION
  */
-define('BOOTSTRAP_VERSION_MINOR', substr(Bootstrap::FRAMEWORK_VERSION, 2, 1));
+define('BOOTSTRAP_LITE_VERSION_MINOR', substr(BootstrapLite::FRAMEWORK_VERSION, 2, 1));
 
 /**
  * The current supported Bootstrap framework patch version number.
@@ -71,16 +71,16 @@ define('BOOTSTRAP_VERSION_MINOR', substr(Bootstrap::FRAMEWORK_VERSION, 2, 1));
  *
  * @code
  *   // Before.
- *   echo BOOTSTRAP_VERSION_PATCH;
+ *   echo BOOTSTRAP_LITE_VERSION_PATCH;
  *
  *   // After.
- *   use Drupal\bootstrap\Bootstrap;
- *   echo substr(Bootstrap::FRAMEWORK_VERSION, 4, 1);
+ *   use Drupal\bootstrap_lite\BootstrapLite;
+ *   echo substr(BootstrapLite::FRAMEWORK_VERSION, 4, 1);
  * @endcode
  *
- * @see \Drupal\bootstrap\Bootstrap::FRAMEWORK_VERSION
+ * @see \Drupal\bootstrap_lite\BootstrapLite::FRAMEWORK_VERSION
  */
-define('BOOTSTRAP_VERSION_PATCH', substr(Bootstrap::FRAMEWORK_VERSION, 4, 1));
+define('BOOTSTRAP_LITE_VERSION_PATCH', substr(BootstrapLite::FRAMEWORK_VERSION, 4, 1));
 
 /**
  * The current supported Bootstrap framework version.
@@ -89,16 +89,16 @@ define('BOOTSTRAP_VERSION_PATCH', substr(Bootstrap::FRAMEWORK_VERSION, 4, 1));
  *
  * @code
  *   // Before.
- *   echo BOOTSTRAP_VERSION;
+ *   echo BOOTSTRAP_LITE_VERSION;
  *
  *   // After.
- *   use Drupal\bootstrap\Bootstrap;
- *   echo Bootstrap::FRAMEWORK_VERSION;
+ *   use Drupal\bootstrap_lite\BootstrapLite;
+ *   echo BootstrapLite::FRAMEWORK_VERSION;
  * @endcode
  *
- * @see \Drupal\bootstrap\Bootstrap::FRAMEWORK_VERSION
+ * @see \Drupal\bootstrap_lite\BootstrapLite::FRAMEWORK_VERSION
  */
-define('BOOTSTRAP_VERSION', Bootstrap::FRAMEWORK_VERSION);
+define('BOOTSTRAP_LITE_VERSION', BootstrapLite::FRAMEWORK_VERSION);
 
 /**
  * Adds a class to an element's render array.
@@ -122,17 +122,17 @@ define('BOOTSTRAP_VERSION', Bootstrap::FRAMEWORK_VERSION);
  *
  * @code
  *   // Before.
- *   _bootstrap_add_class('my-class', $element);
+ *   _bootstrap_lite_add_class('my-class', $element);
  *
  *   // After.
- *   use Drupal\bootstrap\Utility\Element;
+ *   use Drupal\bootstrap_lite\Utility\Element;
  *   Element::create($element)->addClass('my-class');
  * @endcode
  *
- * @see \Drupal\bootstrap\Utility\Element::addClass()
+ * @see \Drupal\bootstrap_lite\Utility\Element::addClass()
  */
-function _bootstrap_add_class($class, array &$element, $property = 'attributes') {
-  Bootstrap::deprecated();
+function _bootstrap_lite_add_class($class, array &$element, $property = 'attributes') {
+  BootstrapLite::deprecated();
   Element::create($element)->addClass($class, $property);
 }
 
@@ -146,17 +146,17 @@ function _bootstrap_add_class($class, array &$element, $property = 'attributes')
  *
  * @code
  *   // Before.
- *   _bootstrap_colorize_button($element);
+ *   _bootstrap_lite_colorize_button($element);
  *
  *   // After.
- *   use Drupal\bootstrap\Utility\Element;
+ *   use Drupal\bootstrap_lite\Utility\Element;
  *   Element::create($element)->colorize();
  * @endcode
  *
- * @see \Drupal\bootstrap\Utility\Element::colorize()
+ * @see \Drupal\bootstrap_lite\Utility\Element::colorize()
  * */
-function _bootstrap_colorize_button(array &$element) {
-  Bootstrap::deprecated();
+function _bootstrap_lite_colorize_button(array &$element) {
+  BootstrapLite::deprecated();
   Element::create($element)->colorize();
 }
 
@@ -176,18 +176,18 @@ function _bootstrap_colorize_button(array &$element) {
  *
  * @code
  *   // Before.
- *   $class = _bootstrap_colorize_text($string, $default);
+ *   $class = _bootstrap_lite_colorize_text($string, $default);
  *
  *   // After.
- *   use Drupal\bootstrap\Bootstrap;
- *   $class = Bootstrap::cssClassFromString($string, $default);
+ *   use Drupal\bootstrap_lite\BootstrapLite;
+ *   $class = BootstrapLite::cssClassFromString($string, $default);
  * @endcode
  *
- * @see \Drupal\bootstrap\Bootstrap::cssClassFromString()
+ * @see \Drupal\bootstrap_lite\BootstrapLite::cssClassFromString()
  */
-function _bootstrap_colorize_text($string, $default = '') {
-  Bootstrap::deprecated();
-  return Bootstrap::cssClassFromString($string, $default);
+function _bootstrap_lite_colorize_text($string, $default = '') {
+  BootstrapLite::deprecated();
+  return BootstrapLite::cssClassFromString($string, $default);
 }
 
 /**
@@ -212,19 +212,19 @@ function _bootstrap_colorize_text($string, $default = '') {
  *
  * @code
  *   // Before.
- *   $files = _bootstrap_file_scan_directory($theme_path . '/js', '/\.js$/');
+ *   $files = _bootstrap_lite_file_scan_directory($theme_path . '/js', '/\.js$/');
  *
  *   // After.
- *   use Drupal\bootstrap\Bootstrap;
- *   $files = Bootstrap::getTheme()->fileScan('/\.js$/', 'js');
+ *   use Drupal\bootstrap_lite\BootstrapLite;
+ *   $files = BootstrapLite::getTheme()->fileScan('/\.js$/', 'js');
  * @endcode
  *
- * @see \Drupal\bootstrap\Theme::fileScan()
+ * @see \Drupal\bootstrap_lite\Theme::fileScan()
  * @see file_scan_directory()
  */
-function _bootstrap_file_scan_directory($dir, $mask, array $options = []) {
-  Bootstrap::deprecated();
-  $theme = Bootstrap::getTheme();
+function _bootstrap_lite_file_scan_directory($dir, $mask, array $options = []) {
+  BootstrapLite::deprecated();
+  $theme = BootstrapLite::getTheme();
   $dir = preg_replace('/^' . preg_quote($theme->getPath()) . '\//', '', $dir);
   return $theme->fileScan($mask, $dir, $options);
 }
@@ -249,19 +249,19 @@ function _bootstrap_file_scan_directory($dir, $mask, array $options = []) {
  *
  * @code
  *   // Before.
- *   $attributes = &_bootstrap_get_attributes($element);
+ *   $attributes = &_bootstrap_lite_get_attributes($element);
  *   $attributes['class'][] = 'my-class';
  *
  *   // After.
- *   use Drupal\bootstrap\Utility\Element;
+ *   use Drupal\bootstrap_lite\Utility\Element;
  *   $attributes = &Element::create($element)->getAttributes();
  *   $attributes['class'][] = 'my-class';
  * @endcode
  *
- * @see \Drupal\bootstrap\Utility\Element::getAttributes()
+ * @see \Drupal\bootstrap_lite\Utility\Element::getAttributes()
  */
-function &_bootstrap_get_attributes(array &$element, $property = 'attributes') {
-  Bootstrap::deprecated();
+function &_bootstrap_lite_get_attributes(array &$element, $property = 'attributes') {
+  BootstrapLite::deprecated();
   return Element::create($element)->getAttributes($property);
 }
 
@@ -281,28 +281,28 @@ function &_bootstrap_get_attributes(array &$element, $property = 'attributes') {
  *
  * @code
  *   // Before (including active theme).
- *   $base_themes = _bootstrap_get_base_themes(NULL, TRUE);
+ *   $base_themes = _bootstrap_lite_get_base_themes(NULL, TRUE);
  *
  *   // Before (excluding active theme).
- *   $base_themes = _bootstrap_get_base_themes('my_subtheme');
+ *   $base_themes = _bootstrap_lite_get_base_themes('my_subtheme');
  *
  *   // After (including active theme).
- *   use Drupal\bootstrap\Bootstrap;
- *   $theme = Bootstrap::getTheme();
+ *   use Drupal\bootstrap_lite\BootstrapLite;
+ *   $theme = BootstrapLite::getTheme();
  *   $base_themes = array_keys($theme->getAncestry());
  *
  *   // After (excluding active theme).
- *   use Drupal\bootstrap\Bootstrap;
- *   $my_subtheme = Bootstrap::getTheme('my_subtheme');
+ *   use Drupal\bootstrap_lite\BootstrapLite;
+ *   $my_subtheme = BootstrapLite::getTheme('my_subtheme');
  *   $base_themes = array_keys($my_subtheme->getAncestry());
  *   array_pop($base_themes);
  * @endcode
  *
- * @see \Drupal\bootstrap\Theme::getAncestry()
+ * @see \Drupal\bootstrap_lite\Theme::getAncestry()
  */
-function _bootstrap_get_base_themes($theme_key = NULL, $include_theme_key = FALSE) {
-  Bootstrap::deprecated();
-  $themes = array_keys(Bootstrap::getTheme($theme_key)->getAncestry());
+function _bootstrap_lite_get_base_themes($theme_key = NULL, $include_theme_key = FALSE) {
+  BootstrapLite::deprecated();
+  $themes = array_keys(BootstrapLite::getTheme($theme_key)->getAncestry());
   if (!$include_theme_key) {
     array_pop($themes);
   }
@@ -329,19 +329,19 @@ function _bootstrap_get_base_themes($theme_key = NULL, $include_theme_key = FALS
  *
  * @code
  *   // Before.
- *   $classes = &_bootstrap_get_classes($element);
+ *   $classes = &_bootstrap_lite_get_classes($element);
  *   $classes[] = 'my-class';
  *
  *   // After.
- *   use Drupal\bootstrap\Utility\Element;
+ *   use Drupal\bootstrap_lite\Utility\Element;
  *   $classes = &Element::create($element)->getClasses();
  *   $classes[] = 'my-class';
  * @endcode
  *
- * @see \Drupal\bootstrap\Utility\Element::getClasses()
+ * @see \Drupal\bootstrap_lite\Utility\Element::getClasses()
  */
-function &_bootstrap_get_classes(array &$element, $property = 'attributes') {
-  Bootstrap::deprecated();
+function &_bootstrap_lite_get_classes(array &$element, $property = 'attributes') {
+  BootstrapLite::deprecated();
   return Element::create($element)->getClasses($property);
 }
 
@@ -350,7 +350,7 @@ function &_bootstrap_get_classes(array &$element, $property = 'attributes') {
  *
  * @param string $version
  *   The specific version of glyphicons to return. If not set, the latest
- *   BOOTSTRAP_VERSION will be used.
+ *   BOOTSTRAP_LITE_VERSION will be used.
  *
  * @return array
  *   An associative array of icons keyed by their classes.
@@ -359,18 +359,18 @@ function &_bootstrap_get_classes(array &$element, $property = 'attributes') {
  *
  * @code
  *   // Before.
- *   $glyphicons = _bootstrap_glyphicons($version);
+ *   $glyphicons = _bootstrap_lite_glyphicons($version);
  *
  *   // After.
- *   use Drupal\bootstrap\Bootstrap;
- *   $glyphicons = Bootstrap::glyphicons($version);
+ *   use Drupal\bootstrap_lite\BootstrapLite;
+ *   $glyphicons = BootstrapLite::glyphicons($version);
  * @endcode
  *
- * @see \Drupal\bootstrap\Bootstrap::glyphicons()
+ * @see \Drupal\bootstrap_lite\BootstrapLite::glyphicons()
  */
-function _bootstrap_glyphicons($version = NULL) {
-  Bootstrap::deprecated();
-  return Bootstrap::glyphicons($version);
+function _bootstrap_lite_glyphicons($version = NULL) {
+  BootstrapLite::deprecated();
+  return BootstrapLite::glyphicons($version);
 }
 
 /**
@@ -380,19 +380,19 @@ function _bootstrap_glyphicons($version = NULL) {
  *
  * @code
  *   // Before.
- *   $supported = _bootstrap_glyphicons_supported();
+ *   $supported = _bootstrap_lite_glyphicons_supported();
  *
  *   // After.
- *   use Drupal\bootstrap\Bootstrap;
- *   $theme = Bootstrap::getTheme();
+ *   use Drupal\bootstrap_lite\BootstrapLite;
+ *   $theme = BootstrapLite::getTheme();
  *   $supported = $theme->hasGlyphicons();
  * @endcode
  *
- * @see \Drupal\bootstrap\Theme::hasGlyphicons()
+ * @see \Drupal\bootstrap_lite\Theme::hasGlyphicons()
  */
-function _bootstrap_glyphicons_supported() {
-  Bootstrap::deprecated();
-  return Bootstrap::getTheme()->hasGlyphicons();
+function _bootstrap_lite_glyphicons_supported() {
+  BootstrapLite::deprecated();
+  return BootstrapLite::getTheme()->hasGlyphicons();
 }
 
 /**
@@ -411,19 +411,19 @@ function _bootstrap_glyphicons_supported() {
  *
  * @code
  *   // Before.
- *   $icon = _bootstrap_icon($name, $default);
+ *   $icon = _bootstrap_lite_icon($name, $default);
  *
  *   // After.
- *   use Drupal\bootstrap\Bootstrap;
- *   use Drupal\bootstrap\Utility\Element;
- *   $icon = (string) Element::createStandalone(Bootstrap::glyphicon($name, ['#markup' => $default]))->renderPlain();
+ *   use Drupal\bootstrap_lite\BootstrapLite;
+ *   use Drupal\bootstrap_lite\Utility\Element;
+ *   $icon = (string) Element::createStandalone(BootstrapLite::glyphicon($name, ['#markup' => $default]))->renderPlain();
  * @endcode
  *
- * @see \Drupal\bootstrap\Bootstrap::glyphicon()
+ * @see \Drupal\bootstrap_lite\BootstrapLite::glyphicon()
  */
-function _bootstrap_icon($name, $default = NULL) {
-  Bootstrap::deprecated();
-  return Element::createStandalone(Bootstrap::glyphicon($name, ['#markup' => $default]))->renderPlain();
+function _bootstrap_lite_icon($name, $default = NULL) {
+  BootstrapLite::deprecated();
+  return Element::createStandalone(BootstrapLite::glyphicon($name, ['#markup' => $default]))->renderPlain();
 }
 
 /**
@@ -436,17 +436,17 @@ function _bootstrap_icon($name, $default = NULL) {
  *
  * @code
  *   // Before.
- *   _bootstrap_iconize_button($element);
+ *   _bootstrap_lite_iconize_button($element);
  *
  *   // After.
- *   use Drupal\bootstrap\Utility\Element;
+ *   use Drupal\bootstrap_lite\Utility\Element;
  *   Element::create($element)->setIcon();
  * @endcode
  *
- * @see \Drupal\bootstrap\Utility\Element::setIcon()
+ * @see \Drupal\bootstrap_lite\Utility\Element::setIcon()
  */
-function _bootstrap_iconize_button(array &$element) {
-  Bootstrap::deprecated();
+function _bootstrap_lite_iconize_button(array &$element) {
+  BootstrapLite::deprecated();
   Element::create($element)->setIcon();
 }
 
@@ -466,18 +466,18 @@ function _bootstrap_iconize_button(array &$element) {
  *
  * @code
  *   // Before.
- *   $icon = _bootstrap_iconize_text($string, $default);
+ *   $icon = _bootstrap_lite_iconize_text($string, $default);
  *
  *   // After.
- *   use Drupal\bootstrap\Bootstrap;
- *   $icon = Bootstrap::glyphiconFromString($string, ['#markup' => $default]);
+ *   use Drupal\bootstrap_lite\BootstrapLite;
+ *   $icon = BootstrapLite::glyphiconFromString($string, ['#markup' => $default]);
  * @endcode
  *
- * @see \Drupal\bootstrap\Bootstrap::glyphiconFromString()
+ * @see \Drupal\bootstrap_lite\BootstrapLite::glyphiconFromString()
  */
-function _bootstrap_iconize_text($string, $default = '') {
-  Bootstrap::deprecated();
-  return Bootstrap::glyphiconFromString($string, ['#markup' => $default]);
+function _bootstrap_lite_iconize_text($string, $default = '') {
+  BootstrapLite::deprecated();
+  return BootstrapLite::glyphiconFromString($string, ['#markup' => $default]);
 }
 
 /**
@@ -493,17 +493,17 @@ function _bootstrap_iconize_text($string, $default = '') {
  *
  * @code
  *   // Before.
- *   $button = _bootstrap_is_button($element);
+ *   $button = _bootstrap_lite_is_button($element);
  *
  *   // After.
- *   use Drupal\bootstrap\Utility\Element;
+ *   use Drupal\bootstrap_lite\Utility\Element;
  *   $button = Element::create($element)->isButton();
  * @endcode
  *
- * @see \Drupal\bootstrap\Utility\Element::isButton()
+ * @see \Drupal\bootstrap_lite\Utility\Element::isButton()
  */
-function _bootstrap_is_button(array $element) {
-  Bootstrap::deprecated();
+function _bootstrap_lite_is_button(array $element) {
+  BootstrapLite::deprecated();
   return Element::create($element)->isButton();
 }
 
@@ -529,17 +529,17 @@ function _bootstrap_is_button(array $element) {
  *
  * @code
  *   // Before.
- *   $simple = _bootstrap_is_simple_string($string, $length, $allowed_tags, $html);
+ *   $simple = _bootstrap_lite_is_simple_string($string, $length, $allowed_tags, $html);
  *
  *   // After.
- *   use Drupal\bootstrap\Utility\Unicode;
+ *   use Drupal\bootstrap_lite\Utility\Unicode;
  *   $simple = Unicode::isSimple($string, $length, $allowed_tags, $html);
  * @endcode
  *
- * @see \Drupal\bootstrap\Utility\Unicode::isSimple()
+ * @see \Drupal\bootstrap_lite\Utility\Unicode::isSimple()
  */
-function _bootstrap_is_simple_string($string, $length = 250, $allowed_tags = NULL, &$html = FALSE) {
-  Bootstrap::deprecated();
+function _bootstrap_lite_is_simple_string($string, $length = 250, $allowed_tags = NULL, &$html = FALSE) {
+  BootstrapLite::deprecated();
   return Unicode::isSimple($string, $length, $allowed_tags, $html);
 }
 
@@ -562,17 +562,17 @@ function _bootstrap_is_simple_string($string, $length = 250, $allowed_tags = NUL
  *
  * @code
  *   // Before.
- *   _bootstrap_remove_class('my-class', $element);
+ *   _bootstrap_lite_remove_class('my-class', $element);
  *
  *   // After.
- *   use Drupal\bootstrap\Utility\Element;
+ *   use Drupal\bootstrap_lite\Utility\Element;
  *   Element::create($element)->removeClass('my-class');
  * @endcode
  *
- * @see \Drupal\bootstrap\Utility\Element::removeClass()
+ * @see \Drupal\bootstrap_lite\Utility\Element::removeClass()
  */
-function _bootstrap_remove_class($class, array &$element, $property = 'attributes') {
-  Bootstrap::deprecated();
+function _bootstrap_lite_remove_class($class, array &$element, $property = 'attributes') {
+  BootstrapLite::deprecated();
   Element::create($element)->removeClass($class, $property);
 }
 
@@ -594,16 +594,16 @@ function _bootstrap_remove_class($class, array &$element, $property = 'attribute
  *
  * @code
  *   // Before.
- *   $providers = bootstrap_cdn_provider();
- *   $jsdelivr = bootstrap_cdn_provider('jsdelivr');
+ *   $providers = bootstrap_lite_cdn_provider();
+ *   $jsdelivr = bootstrap_lite_cdn_provider('jsdelivr');
  *
  *   // After.
- *   use Drupal\bootstrap\Bootstrap;
- *   use Drupal\bootstrap\Plugin\ProviderManager;
+ *   use Drupal\bootstrap_lite\BootstrapLite;
+ *   use Drupal\bootstrap_lite\Plugin\ProviderManager;
  *
- *   $theme = Bootstrap::getTheme();
+ *   $theme = BootstrapLite::getTheme();
  *
- *   // Get provider definitions, the "equivalent" for bootstrap_cdn_provider().
+ *   // Get provider definitions, the "equivalent" for bootstrap_lite_cdn_provider().
  *   $provider_manager = new ProviderManager($theme);
  *   $providers = $provider_manager->getDefinitions();
  *   $jsdelivr = $provider_manager->getDefinition('jsdelivr');
@@ -614,13 +614,13 @@ function _bootstrap_remove_class($class, array &$element, $property = 'attribute
  *   $jsdelivr = $theme->getProvider('jsdelivr');
  * @endcode
  *
- * @see \Drupal\bootstrap\Plugin\ProviderManager
- * @see \Drupal\bootstrap\Theme::getProviders()
- * @see \Drupal\bootstrap\Theme::getProvider()
+ * @see \Drupal\bootstrap_lite\Plugin\ProviderManager
+ * @see \Drupal\bootstrap_lite\Theme::getProviders()
+ * @see \Drupal\bootstrap_lite\Theme::getProvider()
  */
-function bootstrap_cdn_provider($provider = NULL, $reset = FALSE) {
-  Bootstrap::deprecated();
-  $provider_manager = new ProviderManager(Bootstrap::getTheme());
+function bootstrap_lite_cdn_provider($provider = NULL, $reset = FALSE) {
+  BootstrapLite::deprecated();
+  $provider_manager = new ProviderManager(BootstrapLite::getTheme());
   if ($reset) {
     $provider_manager->clearCachedDefinitions();
   }
@@ -650,17 +650,17 @@ function bootstrap_cdn_provider($provider = NULL, $reset = FALSE) {
  *
  * @code
  *   // Before.
- *   bootstrap_element_smart_description($element, $target, $input_only, $length);
+ *   bootstrap_lite_element_smart_description($element, $target, $input_only, $length);
  *
  *   // After.
- *   use Drupal\bootstrap\Utility\Element;
+ *   use Drupal\bootstrap_lite\Utility\Element;
  *   Element::create($element)->smartDescription($target, $input_only, $length);
  * @endcode
  *
- * @see \Drupal\bootstrap\Utility\Element::smartDescription()
+ * @see \Drupal\bootstrap_lite\Utility\Element::smartDescription()
  */
-function bootstrap_element_smart_description(array &$element, array &$target = NULL, $input_only = TRUE, $length = NULL) {
-  Bootstrap::deprecated();
+function bootstrap_lite_element_smart_description(array &$element, array &$target = NULL, $input_only = TRUE, $length = NULL) {
+  BootstrapLite::deprecated();
   Element::create($element)->smartDescription($target, $input_only, $length);
 }
 
@@ -686,28 +686,28 @@ function bootstrap_element_smart_description(array &$element, array &$target = N
  *
  * @code
  *   // Before.
- *   $assets = bootstrap_get_cdn_assets($type, $provider, $theme);
+ *   $assets = bootstrap_lite_get_cdn_assets($type, $provider, $theme);
  *
  *   // After.
- *   use Drupal\bootstrap\Bootstrap;
- *   $theme = Bootstrap::getTheme($theme);
+ *   use Drupal\bootstrap_lite\BootstrapLite;
+ *   $theme = BootstrapLite::getTheme($theme);
  *   $assets = [];
  *   if ($provider = $theme->getProvider($provider)) {
  *     $assets = $provider->getAssets($type);
  *   }
  * @endcode
  *
- * @see \Drupal\bootstrap\Plugin\Provider\Custom::getAssets()
- * @see \Drupal\bootstrap\Plugin\Provider\JsDelivr::getAssets()
- * @see \Drupal\bootstrap\Plugin\Provider\ProviderBase::getAssets()
- * @see \Drupal\bootstrap\Plugin\Provider\ProviderInterface::getAssets()
- * @see \Drupal\bootstrap\Theme::getProvider()
- * @see \Drupal\bootstrap\Bootstrap::getTheme()
+ * @see \Drupal\bootstrap_lite\Plugin\Provider\Custom::getAssets()
+ * @see \Drupal\bootstrap_lite\Plugin\Provider\JsDelivr::getAssets()
+ * @see \Drupal\bootstrap_lite\Plugin\Provider\ProviderBase::getAssets()
+ * @see \Drupal\bootstrap_lite\Plugin\Provider\ProviderInterface::getAssets()
+ * @see \Drupal\bootstrap_lite\Theme::getProvider()
+ * @see \Drupal\bootstrap_lite\BootstrapLite::getTheme()
  */
-function bootstrap_get_cdn_assets($type = NULL, $provider = NULL, $theme = NULL) {
-  Bootstrap::deprecated();
+function bootstrap_lite_get_cdn_assets($type = NULL, $provider = NULL, $theme = NULL) {
+  BootstrapLite::deprecated();
   $assets = [];
-  if ($provider = Bootstrap::getTheme($theme)->getProvider($provider)) {
+  if ($provider = BootstrapLite::getTheme($theme)->getProvider($provider)) {
     $assets = $provider->getAssets($type);
   }
   return $assets;
@@ -730,8 +730,8 @@ function bootstrap_get_cdn_assets($type = NULL, $provider = NULL, $theme = NULL)
  *
  * @deprecated Will be removed in a future release. There is no replacement.
  */
-function bootstrap_get_theme_info($theme_key = NULL, $key = NULL, $base_themes = TRUE) {
-  Bootstrap::deprecated();
+function bootstrap_lite_get_theme_info($theme_key = NULL, $key = NULL, $base_themes = TRUE) {
+  BootstrapLite::deprecated();
   // If no $theme_key is given, use the current theme if we can determine it.
   if (!isset($theme_key)) {
     $theme_key = !empty($GLOBALS['theme_key']) ? $GLOBALS['theme_key'] : FALSE;
@@ -746,7 +746,7 @@ function bootstrap_get_theme_info($theme_key = NULL, $key = NULL, $base_themes =
         // Recursively add base theme values.
         if ($base_themes && isset($theme->base_themes)) {
           foreach (array_keys($theme->base_themes) as $base_theme) {
-            $value = bootstrap_get_theme_info($base_theme, $key);
+            $value = bootstrap_lite_get_theme_info($base_theme, $key);
           }
         }
         if (!empty($themes[$theme_key])) {
@@ -807,22 +807,22 @@ function bootstrap_get_theme_info($theme_key = NULL, $key = NULL, $base_themes =
  *
  * @code
  *   // Before.
- *   bootstrap_include('my_subtheme', 'includes/file.inc');
- *   bootstrap_include('my_subtheme', 'some/other/path/file.inc');
+ *   bootstrap_lite_include('my_subtheme', 'includes/file.inc');
+ *   bootstrap_lite_include('my_subtheme', 'some/other/path/file.inc');
  *
  *   // After.
- *   use Drupal\bootstrap\Bootstrap;
- *   $my_subtheme = Bootstrap::getTheme('my_subtheme');
+ *   use Drupal\bootstrap_lite\BootstrapLite;
+ *   $my_subtheme = BootstrapLite::getTheme('my_subtheme');
  *   $my_subtheme->includeOnce('file.inc');
  *   $my_subtheme->includeOnce('file.inc', 'some/other/path');
  * @endcode
  *
- * @see \Drupal\bootstrap\Theme::includeOnce()
- * @see \Drupal\bootstrap\Bootstrap::getTheme()
+ * @see \Drupal\bootstrap_lite\Theme::includeOnce()
+ * @see \Drupal\bootstrap_lite\BootstrapLite::getTheme()
  */
-function bootstrap_include($theme, $path) {
-  Bootstrap::deprecated();
-  $theme = Bootstrap::getTheme($theme);
+function bootstrap_lite_include($theme, $path) {
+  BootstrapLite::deprecated();
+  $theme = BootstrapLite::getTheme($theme);
   $parts = explode('/', $path);
   $file = array_pop($parts);
   $dir = implode('/', $parts);
@@ -847,22 +847,22 @@ function bootstrap_include($theme, $path) {
  *
  * @code
  *   // Before ("button_colorize" and "my_subtheme_custom_option").
- *   $colorize = bootstrap_setting('button_colorize', 'my_subtheme');
- *   $custom_option = bootstrap_setting('custom_option', 'my_subtheme', 'my_subtheme');
+ *   $colorize = bootstrap_lite_setting('button_colorize', 'my_subtheme');
+ *   $custom_option = bootstrap_lite_setting('custom_option', 'my_subtheme', 'my_subtheme');
  *
  *   // After ("button_colorize" and "my_subtheme_custom_option").
- *   use Drupal\bootstrap\Bootstrap;
- *   $my_subtheme = Bootstrap::getTheme('my_subtheme');
+ *   use Drupal\bootstrap_lite\BootstrapLite;
+ *   $my_subtheme = BootstrapLite::getTheme('my_subtheme');
  *   $my_subtheme->getSetting('button_colorize');
  *   $my_subtheme->getSetting('my_subtheme_custom_option');
  * @endcode
  *
- * @see \Drupal\bootstrap\Theme::getSetting()
- * @see \Drupal\bootstrap\Bootstrap::getTheme()
+ * @see \Drupal\bootstrap_lite\Theme::getSetting()
+ * @see \Drupal\bootstrap_lite\BootstrapLite::getTheme()
  */
-function bootstrap_setting($name, $theme = NULL, $prefix = 'bootstrap') {
-  Bootstrap::deprecated();
-  $theme = Bootstrap::getTheme($theme);
-  $prefix = $prefix !== 'bootstrap' && !empty($prefix) ? $prefix . '_' : '';
+function bootstrap_lite_setting($name, $theme = NULL, $prefix = 'bootstrap_lite') {
+  BootstrapLite::deprecated();
+  $theme = BootstrapLite::getTheme($theme);
+  $prefix = $prefix !== 'bootstrap_lite' && !empty($prefix) ? $prefix . '_' : '';
   return $theme->getSetting($prefix . $name);
 }

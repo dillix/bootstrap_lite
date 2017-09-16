@@ -1,25 +1,25 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Preprocess\BootstrapDropdown.
+ * Contains \Drupal\bootstrap_lite\Plugin\Preprocess\BootstrapDropdown.
  */
 
-namespace Drupal\bootstrap\Plugin\Preprocess;
+namespace Drupal\bootstrap_lite\Plugin\Preprocess;
 
-use Drupal\bootstrap\Annotation\BootstrapPreprocess;
-use Drupal\bootstrap\Utility\Element;
-use Drupal\bootstrap\Utility\Unicode;
-use Drupal\bootstrap\Utility\Variables;
+use Drupal\bootstrap_lite\Annotation\BootstrapPreprocess;
+use Drupal\bootstrap_lite\Utility\Element;
+use Drupal\bootstrap_lite\Utility\Unicode;
+use Drupal\bootstrap_lite\Utility\Variables;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Url;
 
 /**
- * Pre-processes variables for the "bootstrap_dropdown" theme hook.
+ * Pre-processes variables for the "bootstrap_lite_dropdown" theme hook.
  *
  * @ingroup plugins_preprocess
  *
- * @BootstrapPreprocess("bootstrap_dropdown")
+ * @BootstrapPreprocess("bootstrap_lite_dropdown")
  */
 class BootstrapDropdown extends PreprocessBase implements PreprocessInterface {
 
@@ -48,7 +48,7 @@ class BootstrapDropdown extends PreprocessBase implements PreprocessInterface {
   /**
    * Preprocess links in the variables array to convert them from dropbuttons.
    *
-   * @param \Drupal\bootstrap\Utility\Variables $variables
+   * @param \Drupal\bootstrap_lite\Utility\Variables $variables
    *   A variables object.
    */
   protected function preprocessLinks(Variables $variables) {
@@ -139,7 +139,7 @@ class BootstrapDropdown extends PreprocessBase implements PreprocessInterface {
       // Determine if toggle should be a split button.
       $variables->split = count($items) > 1;
 
-      // Add the items variable for "bootstrap_dropdown".
+      // Add the items variable for "bootstrap_lite_dropdown".
       $variables->items = $items->getArrayCopy();
 
       // Remove the unnecessary "links" variable now.

@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Utility\Attributes.
+ * Contains \Drupal\bootstrap_lite\Utility\Attributes.
  */
 
-namespace Drupal\bootstrap\Utility;
+namespace Drupal\bootstrap_lite\Utility;
 
 /**
  * Class to help modify attributes.
@@ -26,7 +26,7 @@ class Attributes extends ArrayObject {
    * @param string|array $class
    *   An individual class or an array of classes to add.
    *
-   * @see \Drupal\bootstrap\Utility\Attributes::getClasses()
+   * @see \Drupal\bootstrap_lite\Utility\Attributes::getClasses()
    */
   public function addClass($class) {
     $classes = &$this->getClasses();
@@ -44,7 +44,7 @@ class Attributes extends ArrayObject {
    * @return mixed
    *   A specific attribute value, passed by reference.
    *
-   * @see \Drupal\bootstrap\Utility\ArrayObject::offsetGet()
+   * @see \Drupal\bootstrap_lite\Utility\ArrayObject::offsetGet()
    */
   public function &getAttribute($name, $default = NULL) {
     return $this->offsetGet($name, $default);
@@ -56,7 +56,7 @@ class Attributes extends ArrayObject {
    * @return array
    *   The classes array, passed by reference.
    *
-   * @see \Drupal\bootstrap\Utility\ArrayObject::offsetGet()
+   * @see \Drupal\bootstrap_lite\Utility\ArrayObject::offsetGet()
    */
   public function &getClasses() {
     $classes = &$this->offsetGet('class', []);
@@ -73,7 +73,7 @@ class Attributes extends ArrayObject {
    * @return bool
    *   TRUE or FALSE
    *
-   * @see \Drupal\bootstrap\Utility\ArrayObject::offsetExists()
+   * @see \Drupal\bootstrap_lite\Utility\ArrayObject::offsetExists()
    */
   public function hasAttribute($name) {
     return $this->offsetExists($name);
@@ -90,7 +90,7 @@ class Attributes extends ArrayObject {
    * @return bool
    *   TRUE or FALSE
    *
-   * @see \Drupal\bootstrap\Utility\Attributes::getClasses()
+   * @see \Drupal\bootstrap_lite\Utility\Attributes::getClasses()
    */
   public function hasClass($class, $all = FALSE) {
     $classes = (array) $class;
@@ -104,7 +104,7 @@ class Attributes extends ArrayObject {
    * @param string|array $name
    *   The name of the attribute to remove.
    *
-   * @see \Drupal\bootstrap\Utility\ArrayObject::offsetUnset()
+   * @see \Drupal\bootstrap_lite\Utility\ArrayObject::offsetUnset()
    */
   public function removeAttribute($name) {
     $this->offsetUnset($name);
@@ -116,7 +116,7 @@ class Attributes extends ArrayObject {
    * @param string|array $class
    *   An individual class or an array of classes to remove.
    *
-   * @see \Drupal\bootstrap\Utility\Attributes::getClasses()
+   * @see \Drupal\bootstrap_lite\Utility\Attributes::getClasses()
    */
   public function removeClass($class) {
     $classes = &$this->getClasses();
@@ -131,7 +131,7 @@ class Attributes extends ArrayObject {
    * @param string $new
    *   The new class. It will not be added if the $old class does not exist.
    *
-   * @see \Drupal\bootstrap\Utility\Attributes::getClasses()
+   * @see \Drupal\bootstrap_lite\Utility\Attributes::getClasses()
    */
   public function replaceClass($old, $new) {
     $classes = &$this->getClasses();
@@ -149,7 +149,7 @@ class Attributes extends ArrayObject {
    * @param mixed $value
    *   The value of the attribute to set.
    *
-   * @see \Drupal\bootstrap\Utility\ArrayObject::offsetSet()
+   * @see \Drupal\bootstrap_lite\Utility\ArrayObject::offsetSet()
    */
   public function setAttribute($name, $value) {
     $this->offsetSet($name, $value);
@@ -161,7 +161,7 @@ class Attributes extends ArrayObject {
    * @param array $values
    *   An associative key/value array of attributes to set.
    *
-   * @see \Drupal\bootstrap\Utility\ArrayObject::merge()
+   * @see \Drupal\bootstrap_lite\Utility\ArrayObject::merge()
    */
   public function setAttributes(array $values) {
     $this->merge($values);

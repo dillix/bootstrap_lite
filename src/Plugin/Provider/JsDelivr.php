@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Provider\JsDelivr.
+ * Contains \Drupal\bootstrap_lite\Plugin\Provider\JsDelivr.
  */
 
-namespace Drupal\bootstrap\Plugin\Provider;
+namespace Drupal\bootstrap_lite\Plugin\Provider;
 
-use Drupal\bootstrap\Annotation\BootstrapProvider;
-use Drupal\bootstrap\Bootstrap;
+use Drupal\bootstrap_lite\Annotation\BootstrapProvider;
+use Drupal\bootstrap_lite\BootstrapLite;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Annotation\Translation;
 
@@ -58,16 +58,16 @@ class JsDelivr extends ProviderBase {
 
         // Determine the "theme" name.
         if ($path === 'css' || $path === 'js') {
-          $theme = 'bootstrap';
-          $title = (string) t('Bootstrap');
+          $theme = 'bootstrap_lite';
+          $title = (string) t('Bootstrap Lite');
         }
         else {
           $theme = $path;
           $title = ucfirst($path);
         }
         if ($matches[2]) {
-          $theme = 'bootstrap_theme';
-          $title = (string) t('Bootstrap Theme');
+          $theme = 'bootstrap_lite_theme';
+          $title = (string) t('Bootstrap Lite Theme');
         }
 
         $themes[$theme]['title'] = $title;
@@ -88,8 +88,8 @@ class JsDelivr extends ProviderBase {
   public function getAssets($types = NULL) {
     $this->assets = [];
     $error = !empty($provider['error']);
-    $version = $error ? Bootstrap::FRAMEWORK_VERSION : $this->theme->getSetting('cdn_jsdelivr_version');
-    $theme = $error ? 'bootstrap' : $this->theme->getSetting('cdn_jsdelivr_theme');
+    $version = $error ? BootstrapLite::FRAMEWORK_VERSION : $this->theme->getSetting('cdn_jsdelivr_version');
+    $theme = $error ? 'bootstrap_lite' : $this->theme->getSetting('cdn_jsdelivr_theme');
     if (isset($this->pluginDefinition['themes'][$version][$theme])) {
       $this->assets = $this->pluginDefinition['themes'][$version][$theme];
     }
@@ -131,15 +131,15 @@ class JsDelivr extends ProviderBase {
     // If the main bootstrap library could not be found, then provide defaults.
     if (!isset($libraries[$bootstrap])) {
       $definition['error'] = TRUE;
-      $definition['versions'][Bootstrap::FRAMEWORK_VERSION] = Bootstrap::FRAMEWORK_VERSION;
-      $definition['themes'][Bootstrap::FRAMEWORK_VERSION] = [
-        'bootstrap' => [
-          'title' => (string) t('Bootstrap'),
-          'css' => ['//cdn.jsdelivr.net/bootstrap/' . Bootstrap::FRAMEWORK_VERSION . '/css/bootstrap.css'],
-          'js' => ['//cdn.jsdelivr.net/bootstrap/' . Bootstrap::FRAMEWORK_VERSION . '/js/bootstrap.js'],
+      $definition['versions'][BootstrapLite::FRAMEWORK_VERSION] = BootstrapLite::FRAMEWORK_VERSION;
+      $definition['themes'][BootstrapLite::FRAMEWORK_VERSION] = [
+        'bootstrap_lite' => [
+          'title' => (string) t('Bootstrap Lite'),
+          'css' => ['//cdn.jsdelivr.net/bootstrap/' . BootstrapLite::FRAMEWORK_VERSION . '/css/bootstrap.css'],
+          'js' => ['//cdn.jsdelivr.net/bootstrap/' . BootstrapLite::FRAMEWORK_VERSION . '/js/bootstrap.js'],
           'min' => [
-            'css' => ['//cdn.jsdelivr.net/bootstrap/' . Bootstrap::FRAMEWORK_VERSION . '/css/bootstrap.min.css'],
-            'js' => ['//cdn.jsdelivr.net/bootstrap/' . Bootstrap::FRAMEWORK_VERSION . '/js/bootstrap.min.js'],
+            'css' => ['//cdn.jsdelivr.net/bootstrap/' . BootstrapLite::FRAMEWORK_VERSION . '/css/bootstrap.min.css'],
+            'js' => ['//cdn.jsdelivr.net/bootstrap/' . BootstrapLite::FRAMEWORK_VERSION . '/js/bootstrap.min.js'],
           ],
         ],
       ];
@@ -168,21 +168,21 @@ class JsDelivr extends ProviderBase {
       foreach (array_keys($definition['themes'][$version]) as $theme) {
         // Some themes actually require Bootstrap framework assets to still
         // function properly.
-        if ($theme !== 'bootstrap') {
+        if ($theme !== 'bootstrap_lite') {
           foreach (['css', 'js'] as $type) {
             // Bootswatch themes include the Bootstrap framework in their CSS.
             // Skip the CSS portions.
-            if ($theme !== 'bootstrap_theme' && $type === 'css') {
+            if ($theme !== 'bootstrap_lite_theme' && $type === 'css') {
               continue;
             }
-            if (!isset($definition['themes'][$version][$theme][$type]) && !empty($definition['themes'][$version]['bootstrap'][$type])) {
+            if (!isset($definition['themes'][$version][$theme][$type]) && !empty($definition['themes'][$version]['bootstrap_lite'][$type])) {
               $definition['themes'][$version][$theme][$type] = [];
             }
-            $definition['themes'][$version][$theme][$type] = NestedArray::mergeDeep($definition['themes'][$version]['bootstrap'][$type], $definition['themes'][$version][$theme][$type]);
-            if (!isset($definition['themes'][$version][$theme]['min'][$type]) && !empty($definition['themes'][$version]['bootstrap']['min'][$type])) {
+            $definition['themes'][$version][$theme][$type] = NestedArray::mergeDeep($definition['themes'][$version]['bootstrap_lite'][$type], $definition['themes'][$version][$theme][$type]);
+            if (!isset($definition['themes'][$version][$theme]['min'][$type]) && !empty($definition['themes'][$version]['bootstrap_lite']['min'][$type])) {
               $definition['themes'][$version][$theme]['min'][$type] = [];
             }
-            $definition['themes'][$version][$theme]['min'][$type] = NestedArray::mergeDeep($definition['themes'][$version]['bootstrap']['min'][$type], $definition['themes'][$version][$theme]['min'][$type]);
+            $definition['themes'][$version][$theme]['min'][$type] = NestedArray::mergeDeep($definition['themes'][$version]['bootstrap_lite']['min'][$type], $definition['themes'][$version][$theme]['min'][$type]);
           }
         }
         // Some themes do not have a non-minified version, clone them to the

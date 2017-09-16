@@ -1,16 +1,16 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Alter\ThemeSuggestions.
+ * Contains \Drupal\bootstrap_lite\Plugin\Alter\ThemeSuggestions.
  */
 
-namespace Drupal\bootstrap\Plugin\Alter;
+namespace Drupal\bootstrap_lite\Plugin\Alter;
 
-use Drupal\bootstrap\Annotation\BootstrapAlter;
-use Drupal\bootstrap\Bootstrap;
-use Drupal\bootstrap\Plugin\PluginBase;
-use Drupal\bootstrap\Utility\Unicode;
-use Drupal\bootstrap\Utility\Variables;
+use Drupal\bootstrap_lite\Annotation\BootstrapAlter;
+use Drupal\bootstrap_lite\BootstrapLite;
+use Drupal\bootstrap_lite\Plugin\PluginBase;
+use Drupal\bootstrap_lite\Utility\Unicode;
+use Drupal\bootstrap_lite\Utility\Variables;
 use Drupal\Core\Entity\EntityInterface;
 
 /**
@@ -30,7 +30,7 @@ class ThemeSuggestions extends PluginBase implements AlterInterface {
   /**
    * An element object provided in the variables array, may not be set.
    *
-   * @var \Drupal\bootstrap\Utility\Element|false
+   * @var \Drupal\bootstrap_lite\Utility\Element|false
    */
   protected $element;
 
@@ -72,7 +72,7 @@ class ThemeSuggestions extends PluginBase implements AlterInterface {
   /**
    * The variables array object passed via hook_theme_suggestions_alter().
    *
-   * @var \Drupal\bootstrap\Utility\Variables
+   * @var \Drupal\bootstrap_lite\Utility\Variables
    */
   protected $variables;
 
@@ -124,7 +124,7 @@ class ThemeSuggestions extends PluginBase implements AlterInterface {
     // Remove the 'dropbutton' suggestion.
     array_shift($this->hookSuggestions);
 
-    $this->addSuggestion('bootstrap_dropdown');
+    $this->addSuggestion('bootstrap_lite_dropdown');
   }
 
   /**
@@ -309,8 +309,8 @@ class ThemeSuggestions extends PluginBase implements AlterInterface {
    */
   protected function processSuggestions() {
     // Add special hook suggestions for Bootstrap panels.
-    if ((in_array($this->originalHook, $this->bootstrapPanelTypes)) && $this->element && $this->element->getProperty('bootstrap_panel', TRUE)) {
-      $this->addSuggestion('bootstrap_panel');
+    if ((in_array($this->originalHook, $this->bootstrapPanelTypes)) && $this->element && $this->element->getProperty('bootstrap_lite_panel', TRUE)) {
+      $this->addSuggestion('bootstrap_lite_panel');
     }
 
     // Retrieve any dynamic alter methods.
@@ -329,7 +329,7 @@ class ThemeSuggestions extends PluginBase implements AlterInterface {
    *
    * @param array $suggestions
    *   The suggestions array, this is ignored.
-   * @param \Drupal\bootstrap\Utility\Variables $variables
+   * @param \Drupal\bootstrap_lite\Utility\Variables $variables
    *   The variables object, this is ignored.
    * @param string $entity_type
    *   Optional. A specific type of entity to look for.
@@ -339,17 +339,17 @@ class ThemeSuggestions extends PluginBase implements AlterInterface {
    *
    * @deprecated Since 8.x-3.2. Will be removed in a future release.
    *
-   * @see \Drupal\bootstrap\Plugin\Alter\ThemeSuggestions::addSuggestionsForEntity
+   * @see \Drupal\bootstrap_lite\Plugin\Alter\ThemeSuggestions::addSuggestionsForEntity
    */
   public function addEntitySuggestions(array &$suggestions, Variables $variables, $entity_type = 'entity', $prefix = '') {
-    Bootstrap::deprecated();
+    BootstrapLite::deprecated();
     $this->addSuggestionsForEntity($entity_type, $prefix);
   }
 
   /**
    * Extracts the entity from the element(s) passed in the Variables object.
    *
-   * @param \Drupal\bootstrap\Utility\Variables $variables
+   * @param \Drupal\bootstrap_lite\Utility\Variables $variables
    *   The Variables object, this is ignored.
    * @param string $entity_type
    *   Optional. The entity type to attempt to retrieve.
@@ -359,10 +359,10 @@ class ThemeSuggestions extends PluginBase implements AlterInterface {
    *
    * @deprecated Since 8.x-3.2. Will be removed in a future release.
    *
-   * @see \Drupal\bootstrap\Plugin\Alter\ThemeSuggestions::getEntityObject
+   * @see \Drupal\bootstrap_lite\Plugin\Alter\ThemeSuggestions::getEntityObject
    */
   public function getEntity(Variables $variables, $entity_type = 'entity') {
-    Bootstrap::deprecated();
+    BootstrapLite::deprecated();
     return $this->getEntityObject($entity_type);
   }
 

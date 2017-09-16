@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Form\FormBase.
+ * Contains \Drupal\bootstrap_lite\Plugin\Form\FormBase.
  */
 
-namespace Drupal\bootstrap\Plugin\Form;
+namespace Drupal\bootstrap_lite\Plugin\Form;
 
-use Drupal\bootstrap\Plugin\PluginBase;
-use Drupal\bootstrap\Utility\Element;
+use Drupal\bootstrap_lite\Plugin\PluginBase;
+use Drupal\bootstrap_lite\Utility\Element;
 use Drupal\Core\Form\FormStateInterface;
 
 /**

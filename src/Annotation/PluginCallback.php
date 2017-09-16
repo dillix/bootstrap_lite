@@ -1,12 +1,12 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Annotation\PluginCallback.
+ * Contains \Drupal\bootstrap_lite\Annotation\PluginCallback.
  */
 
-namespace Drupal\bootstrap\Annotation;
+namespace Drupal\bootstrap_lite\Annotation;
 
-use Drupal\bootstrap\Bootstrap;
+use Drupal\bootstrap_lite\BootstrapLite;
 use Drupal\Component\Annotation\AnnotationInterface;
 use Drupal\Component\Annotation\PluginID;
 
@@ -32,17 +32,17 @@ class PluginCallback extends PluginID {
    * Flag that determines how to add the plugin to a callback array.
    *
    * Must be one of the following constants:
-   *   - \Drupal\bootstrap\Bootstrap::CALLBACK_APPEND
-   *   - \Drupal\bootstrap\Bootstrap::CALLBACK_PREPEND
-   *   - \Drupal\bootstrap\Bootstrap::CALLBACK_REPLACE_APPEND
-   *   - \Drupal\bootstrap\Bootstrap::CALLBACK_REPLACE_PREPEND
+   *   - \Drupal\bootstrap_lite\BootstrapLite::CALLBACK_APPEND
+   *   - \Drupal\bootstrap_lite\BootstrapLite::CALLBACK_PREPEND
+   *   - \Drupal\bootstrap_lite\BootstrapLite::CALLBACK_REPLACE_APPEND
+   *   - \Drupal\bootstrap_lite\BootstrapLite::CALLBACK_REPLACE_PREPEND
    * Use with @ BootstrapConstant annotation.
    *
-   * @see \Drupal\bootstrap\Bootstrap::addCallback()
+   * @see \Drupal\bootstrap_lite\BootstrapLite::addCallback()
    *
-   * @var \Drupal\bootstrap\Annotation\BootstrapConstant
+   * @var \Drupal\bootstrap_lite\Annotation\BootstrapConstant
    */
-  public $action = Bootstrap::CALLBACK_APPEND;
+  public $action = BootstrapLite::CALLBACK_APPEND;
 
   /**
    * A callback to replace.

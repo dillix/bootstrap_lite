@@ -4,9 +4,9 @@ dependencies:
   module:
     - system
   theme:
-    - bootstrap
-id: bootstrap_breadcrumbs
-theme: bootstrap
+    - bootstrap_lite
+id: bootstrap_lite_breadcrumbs
+theme: bootstrap_lite
 region: header
 weight: -100
 provider: null

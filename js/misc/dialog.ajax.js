@@ -19,7 +19,7 @@
       // dialogs. Non-modal dialogs are responsible for creating their own
       // elements, since there can be multiple non-modal dialogs at a time.
       if (!$('#drupal-modal').length) {
-        $(Drupal.theme.bootstrapModal()).appendTo('body');
+        $(Drupal.theme.bootstrapLiteModal()).appendTo('body');
       }
 
       // Special behaviors specific when attaching content within a dialog.
@@ -110,7 +110,7 @@
     var $dialog = $(response.selector);
     if (!$dialog.length) {
       // Create the element if needed.
-      $dialog = $(Drupal.theme.bootstrapModal({ id: response.selector.replace(/^#/, '') })).appendTo('body');
+      $dialog = $(Drupal.theme.bootstrapLiteModal({ id: response.selector.replace(/^#/, '') })).appendTo('body');
     }
     // Set up the wrapper, if there isn't one.
     var id = $dialog.attr('id');
@@ -211,7 +211,7 @@
     if (settings.title) {
       var $header = $element.find('.modal-header');
       if (!$header[0]) {
-        $header = $(Drupal.theme.bootstrapModalHeader()).prependTo($element.find('.modal-content'));
+        $header = $(Drupal.theme.bootstrapLiteModalHeader()).prependTo($element.find('.modal-content'));
       }
       $header.find('.modal-title').text(Drupal.checkPlain(settings.title));
     }
@@ -221,7 +221,7 @@
 
     // Add new buttons.
     if (settings.buttons && settings.buttons.length) {
-      var $footer = $(Drupal.theme.bootstrapModalFooter('', true)).appendTo($element.find('.modal-content'));
+      var $footer = $(Drupal.theme.bootstrapLiteModalFooter('', true)).appendTo($element.find('.modal-content'));
       for (var i in settings.buttons) {
         if (!settings.buttons.hasOwnProperty(i)) continue;
         var button = settings.buttons[i];

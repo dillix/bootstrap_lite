@@ -3,7 +3,7 @@
  * Provides an event handler for hidden elements in dropdown menus.
  */
 
-(function ($, Drupal, Bootstrap) {
+(function ($, Drupal, BootstrapLite) {
   'use strict';
 
   /**
@@ -27,11 +27,11 @@
    * event callbacks to be fired as they were intended (despite the fact that
    * the markup has been changed to work with Bootstrap).
    *
-   * @see \Drupal\bootstrap\Plugin\Preprocess\BootstrapDropdown::preprocessLinks
+   * @see \Drupal\bootstrap_lite\Plugin\Preprocess\BootstrapLiteDropdown::preprocessLinks
    *
-   * @type {Drupal~behavior#bootstrapDropdown}
+   * @type {Drupal~behavior#bootstrapLiteDropdown}
    */
-  Drupal.behaviors.bootstrapDropdown = {
+  Drupal.behaviors.bootstrapLiteDropdown = {
     attach: function (context) {
       var elements = context.querySelectorAll('.dropdown [data-dropdown-target]');
       for (var k in elements) {
@@ -64,13 +64,13 @@
         e.stopPropagation();
         var element = target && target !== '#' && document.querySelectorAll(target)[0];
         if (element) {
-          Bootstrap.simulate(element, e.type, e);
+          BootstrapLite.simulate(element, e.type, e);
         }
-        else if (Bootstrap.settings.dev && window.console && !e.type.match(/^mouse/)) {
-          window.console.debug('[Drupal Bootstrap] Could not find a the target:', target);
+        else if (BootstrapLite.settings.dev && window.console && !e.type.match(/^mouse/)) {
+          window.console.debug('[Drupal Bootstrap Lite] Could not find a the target:', target);
         }
       }
     }
   }
 
-})(jQuery, Drupal, Drupal.bootstrap);
+})(jQuery, Drupal, Drupal.bootstrap_lite);

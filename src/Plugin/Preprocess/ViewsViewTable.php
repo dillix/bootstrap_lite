@@ -1,12 +1,12 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Preprocess\ViewsViewTable.
+ * Contains \Drupal\bootstrap_lite\Plugin\Preprocess\ViewsViewTable.
  */
 
-namespace Drupal\bootstrap\Plugin\Preprocess;
+namespace Drupal\bootstrap_lite\Plugin\Preprocess;
 
-use Drupal\bootstrap\Annotation\BootstrapPreprocess;
+use Drupal\bootstrap_lite\Annotation\BootstrapPreprocess;
 
 /**
  * Pre-processes variables for the "views_view_table" theme hook.

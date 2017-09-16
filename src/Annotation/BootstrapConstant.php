@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Annotation\BootstrapConstant.
+ * Contains \Drupal\bootstrap_lite\Annotation\BootstrapConstant.
  */
 
-namespace Drupal\bootstrap\Annotation;
+namespace Drupal\bootstrap_lite\Annotation;
 
 use Doctrine\Common\Annotations\AnnotationException;
 use Drupal\Component\Annotation\AnnotationBase;

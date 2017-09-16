@@ -1,26 +1,26 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Preprocess\BootstrapCarousel.
+ * Contains \Drupal\bootstrap_lite\Plugin\Preprocess\BootstrapCarousel.
  */
 
-namespace Drupal\bootstrap\Plugin\Preprocess;
+namespace Drupal\bootstrap_lite\Plugin\Preprocess;
 
-use Drupal\bootstrap\Annotation\BootstrapPreprocess;
-use Drupal\bootstrap\Bootstrap;
-use Drupal\bootstrap\Utility\Element;
-use Drupal\bootstrap\Utility\Variables;
+use Drupal\bootstrap_lite\Annotation\BootstrapPreprocess;
+use Drupal\bootstrap_lite\BootstrapLite;
+use Drupal\bootstrap_lite\Utility\Element;
+use Drupal\bootstrap_lite\Utility\Variables;
 use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Template\Attribute;
 use Drupal\Core\Url;
 
 /**
- * Pre-processes variables for the "bootstrap_carousel" theme hook.
+ * Pre-processes variables for the "bootstrap_lite_carousel" theme hook.
  *
  * @ingroup plugins_preprocess
  *
- * @BootstrapPreprocess("bootstrap_carousel")
+ * @BootstrapPreprocess("bootstrap_lite_carousel")
  */
 class BootstrapCarousel extends PreprocessBase implements PreprocessInterface {
 
@@ -29,7 +29,7 @@ class BootstrapCarousel extends PreprocessBase implements PreprocessInterface {
    */
   protected function preprocessVariables(Variables $variables) {
     // Retrieve the ID, generating one if needed.
-    $id = $variables->getAttribute('id', Html::getUniqueId($variables->offsetGet('id', 'bootstrap-carousel')));
+    $id = $variables->getAttribute('id', Html::getUniqueId($variables->offsetGet('id', 'bootstrap-lite-carousel')));
     unset($variables['id']);
 
     // Build slides.
@@ -42,8 +42,8 @@ class BootstrapCarousel extends PreprocessBase implements PreprocessInterface {
 
     // Build controls.
     if ($variables->controls) {
-      $left_icon = Bootstrap::glyphicon('chevron-left');
-      $right_icon = Bootstrap::glyphicon('chevron-right');
+      $left_icon = BootstrapLite::glyphicon('chevron-left');
+      $right_icon = BootstrapLite::glyphicon('chevron-right');
       $url = Url::fromUserInput("#$id");
       $variables->controls = [
         'left' => [
@@ -72,7 +72,7 @@ class BootstrapCarousel extends PreprocessBase implements PreprocessInterface {
     // Build indicators.
     if ($variables->indicators) {
       $variables->indicators = [
-        '#theme' => 'item_list__bootstrap_carousel_indicators',
+        '#theme' => 'item_list__bootstrap_lite_carousel_indicators',
         '#list_type' => 'ol',
         '#items' => array_keys($variables->slides),
         '#context' => [

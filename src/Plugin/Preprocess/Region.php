@@ -1,14 +1,14 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Preprocess\Region.
+ * Contains \Drupal\bootstrap_lite\Plugin\Preprocess\Region.
  */
 
-namespace Drupal\bootstrap\Plugin\Preprocess;
+namespace Drupal\bootstrap_lite\Plugin\Preprocess;
 
-use Drupal\bootstrap\Annotation\BootstrapPreprocess;
-use Drupal\bootstrap\Bootstrap;
-use Drupal\bootstrap\Utility\Variables;
+use Drupal\bootstrap_lite\Annotation\BootstrapPreprocess;
+use Drupal\bootstrap_lite\BootstrapLite;
+use Drupal\bootstrap_lite\Utility\Variables;
 
 /**
  * Pre-processes variables for the "region" theme hook.
@@ -30,7 +30,7 @@ class Region extends PreprocessBase implements PreprocessInterface {
     // Help region.
     if ($region === 'help' && !empty($variables['content'])) {
       $variables['content'] = [
-        'icon' => Bootstrap::glyphicon('question-sign'),
+        'icon' => BootstrapLite::glyphicon('question-sign'),
         'content' => ['#markup' => $variables['content']],
       ];
       $variables->addClass(['alert', 'alert-info', 'messages', 'info']);

@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Annotation\BootstrapProvider.
+ * Contains \Drupal\bootstrap_lite\Annotation\BootstrapProvider.
  */
 
-namespace Drupal\bootstrap\Annotation;
+namespace Drupal\bootstrap_lite\Annotation;
 
 use Drupal\Component\Annotation\Plugin;
 
@@ -13,10 +13,10 @@ use Drupal\Component\Annotation\Plugin;
  *
  * Plugin Namespace: "Plugin/Provider".
  *
- * @see \Drupal\bootstrap\Plugin\ProviderInterface
- * @see \Drupal\bootstrap\Plugin\ProviderManager
- * @see \Drupal\bootstrap\Theme::getProviders()
- * @see \Drupal\bootstrap\Theme::getProvider()
+ * @see \Drupal\bootstrap_lite\Plugin\ProviderInterface
+ * @see \Drupal\bootstrap_lite\Plugin\ProviderManager
+ * @see \Drupal\bootstrap_lite\Theme::getProviders()
+ * @see \Drupal\bootstrap_lite\Theme::getProvider()
  * @see plugin_api
  *
  * @Annotation

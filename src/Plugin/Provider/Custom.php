@@ -1,12 +1,12 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Provider\Custom.
+ * Contains \Drupal\bootstrap_lite\Plugin\Provider\Custom.
  */
 
-namespace Drupal\bootstrap\Plugin\Provider;
+namespace Drupal\bootstrap_lite\Plugin\Provider;
 
-use Drupal\bootstrap\Annotation\BootstrapProvider;
+use Drupal\bootstrap_lite\Annotation\BootstrapProvider;
 use Drupal\Core\Annotation\Translation;
 
 /**

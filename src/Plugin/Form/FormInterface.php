@@ -1,12 +1,12 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Form\FormInterface.
+ * Contains \Drupal\bootstrap_lite\Plugin\Form\FormInterface.
  */
 
-namespace Drupal\bootstrap\Plugin\Form;
+namespace Drupal\bootstrap_lite\Plugin\Form;
 
-use Drupal\bootstrap\Utility\Element;
+use Drupal\bootstrap_lite\Utility\Element;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
@@ -32,7 +32,7 @@ interface FormInterface {
   /**
    * The alter method to store the code.
    *
-   * @param \Drupal\bootstrap\Utility\Element $form
+   * @param \Drupal\bootstrap_lite\Utility\Element $form
    *   The Element object that comprises the form.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The current state of the form.
@@ -55,7 +55,7 @@ interface FormInterface {
   /**
    * Form validation handler.
    *
-   * @param \Drupal\bootstrap\Utility\Element $form
+   * @param \Drupal\bootstrap_lite\Utility\Element $form
    *   The Element object that comprises the form.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The current state of the form.
@@ -75,7 +75,7 @@ interface FormInterface {
   /**
    * Form submission handler.
    *
-   * @param \Drupal\bootstrap\Utility\Element $form
+   * @param \Drupal\bootstrap_lite\Utility\Element $form
    *   The Element object that comprises the form.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The current state of the form.

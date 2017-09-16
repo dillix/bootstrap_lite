@@ -247,7 +247,7 @@
     handle
       .attr('title', Drupal.t('Drag to re-order'))
       .attr('data-toggle', 'tooltip')
-      .append(Drupal.theme('bootstrapIcon', 'move'))
+      .append(Drupal.theme('bootstrapLiteIcon', 'move'))
     ;
 
     handle.on('mousedown touchstart pointerdown', function (event) {
@@ -443,7 +443,7 @@
      * @return {string}
      */
     tableDragChangedMarker: function () {
-      return Drupal.theme('bootstrapIcon', 'warning-sign', {'class': ['tabledrag-changed', 'text-warning']});
+      return Drupal.theme('bootstrapLiteIcon', 'warning-sign', {'class': ['tabledrag-changed', 'text-warning']});
     },
 
     /**

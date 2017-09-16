@@ -1,8 +1,8 @@
 <?php
 
-namespace Drupal\bootstrap\Plugin\Preprocess;
+namespace Drupal\bootstrap_lite\Plugin\Preprocess;
 
-use Drupal\bootstrap\Utility\Variables;
+use Drupal\bootstrap_lite\Utility\Variables;
 
 /**
  * Pre-processes for the "item_list__dropdown" theme hook.

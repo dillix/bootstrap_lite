@@ -1,15 +1,15 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Preprocess\FileLink.
+ * Contains \Drupal\bootstrap_lite\Plugin\Preprocess\FileLink.
  */
 
-namespace Drupal\bootstrap\Plugin\Preprocess;
+namespace Drupal\bootstrap_lite\Plugin\Preprocess;
 
-use Drupal\bootstrap\Annotation\BootstrapPreprocess;
-use Drupal\bootstrap\Bootstrap;
-use Drupal\bootstrap\Utility\Element;
-use Drupal\bootstrap\Utility\Variables;
+use Drupal\bootstrap_lite\Annotation\BootstrapPreprocess;
+use Drupal\bootstrap_lite\BootstrapLite;
+use Drupal\bootstrap_lite\Utility\Element;
+use Drupal\bootstrap_lite\Utility\Variables;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\file\Entity\File;
@@ -98,7 +98,7 @@ class FileLink extends PreprocessBase {
     ]);
 
     // Set the icon for the mime type.
-    $icon = Bootstrap::glyphicon($mime['icon']);
+    $icon = BootstrapLite::glyphicon($mime['icon']);
     $variables->icon = Element::create($icon)
       ->addClass('text-primary')
       ->getArray();

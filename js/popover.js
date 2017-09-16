@@ -1,17 +1,17 @@
 /**
  * @file
- * Bootstrap Popovers.
+ * Bootstrap Lite Popovers.
  */
 
 var Drupal = Drupal || {};
 
-(function ($, Drupal, Bootstrap) {
+(function ($, Drupal, BootstrapLite) {
   "use strict";
 
   /**
-   * Extend the Bootstrap Popover plugin constructor class.
+   * Extend the Bootstrap Lite Popover plugin constructor class.
    */
-  Bootstrap.extendPlugin('popover', function (settings) {
+  BootstrapLite.extendPlugin('popover', function (settings) {
     return {
       DEFAULTS: {
         animation: !!settings.popover_animation,
@@ -30,11 +30,11 @@ var Drupal = Drupal || {};
   });
 
   /**
-   * Bootstrap Popovers.
+   * Bootstrap Lite Popovers.
    *
    * @todo This should really be properly delegated if selector option is set.
    */
-  Drupal.behaviors.bootstrapPopovers = {
+  Drupal.behaviors.bootstrapLitePopovers = {
     attach: function (context) {
       // Immediately return if popovers are not available.
       if (!$.fn.popover || !$.fn.popover.Constructor.DEFAULTS.enabled) {
@@ -96,8 +96,8 @@ var Drupal = Drupal || {};
           // To ensure the element is bound multiple times, remove any
           // previously set event handler before adding another one.
           $element
-            .off('click.drupal.bootstrap.popover')
-            .on('click.drupal.bootstrap.popover', function (e) {
+            .off('click.drupal.bootstrap_lite.popover')
+            .on('click.drupal.bootstrap_lite.popover', function (e) {
               $(this).popover('toggle');
               e.preventDefault();
               e.stopPropagation();
@@ -114,10 +114,10 @@ var Drupal = Drupal || {};
 
       // Destroy all popovers.
       $(context).find('[data-toggle="popover"]')
-        .off('click.drupal.bootstrap.popover')
+        .off('click.drupal.bootstrap_lite.popover')
         .popover('destroy')
       ;
     }
   };
 
-})(window.jQuery, window.Drupal, window.Drupal.bootstrap);
+})(window.jQuery, window.Drupal, window.Drupal.bootstrap_lite);

@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Annotation\BootstrapAlter.
+ * Contains \Drupal\bootstrap_lite\Annotation\BootstrapAlter.
  */
 
-namespace Drupal\bootstrap\Annotation;
+namespace Drupal\bootstrap_lite\Annotation;
 
 use Drupal\Component\Annotation\PluginID;
 
@@ -13,8 +13,8 @@ use Drupal\Component\Annotation\PluginID;
  *
  * Plugin Namespace: "Plugin/Alter".
  *
- * @see \Drupal\bootstrap\Plugin\AlterInterface
- * @see \Drupal\bootstrap\Plugin\AlterManager
+ * @see \Drupal\bootstrap_lite\Plugin\AlterInterface
+ * @see \Drupal\bootstrap_lite\Plugin\AlterManager
  * @see plugin_api
  *
  * @Annotation

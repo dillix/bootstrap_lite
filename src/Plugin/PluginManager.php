@@ -1,17 +1,17 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\PluginManager.
+ * Contains \Drupal\bootstrap_lite\Plugin\PluginManager.
  */
 
-namespace Drupal\bootstrap\Plugin;
+namespace Drupal\bootstrap_lite\Plugin;
 
-use Drupal\bootstrap\Bootstrap;
-use Drupal\bootstrap\Theme;
+use Drupal\bootstrap_lite\BootstrapLite;
+use Drupal\bootstrap_lite\Theme;
 use Drupal\Core\Plugin\DefaultPluginManager;
 
 /**
- * Base class for Bootstrap plugin managers.
+ * Base class for Bootstrap Lite plugin managers.
  *
  * @ingroup utility
  */
@@ -20,7 +20,7 @@ class PluginManager extends DefaultPluginManager {
   /**
    * The current theme.
    *
-   * @var \Drupal\bootstrap\Theme
+   * @var \Drupal\bootstrap_lite\Theme
    */
   protected $theme;
 
@@ -41,7 +41,7 @@ class PluginManager extends DefaultPluginManager {
   /**
    * Creates the discovery object.
    *
-   * @param \Drupal\bootstrap\Theme $theme
+   * @param \Drupal\bootstrap_lite\Theme $theme
    *   The theme to use for discovery.
    * @param string|bool $subdir
    *   The plugin's subdirectory, for example Plugin/views/filter.
@@ -95,7 +95,7 @@ class PluginManager extends DefaultPluginManager {
    *   An indexed array of cache tags.
    */
   public function getCacheTags() {
-    return [Bootstrap::CACHE_TAG];
+    return [BootstrapLite::CACHE_TAG];
   }
 
   /**

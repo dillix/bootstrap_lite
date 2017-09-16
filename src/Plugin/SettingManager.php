@@ -1,29 +1,29 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\SettingManager.
+ * Contains \Drupal\bootstrap_lite\Plugin\SettingManager.
  */
 
-namespace Drupal\bootstrap\Plugin;
+namespace Drupal\bootstrap_lite\Plugin;
 
-use Drupal\bootstrap\Theme;
+use Drupal\bootstrap_lite\Theme;
 use Drupal\Component\Utility\SortArray;
 
 /**
- * Manages discovery and instantiation of Bootstrap theme settings.
+ * Manages discovery and instantiation of Bootstrap Lite theme settings.
  *
  * @ingroup plugins_setting
  */
 class SettingManager extends PluginManager {
 
   /**
-   * Constructs a new \Drupal\bootstrap\Plugin\SettingManager object.
+   * Constructs a new \Drupal\bootstrap_lite\Plugin\SettingManager object.
    *
-   * @param \Drupal\bootstrap\Theme $theme
+   * @param \Drupal\bootstrap_lite\Theme $theme
    *   The theme to use for discovery.
    */
   public function __construct(Theme $theme) {
-    parent::__construct($theme, 'Plugin/Setting', 'Drupal\bootstrap\Plugin\Setting\SettingInterface', 'Drupal\bootstrap\Annotation\BootstrapSetting');
+    parent::__construct($theme, 'Plugin/Setting', 'Drupal\bootstrap_lite\Plugin\Setting\SettingInterface', 'Drupal\bootstrap_lite\Annotation\BootstrapSetting');
     $this->setCacheBackend(\Drupal::cache('discovery'), 'theme:' . $theme->getName() . ':setting', $this->getCacheTags());
   }
 

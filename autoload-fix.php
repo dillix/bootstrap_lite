@@ -9,7 +9,7 @@
  *
  * This is in an attempt to ensure theme autoloading works properly.
  *
- * @see \Drupal\bootstrap\Bootstrap::autoloadFixInclude
+ * @see \Drupal\bootstrap_lite\BootstrapLite::autoloadFixInclude
  */
 try {
   \Drupal::service('theme_handler')->listInfo();

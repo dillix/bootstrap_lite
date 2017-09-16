@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Prerender\Dropbutton.
+ * Contains \Drupal\bootstrap_lite\Plugin\Prerender\Dropbutton.
  */
 
-namespace Drupal\bootstrap\Plugin\Prerender;
+namespace Drupal\bootstrap_lite\Plugin\Prerender;
 
-use Drupal\bootstrap\Annotation\BootstrapPrerender;
-use Drupal\bootstrap\Utility\Element;
+use Drupal\bootstrap_lite\Annotation\BootstrapPrerender;
+use Drupal\bootstrap_lite\Utility\Element;
 
 /**
  * Pre-render callback for the "dropbutton" element type.
@@ -26,7 +26,7 @@ class Dropbutton extends PrerenderBase {
    * {@inheritdoc}
    */
   public static function preRenderElement(Element $element) {
-    $element['#attached']['library'][] = 'bootstrap/dropdown';
+    $element['#attached']['library'][] = 'bootstrap_lite/dropdown';
 
     // Enable targeted theming of specific dropbuttons (e.g., 'operations' or
     // 'operations__node').

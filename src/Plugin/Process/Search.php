@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Process\Search.
+ * Contains \Drupal\bootstrap_lite\Plugin\Process\Search.
  */
 
-namespace Drupal\bootstrap\Plugin\Process;
+namespace Drupal\bootstrap_lite\Plugin\Process;
 
-use Drupal\bootstrap\Annotation\BootstrapProcess;
-use Drupal\bootstrap\Utility\Element;
+use Drupal\bootstrap_lite\Annotation\BootstrapProcess;
+use Drupal\bootstrap_lite\Utility\Element;
 use Drupal\Core\Form\FormStateInterface;
 
 /**

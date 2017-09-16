@@ -1,32 +1,32 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\ProcessManager.
+ * Contains \Drupal\bootstrap_lite\Plugin\ProcessManager.
  */
 
-namespace Drupal\bootstrap\Plugin;
+namespace Drupal\bootstrap_lite\Plugin;
 
-use Drupal\bootstrap\Bootstrap;
-use Drupal\bootstrap\Theme;
-use Drupal\bootstrap\Utility\Element;
+use Drupal\bootstrap_lite\BootstrapLite;
+use Drupal\bootstrap_lite\Theme;
+use Drupal\bootstrap_lite\Utility\Element;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Manages discovery and instantiation of Bootstrap form process callbacks.
+ * Manages discovery and instantiation of Bootstrap Lite form process callbacks.
  *
  * @ingroup plugins_process
  */
 class ProcessManager extends PluginManager {
 
   /**
-   * Constructs a new \Drupal\bootstrap\Plugin\ProcessManager object.
+   * Constructs a new \Drupal\bootstrap_lite\Plugin\ProcessManager object.
    *
-   * @param \Drupal\bootstrap\Theme $theme
+   * @param \Drupal\bootstrap_lite\Theme $theme
    *   The theme to use for discovery.
    */
   public function __construct(Theme $theme) {
-    parent::__construct($theme, 'Plugin/Process', 'Drupal\bootstrap\Plugin\Process\ProcessInterface', 'Drupal\bootstrap\Annotation\BootstrapProcess');
+    parent::__construct($theme, 'Plugin/Process', 'Drupal\bootstrap_lite\Plugin\Process\ProcessInterface', 'Drupal\bootstrap_lite\Annotation\BootstrapProcess');
     $this->setCacheBackend(\Drupal::cache('discovery'), 'theme:' . $theme->getName() . ':process', $this->getCacheTags());
   }
 
@@ -43,16 +43,16 @@ class ProcessManager extends PluginManager {
    * @return array
    *   The altered element array.
    *
-   * @see \Drupal\bootstrap\Plugin\Alter\ElementInfo::alter
+   * @see \Drupal\bootstrap_lite\Plugin\Alter\ElementInfo::alter
    */
   public static function process(array $element, FormStateInterface $form_state, array &$complete_form) {
-    if (!empty($element['#bootstrap_ignore_process'])) {
+    if (!empty($element['#bootstrap_lite_ignore_process'])) {
       return $element;
     }
 
     static $theme;
     if (!isset($theme)) {
-      $theme = Bootstrap::getTheme();
+      $theme = BootstrapLite::getTheme();
     }
 
     $e = Element::create($element, $form_state);
@@ -81,7 +81,7 @@ class ProcessManager extends PluginManager {
   /**
    * Processes elements with AJAX properties.
    *
-   * @param \Drupal\bootstrap\Utility\Element $element
+   * @param \Drupal\bootstrap_lite\Utility\Element $element
    *   The element object.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The current state of the form.
@@ -94,7 +94,7 @@ class ProcessManager extends PluginManager {
     // Show throbber AJAX requests in an input button group.
     if (!$element->isType('hidden') && (!isset($ajax['progress']['type']) || $ajax['progress']['type'] === 'throbber')) {
       // Use an icon for autocomplete "throbber".
-      $icon = Bootstrap::glyphicon('refresh');
+      $icon = BootstrapLite::glyphicon('refresh');
       $element->appendProperty('field_suffix', Element::create($icon)->addClass(['ajax-progress', 'ajax-progress-throbber']));
       $element->setProperty('input_group', TRUE);
     }
@@ -103,7 +103,7 @@ class ProcessManager extends PluginManager {
   /**
    * Processes elements that have input groups.
    *
-   * @param \Drupal\bootstrap\Utility\Element $element
+   * @param \Drupal\bootstrap_lite\Utility\Element $element
    *   The element object.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The current state of the form.
@@ -155,10 +155,10 @@ class ProcessManager extends PluginManager {
   /**
    * Traverses an element to find the closest button.
    *
-   * @param \Drupal\bootstrap\Utility\Element $element
+   * @param \Drupal\bootstrap_lite\Utility\Element $element
    *   The element to iterate over.
    *
-   * @return \Drupal\bootstrap\Utility\Element|FALSE
+   * @return \Drupal\bootstrap_lite\Utility\Element|FALSE
    *   The first button element or FALSE if no button could be found.
    */
   protected static function &findButton(Element $element) {

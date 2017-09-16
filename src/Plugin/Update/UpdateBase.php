@@ -1,14 +1,14 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap\Plugin\Update\UpdateBase.
+ * Contains \Drupal\bootstrap_lite\Plugin\Update\UpdateBase.
  */
 
-namespace Drupal\bootstrap\Plugin\Update;
+namespace Drupal\bootstrap_lite\Plugin\Update;
 
-use Drupal\bootstrap\Bootstrap;
-use Drupal\bootstrap\Plugin\PluginBase;
-use Drupal\bootstrap\Theme;
+use Drupal\bootstrap_lite\BootstrapLite;
+use Drupal\bootstrap_lite\Plugin\PluginBase;
+use Drupal\bootstrap_lite\Theme;
 
 /**
  * Base class for an update.
@@ -56,7 +56,7 @@ class UpdateBase extends PluginBase implements UpdateInterface {
    * {@inheritdoc}
    */
   public function getTheme() {
-    return Bootstrap::getTheme($this->pluginDefinition['provider']);
+    return BootstrapLite::getTheme($this->pluginDefinition['provider']);
   }
 
   /**
@@ -80,7 +80,7 @@ class UpdateBase extends PluginBase implements UpdateInterface {
    *
    * @deprecated 8.x-3.0-rc2, will be removed before 8.x-3.0 is released.
    *
-   * @see \Drupal\bootstrap\Plugin\Update\UpdateBase::getSeverity
+   * @see \Drupal\bootstrap_lite\Plugin\Update\UpdateBase::getSeverity
    */
   public function getLevel() {
     return $this->getSeverity();
@@ -91,7 +91,7 @@ class UpdateBase extends PluginBase implements UpdateInterface {
    *
    * @deprecated 8.x-3.0-rc2, will be removed before 8.x-3.0 is released.
    *
-   * @see \Drupal\bootstrap\Plugin\Update\UpdateBase::getLabel
+   * @see \Drupal\bootstrap_lite\Plugin\Update\UpdateBase::getLabel
    */
   public function getTitle() {
     return $this->getLabel();
