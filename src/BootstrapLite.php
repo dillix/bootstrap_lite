@@ -981,7 +981,7 @@ class BootstrapLite {
         'glyphicon-jpy' => 'jpy',
         'glyphicon-rub' => 'rub',
         'glyphicon-xbt' => 'xbt',
-      ]);
+      ];
     }
 
     // Return a specific versions icon set.
