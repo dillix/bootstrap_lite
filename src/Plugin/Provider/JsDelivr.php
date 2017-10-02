@@ -120,7 +120,7 @@ class JsDelivr extends ProviderBase {
       foreach ($json as $data) {
         if ($data['name'] === $bootstrap || $data['name'] === $bootswatch) {
           foreach ($data['assets'] as $asset) {
-            if (preg_match('/^' . substr(Bootstrap::FRAMEWORK_VERSION, 0, 1) . '\.\d\.\d$/', $asset['version'])) {
+            if (preg_match('/^' . substr(BootstrapLite::FRAMEWORK_VERSION, 0, 1) . '\.\d\.\d$/', $asset['version'])) {
               $libraries[$data['name']][$asset['version']] = $asset['files'];
             }
           }

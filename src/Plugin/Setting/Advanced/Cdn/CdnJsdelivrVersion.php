@@ -26,7 +26,7 @@ use Drupal\Core\Form\FormStateInterface;
  *   weight = -1,
  *   title = @Translation("Version"),
  *   description = @Translation("Choose the Bootstrap version from jsdelivr"),
- *   defaultValue = @BootstrapConstant("Drupal\bootstrap_lite\Bootstrap::FRAMEWORK_VERSION"),
+ *   defaultValue = @BootstrapConstant("Drupal\bootstrap_lite\BootstrapLite::FRAMEWORK_VERSION"),
  *   groups = {
  *     "advanced" = @Translation("Advanced"),
  *     "cdn" = @Translation("CDN (Content Delivery Network)"),
