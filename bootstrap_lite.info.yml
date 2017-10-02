@@ -4,6 +4,7 @@ base theme: false
 name: 'Bootstrap Lite'
 description: 'Built to use Bootstrap, a sleek, intuitive, and powerful front-end framework for faster and easier web development.'
 package: 'Bootstrap'
+core: '8.x'
 
 regions:
   navigation: 'Navigation'
