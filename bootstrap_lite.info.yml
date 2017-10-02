@@ -20,7 +20,7 @@ regions:
   page_bottom: 'Page bottom'
 
 libraries:
-  - 'bootstrap/theme'
+  - 'bootstrap_lite/theme'
 
 libraries-extend:
   core/drupal.ajax:
