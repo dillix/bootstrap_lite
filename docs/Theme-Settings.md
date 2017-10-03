@@ -277,10 +277,10 @@ settings:
   <thead><tr><th class="col-xs-3">Setting name</th><th>Description and default value</th></tr></thead>
   <tbody>
   <tr>
-    <td class="col-xs-3">image_responsive</td>
+    <td class="col-xs-3">image_fluid</td>
     <td>
-      <div class="help-block">Images in Bootstrap 3 can be made responsive-friendly via the addition of the <code>.img-responsive</code> class. This applies <code>max-width: 100%;</code> and <code>height: auto;</code> to the image so that it scales nicely to the parent element.</div>
-      <pre class=" language-yaml"><code>image_responsive: 1
+      <div class="help-block">Images in Bootstrap 4 can be made responsive-friendly via the addition of the <code>.img-fluid</code> class. This applies <code>max-width: 100%;</code> and <code>height: auto;</code> to the image so that it scales nicely to the parent element.</div>
+      <pre class=" language-yaml"><code>image_fluid: 1
 </code></pre>
     </td>
   </tr>
