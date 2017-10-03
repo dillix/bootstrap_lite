@@ -27,12 +27,12 @@ use Drupal\Core\Annotation\Translation;
  *     "images" = @Translation("Images"),
  *   },
  *   options = {
- *     "img-rounded" = @Translation("Rounded"),
- *     "img-circle" = @Translation("Circle"),
+ *     "rounded" = @Translation("Rounded"),
+ *     "rounded-circle" = @Translation("Circle"),
  *     "img-thumbnail" = @Translation("Thumbnail"),
  *   },
  *   see = {
- *     "http://getbootstrap.com/css/#images-shapes" = @Translation("Image Shapes"),
+ *     "https://getbootstrap.com/docs/4.0/content/images/" = @Translation("Image Shapes"),
  *   },
  * )
  */
