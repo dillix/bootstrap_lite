@@ -71,30 +71,4 @@ class UpdateBase extends PluginBase implements UpdateInterface {
    */
   public function process(Theme $theme, array &$context) {}
 
-  /*************************
-   * Deprecated methods.
-   *************************/
-
-  /**
-   * {@inheritdoc}
-   *
-   * @deprecated 8.x-3.0-rc2, will be removed before 8.x-3.0 is released.
-   *
-   * @see \Drupal\bootstrap_lite\Plugin\Update\UpdateBase::getSeverity
-   */
-  public function getLevel() {
-    return $this->getSeverity();
-  }
-
-  /**
-   * {@inheritdoc}
-   *
-   * @deprecated 8.x-3.0-rc2, will be removed before 8.x-3.0 is released.
-   *
-   * @see \Drupal\bootstrap_lite\Plugin\Update\UpdateBase::getLabel
-   */
-  public function getTitle() {
-    return $this->getLabel();
-  }
-
 }

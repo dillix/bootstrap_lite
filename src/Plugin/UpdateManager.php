@@ -132,22 +132,4 @@ class UpdateManager extends PluginManager {
     return array_keys($definitions);
   }
 
-  /*************************
-   * Deprecated methods.
-   *************************/
-
-  /**
-   * Retrieves the latest update schema.
-   *
-   * @return int
-   *   The latest update schema.
-   *
-   * @deprecated 8.x-3.0-rc2, will be removed before 8.x-3.0 is released.
-   *
-   * @see \Drupal\bootstrap_lite\Plugin\UpdateManager::getLatestSchema
-   */
-  public function getLatestVersion() {
-    return $this->getLatestSchema();
-  }
-
 }

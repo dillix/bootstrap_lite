@@ -16,30 +16,6 @@ settings:
 
 ### Advanced
 
-<table class="table table-striped table-responsive">
-  <thead><tr><th class="col-xs-3">Setting name</th><th>Description and default value</th></tr></thead>
-  <tbody>
-  <tr>
-    <td class="col-xs-3">include_deprecated</td>
-    <td>
-      <div class="help-block">Enabling this setting will include any <code>deprecated.php</code> file found in your theme or base themes.</div>
-      <pre class=" language-yaml"><code>include_deprecated: 0
-</code></pre>
-    </td>
-  </tr>
-  <tr>
-    <td class="col-xs-3">suppress_deprecated_warnings</td>
-    <td>
-      <div class="help-block">Enable this setting if you wish to suppress deprecated warning messages. <strong class='error text-error'>WARNING: Suppressing these messages does not "fix" the problem and you will inevitably encounter issues when they are removed in future updates. Only use this setting in extreme and necessary circumstances.</strong></div>
-      <pre class=" language-yaml"><code>suppress_deprecated_warnings: 0
-</code></pre>
-    </td>
-  </tr>
-  </tbody>
-</table>
-
----
-
 ### Advanced > CDN (Content Delivery Network)
 
 <table class="table table-striped table-responsive">
@@ -599,5 +575,5 @@ settings:
   </tbody>
 </table>
 
-[Drupal Bootstrap]: https://www.drupal.org/project/bootstrap
+[Drupal Bootstrap Lite]: https://www.drupal.org/project/bootstrap_lite
 [Bootstrap Framework]: http://getbootstrap.com

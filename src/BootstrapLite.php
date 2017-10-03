@@ -402,32 +402,6 @@ class BootstrapLite {
   }
 
   /**
-   * Logs and displays a warning about a deprecated function/method being used.
-   */
-  public static function deprecated() {
-    // Log backtrace.
-    $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-    \Drupal::logger('bootstrap_lite')->warning('<pre><code>' . print_r($backtrace, TRUE) . '</code></pre>');
-
-    if (!self::getTheme()->getSetting('suppress_deprecated_warnings')) {
-      return;
-    }
-
-    // Extrapolate the caller.
-    $caller = $backtrace[1];
-    $class = '';
-    if (isset($caller['class'])) {
-      $parts = explode('\\', $caller['class']);
-      $class = array_pop($parts) . '::';
-    }
-    drupal_set_message(t('The following function(s) or method(s) have been deprecated, please check the logs for a more detailed backtrace on where these are being invoked. Click on the function or method link to search the documentation site for a possible replacement or solution.'), 'warning');
-    drupal_set_message(t('<a href=":url" target="_blank">@title</a>.', [
-      ':url' => self::apiSearchUrl($class . $caller['function']),
-      '@title' => ($class ? $caller['class'] . $caller['type'] : '') . $caller['function'] . '()',
-    ]), 'warning');
-  }
-
-  /**
    * Provides additional variables to be used in elements and templates.
    *
    * @return array
@@ -1019,16 +993,6 @@ class BootstrapLite {
     if (!$initialized) {
       // Initialize the active theme.
       $active_theme = self::getTheme();
-
-      // Include deprecated functions.
-      foreach ($active_theme->getAncestry() as $ancestor) {
-        if ($ancestor->getSetting('include_deprecated')) {
-          $files = $ancestor->fileScan('/^deprecated\.php$/');
-          if ($file = reset($files)) {
-            $ancestor->includeOnce($file->uri, FALSE);
-          }
-        }
-      }
 
       $initialized = TRUE;
     }

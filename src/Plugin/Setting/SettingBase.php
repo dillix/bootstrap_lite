@@ -73,16 +73,6 @@ class SettingBase extends PluginBase implements SettingInterface {
 
   /**
    * {@inheritdoc}
-   *
-   * @deprecated Will be removed in a future release. Use \Drupal\bootstrap_lite\Plugin\Setting\SettingInterface::getGroupElement
-   */
-  public function getGroup(array &$form, FormStateInterface $form_state) {
-    BootstrapLite::deprecated();
-    return $this->getGroupElement(Element::create($form), $form_state);
-  }
-
-  /**
-   * {@inheritdoc}
    */
   public function getGroupElement(Element $form, FormStateInterface $form_state) {
     $groups = $this->getGroups();
@@ -117,16 +107,6 @@ class SettingBase extends PluginBase implements SettingInterface {
    */
   public function getGroups() {
     return !empty($this->pluginDefinition['groups']) ? $this->pluginDefinition['groups'] : [];
-  }
-
-  /**
-   * {@inheritdoc}
-   *
-   * @deprecated Will be removed in a future release. Use \Drupal\bootstrap_lite\Plugin\Setting\SettingInterface::getSettingElement
-   */
-  public function getElement(array &$form, FormStateInterface $form_state) {
-    BootstrapLite::deprecated();
-    return $this->getSettingElement(Element::create($form), $form_state);
   }
 
   /**

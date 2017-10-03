@@ -564,19 +564,6 @@ class Theme {
   }
 
   /**
-   * Retrieves the theme's setting plugin instances.
-   *
-   * @return \Drupal\bootstrap_lite\Plugin\Setting\SettingInterface[]
-   *   An associative array of setting objects, keyed by their name.
-   *
-   * @deprecated Will be removed in a future release. Use \Drupal\bootstrap_lite\Theme::getSettingPlugin instead.
-   */
-  public function getSettingPlugins() {
-    BootstrapLite::deprecated();
-    return $this->getSettingPlugin();
-  }
-
-  /**
    * Retrieves the theme's cache from the database.
    *
    * @return \Drupal\bootstrap_lite\Utility\Storage
