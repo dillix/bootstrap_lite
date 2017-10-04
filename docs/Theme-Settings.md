@@ -335,6 +335,14 @@ settings:
     </td>
   </tr>
   <tr>
+    <td class="col-xs-3">table_inversed</td>
+    <td>
+      <div class="help-block">Makes tables with light text on dark backgrounds.</div>
+      <pre class=" language-yaml"><code>table_inversed: 0
+</code></pre>
+    </td>
+  </tr>
+  <tr>
     <td class="col-xs-3">table_striped</td>
     <td>
       <div class="help-block">Add zebra-striping to any table row within the <code>&lt;tbody&gt;</code>.</div>

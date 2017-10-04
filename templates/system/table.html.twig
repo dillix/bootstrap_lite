@@ -46,14 +46,13 @@
  * @see template_preprocess_table()
  */
 #}
-{% if responsive %}
-  <div class="table-responsive">
-{% endif %}
 {%
   set classes = [
     'table',
+    responsive ? 'table-responsive',
+    inversed ? 'table-inverse',
     bordered ? 'table-bordered',
-    condensed ? 'table-condensed',
+    condensed ? 'table-sm',
     hover ? 'table-hover',
     striped ? 'table-striped',
     sticky ? 'sticky-enabled',
@@ -127,6 +126,3 @@
     </tfoot>
   {% endif %}
 </table>
-{% if responsive %}
-  </div>
-{% endif %}
