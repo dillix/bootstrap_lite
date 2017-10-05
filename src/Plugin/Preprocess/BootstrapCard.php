@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Contains \Drupal\bootstrap_lite\Plugin\Preprocess\BootstrapPanel.
+ * Contains \Drupal\bootstrap_lite\Plugin\Preprocess\BootstrapCard.
  */
 
 namespace Drupal\bootstrap_lite\Plugin\Preprocess;
@@ -13,13 +13,13 @@ use Drupal\Component\Render\MarkupInterface;
 use Drupal\Component\Utility\Html;
 
 /**
- * Pre-processes variables for the "bootstrap_lite_panel" theme hook.
+ * Pre-processes variables for the "bootstrap_lite_card" theme hook.
  *
  * @ingroup plugins_preprocess
  *
- * @BootstrapPreprocess("bootstrap_lite_panel")
+ * @BootstrapPreprocess("bootstrap_lite_card")
  */
-class BootstrapPanel extends PreprocessBase implements PreprocessInterface {
+class BootstrapCard extends PreprocessBase implements PreprocessInterface {
 
   /**
    * {@inheritdoc}
@@ -61,7 +61,7 @@ class BootstrapPanel extends PreprocessBase implements PreprocessInterface {
       'errors' => 'errors',
       'footer' => 'footer',
       'required' => 'required',
-      'panel_type' => 'panel_type',
+      'card_type' => 'card_type',
       'title' => 'heading',
       'title_attributes' => 'heading_attributes',
     ];
@@ -96,7 +96,7 @@ class BootstrapPanel extends PreprocessBase implements PreprocessInterface {
    */
   protected function preprocessVariables(Variables $variables) {
     // Retrieve the ID, generating one if needed.
-    $id = $variables->getAttribute('id', Html::getUniqueId($variables->offsetGet('id', 'bootstrap-lite-panel')));
+    $id = $variables->getAttribute('id', Html::getUniqueId($variables->offsetGet('id', 'bootstrap-lite-card')));
     unset($variables['id']);
 
     // Handle collapsible state.
@@ -123,9 +123,9 @@ class BootstrapPanel extends PreprocessBase implements PreprocessInterface {
       $variables->offsetSet('heading', ['#markup' => $heading]);
     }
 
-    // Ensure there is a valid panel state.
-    if (!$variables->offsetGet('panel_type')) {
-      $variables->offsetSet('panel_type', 'default');
+    // Ensure there is a valid card state.
+    if (!$variables->offsetGet('card_type')) {
+      $variables->offsetSet('card_type', 'default');
     }
 
     // Convert the description variable.

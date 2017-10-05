@@ -526,7 +526,7 @@ class BootstrapLite {
       ],
     ];
 
-    $hooks['bootstrap_lite_panel'] = [
+    $hooks['bootstrap_lite_card'] = [
       'variables' => [
         'attributes' => [],
         'body' => [],
@@ -540,7 +540,7 @@ class BootstrapLite {
         'heading' => NULL,
         'heading_attributes' => [],
         'id' => NULL,
-        'panel_type' => 'default',
+        'card_type' => 'default',
       ],
     ];
 

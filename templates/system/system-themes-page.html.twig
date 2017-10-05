@@ -37,20 +37,20 @@
         'system-themes-list',
         'system-themes-list-' ~ theme_group.state,
         'clearfix',
-        'panel',
-        'panel-default',
+        'card',
+        'card-default',
       ]
     %}
     <div{{ theme_group.attributes.addClass(theme_group_classes) }}>
-      <div class="panel-heading">
-        <a class="panel-title" href="#system-themes-list--{{ theme_group.state }}" aria-controls="#system-themes-list--{{ theme_group.state }}" aria-expanded="false" aria-pressed="false" data-toggle="collapse" role="button">
+      <div class="card-header">
+        <a class="card-title mb-0" href="#system-themes-list--{{ theme_group.state }}" aria-controls="#system-themes-list--{{ theme_group.state }}" aria-expanded="false" aria-pressed="false" data-toggle="collapse" role="button">
           {{ theme_group.title }} ({{ theme_group.themes|length }})
         </a>
       </div>
       {%
         set table_classes = [
           'table',
-          'panel-collapse',
+          'card-collapse',
           theme_group.state == 'uninstalled' ? 'collapse',
           'fade',
           theme_group.state != 'uninstalled' ? 'in',

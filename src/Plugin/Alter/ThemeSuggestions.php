@@ -25,7 +25,7 @@ class ThemeSuggestions extends PluginBase implements AlterInterface {
   /**
    * @var array
    */
-  protected $bootstrapPanelTypes = ['details', 'fieldset'];
+  protected $bootstrapCardTypes = ['details', 'fieldset'];
 
   /**
    * An element object provided in the variables array, may not be set.
@@ -308,9 +308,9 @@ class ThemeSuggestions extends PluginBase implements AlterInterface {
    * Processes the necessary theme hook suggestions.
    */
   protected function processSuggestions() {
-    // Add special hook suggestions for Bootstrap panels.
-    if ((in_array($this->originalHook, $this->bootstrapPanelTypes)) && $this->element && $this->element->getProperty('bootstrap_lite_panel', TRUE)) {
-      $this->addSuggestion('bootstrap_lite_panel');
+    // Add special hook suggestions for Bootstrap cards.
+    if ((in_array($this->originalHook, $this->bootstrapCardTypes)) && $this->element && $this->element->getProperty('bootstrap_lite_card', TRUE)) {
+      $this->addSuggestion('bootstrap_lite_card');
     }
 
     // Retrieve any dynamic alter methods.

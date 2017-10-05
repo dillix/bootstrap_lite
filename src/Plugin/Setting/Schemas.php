@@ -52,7 +52,7 @@ class Schemas extends SettingBase {
     $form['update'] = [
       '#type' => 'details',
       '#title' => $this->t('Theme Updates'),
-      '#panel_type' => !!$updates ? 'primary' : 'default',
+      '#card_type' => !!$updates ? 'primary' : 'default',
       '#open' => !!$updates,
       '#weight' => -20,
     ];

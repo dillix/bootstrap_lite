@@ -36,7 +36,7 @@
         var tab_focus;
 
         // Check if there are some details that can be converted to vertical-tabs
-        var $details = $this.find('> .panel');
+        var $details = $this.find('> .card');
         if ($details.length === 0) {
           return;
         }
@@ -49,7 +49,7 @@
         $details.each(function () {
           var $that = $(this);
           var vertical_tab = new Drupal.verticalTab({
-            title: $that.find('> .panel-heading > .panel-title, > .panel-heading').last().html(),
+            title: $that.find('> .card-header > .card-title, > .card-header').last().html(),
             details: $that
           });
           tab_list.append(vertical_tab.item);
@@ -58,10 +58,10 @@
             // prop() can't be used on browsers not supporting details element,
             // the style won't apply to them if prop() is used.
             .attr('open', true)
-            .removeClass('collapsible collapsed panel panel-default')
+            .removeClass('collapsible collapsed card card-default')
             .addClass('tab-pane vertical-tabs-pane')
             .data('verticalTab', vertical_tab)
-            .find('> .panel-heading').remove();
+            .find('> .card-header').remove();
           if (this.id === focusID) {
             tab_focus = $that;
           }

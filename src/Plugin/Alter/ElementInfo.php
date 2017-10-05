@@ -37,12 +37,12 @@ class ElementInfo extends PluginBase implements AlterInterface {
 
       // By default, the "checkboxes" and "radios" element types invoke
       // CompositeFormElementTrait::preRenderCompositeFormElement which wraps
-      // the element in a fieldset and thus ultimately a panel. This isn't
+      // the element in a fieldset and thus ultimately a card. This isn't
       // (usually) the desired effect for these elements, so to avoid rendering
-      // them as Bootstrap panels, the #bootstrap_panel should be set to FALSE
+      // them as Bootstrap cards, the #bootstrap_card should be set to FALSE
       // by default. This allows those who wish to opt back in to do so.
       if ($type === 'checkboxes' || $type === 'radios') {
-        $element['#bootstrap_panel'] = FALSE;
+        $element['#bootstrap_card'] = FALSE;
       }
 
       // Core does not actually use the "description_display" property on the
@@ -54,7 +54,7 @@ class ElementInfo extends PluginBase implements AlterInterface {
       // @see \Drupal\Core\Form\FormBuilder::doBuildForm()
       if ($type === 'details' || $type === 'fieldset') {
         $element['#description_display'] = 'before';
-        $element['#panel_type'] = 'default';
+        $element['#card_type'] = 'default';
       }
 
       // Add extra variables as defaults to all elements.
