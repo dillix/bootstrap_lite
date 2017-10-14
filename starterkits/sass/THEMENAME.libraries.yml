@@ -5,7 +5,6 @@ global-styling:
 
 bootstrap-scripts:
   js:
-    bootstrap/assets/javascripts/bootstrap/affix.js: {}
     bootstrap/assets/javascripts/bootstrap/alert.js: {}
     bootstrap/assets/javascripts/bootstrap/button.js: {}
     bootstrap/assets/javascripts/bootstrap/carousel.js: {}
