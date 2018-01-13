@@ -58,37 +58,35 @@
     {%
       set navbar_classes = [
         'navbar',
-        theme.settings.navbar_inverse ? 'navbar-inverse' : 'navbar-default',
+        theme.settings.navbar_inverse ? 'navbar-dark' : 'navbar-light',
+        theme.settings.navbar_inverse ? 'bg-dark' : 'bg-light',
         theme.settings.navbar_position ? 'navbar-' ~ theme.settings.navbar_position|clean_class : container,
+        page.navigation_collapsible ? 'navbar-expand-md' : 'navbar-expand',
       ]
     %}
-    <header{{ navbar_attributes.addClass(navbar_classes) }} id="navbar" role="banner">
-      {% if not navbar_attributes.hasClass(container) %}
-        <div class="{{ container }}">
-      {% endif %}
-      <div class="navbar-header">
-        {{ page.navigation }}
-        {# .btn-navbar is used as the toggle for collapsed navbar content #}
-        {% if page.navigation_collapsible %}
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
-            <span class="sr-only">{{ 'Toggle navigation'|t }}</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        {% endif %}
-      </div>
+    {% if container == 'container' %}
+    <div class="{{ container }}">
+    {% endif %}
 
+    <header{{ navbar_attributes.addClass(navbar_classes) }} id="navbar" role="navigation">
+      
+      {{ page.navigation }}
       {# Navigation (collapsible) #}
       {% if page.navigation_collapsible %}
+        {# button is used as the toggle for collapsed navbar content #}
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="{{ 'Toggle navigation'|t }}">
+          <span class="navbar-toggler-icon"></span>
+        </button>
         <div id="navbar-collapse" class="navbar-collapse collapse">
           {{ page.navigation_collapsible }}
         </div>
       {% endif %}
-      {% if not navbar_attributes.hasClass(container) %}
-        </div>
-      {% endif %}
     </header>
+
+    {% if container == 'container' %}
+    </div>
+    {% endif %}
+
   {% endblock %}
 {% endif %}
 
