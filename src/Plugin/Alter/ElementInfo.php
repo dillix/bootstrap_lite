@@ -42,7 +42,7 @@ class ElementInfo extends PluginBase implements AlterInterface {
       // them as Bootstrap cards, the #bootstrap_card should be set to FALSE
       // by default. This allows those who wish to opt back in to do so.
       if ($type === 'checkboxes' || $type === 'radios') {
-        $element['#bootstrap_card'] = FALSE;
+        $element['#bootstrap_lite_card'] = FALSE;
       }
 
       // Core does not actually use the "description_display" property on the
