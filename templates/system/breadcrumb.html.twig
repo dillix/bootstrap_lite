@@ -10,15 +10,23 @@
  */
 #}
 {% if breadcrumb %}
-  <ol class="breadcrumb">
-    {% for item in breadcrumb %}
-      <li {{ item.attributes }}>
-        {% if item.url %}
-          <a href="{{ item.url }}">{{ item.text }}</a>
-        {% else %}
-          {{ item.text }}
-        {% endif %}
-      </li>
-    {% endfor %}
-  </ol>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      {% for item in breadcrumb %}
+        {%
+          set item_classes = [
+            'breadcrumb-item',
+            item.attributes.hasClass('active')? 'active',
+          ]
+        %}
+        <li{{ attributes.addClass(item_classes) }}>
+          {% if item.url %}
+            <a href="{{ item.url }}">{{ item.text }}</a>
+          {% else %}
+            {{ item.text }}
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ol>
+  </nav>
 {% endif %}
