@@ -42,7 +42,6 @@ libraries-extend:
 
 libraries-override:
   core/drupal.batch: bootstrap_lite/drupal.batch
-  core/drupal.collapse: false
   core/drupal.dropbutton: bootstrap_lite/dropdown
   core/drupal.vertical-tabs: bootstrap_lite/drupal.vertical-tabs
   filter/drupal.filter: bootstrap_lite/drupal.filter
