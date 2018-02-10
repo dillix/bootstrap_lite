@@ -62,7 +62,12 @@
       $context.find('#edit-javascript').drupalSetSummary(function () {
         var summary = [];
         if ($context.find('input[name="modal_enabled"]').is(':checked')) {
-          summary.push(Drupal.t('Modals'));
+          if ($context.find('input[name="modal_jquery_ui_bridge"]').is(':checked')) {
+            summary.push(Drupal.t('Modals (Bridged)'));
+          }
+          else {
+            summary.push(Drupal.t('Modals'));
+          }
         }
         if ($context.find('input[name="popover_enabled"]').is(':checked')) {
           summary.push(Drupal.t('Popovers'));

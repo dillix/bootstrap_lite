@@ -27,6 +27,8 @@ libraries-extend:
     - bootstrap_lite/drupal.ajax
   core/drupal.autocomplete:
     - bootstrap_lite/drupal.autocomplete
+  core/drupal.dialog.ajax:
+    - bootstrap_lite/drupal.dialog.ajax
   core/drupal.form:
     - bootstrap_lite/drupal.form
   core/drupal.progress:
@@ -70,11 +72,3 @@ libraries-override:
     css:
       theme:
         css/node.preview.css: false
-
-# The following are dynamic library overrides based on certain critera,
-# usually a theme setting.
-#
-# @see \Drupal\bootstrap_lite\Plugin\Alter\LibraryInfo::alter()
-#
-#  core/drupal.dialog: bootstrap_lite/drupal.dialog
-#  core/drupal.dialog.ajax: bootstrap_lite/drupal.dialog.ajax

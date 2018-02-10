@@ -82,8 +82,25 @@ class LibraryInfo extends PluginBase implements AlterInterface {
     elseif ($extension === 'core') {
       // Replace core dialog/jQuery UI implementations with Bootstrap Modals.
       if ($this->theme->getSetting('modal_enabled')) {
-        $libraries['drupal.dialog']['override'] = 'bootstrap_lite/drupal.dialog';
-        $libraries['drupal.dialog.ajax']['override'] = 'bootstrap_lite/drupal.dialog.ajax';
+        // Replace dependencies if using bridge so jQuery UI is not loaded
+        // and remove dialog.jquery-ui.js since the dialog widget isn't loaded.
+        if ($this->theme->getSetting('modal_jquery_ui_bridge')) {
+          // Remove core's jquery.ui.dialog dependency.
+          $key = array_search('core/jquery.ui.dialog', $libraries['drupal.dialog']['dependencies']);
+          if ($key !== FALSE) {
+            unset($libraries['drupal.dialog']['dependencies'][$key]);
+          }
+
+          // Remove core's dialog.jquery-ui.js.
+          unset($libraries['drupal.dialog']['js']['misc/dialog/dialog.jquery-ui.js']);
+
+          // Add the Modal jQuery UI Bridge.
+          $libraries['drupal.dialog']['dependencies'][] = 'bootstrap_lite/modal.jquery.ui.bridge';
+        }
+        // Otherwise, just append the modal.
+        else {
+          $libraries['drupal.dialog']['dependencies'][] = 'bootstrap_lite/modal';
+        }
       }
     }
   }

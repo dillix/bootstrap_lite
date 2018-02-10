@@ -8,10 +8,11 @@
  *
  * @namespace
  */
-(function ($, Drupal, drupalSettings) {
+(function (_, $, Drupal, drupalSettings) {
   'use strict';
 
-  Drupal.bootstrap_lite = {
+  var BootstrapLite = {
+    processedOnce: {},
     settings: drupalSettings.bootstrap_lite || {}
   };
 
@@ -28,70 +29,54 @@
    *
    * @ingroup sanitization
    */
-  Drupal.bootstrap_lite.checkPlain = function (str) {
+  BootstrapLite.checkPlain = function (str) {
     return str && Drupal.checkPlain(str) || '';
   };
 
   /**
-   * Extends a Bootstrap Lite plugin constructor.
+   * Creates a jQuery plugin.
    *
-   * @param {string} id
-   *   A Bootstrap Lite plugin identifier located in $.fn.
-   * @param {function} [callback]
-   *   A callback to extend the plugin constructor.
-   *
-   * @return {function|boolean}
-   *   The Bootstrap Lite plugin or FALSE if the plugin does not exist.
+   * @param {String} id
+   *   A jQuery plugin identifier located in $.fn.
+   * @param {Function} plugin
+   *   A constructor function used to initialize the for the jQuery plugin.
+   * @param {Boolean} [noConflict]
+   *   Flag indicating whether or not to create a ".noConflict()" helper method
+   *   for the plugin.
    */
-  Drupal.bootstrap_lite.extendPlugin = function (id, callback) {
-    // Immediately return if the plugin does not exist.
-    if (!$.fn[id] || !$.fn[id].Constructor) return false;
-
-    // Extend the plugin if a callback was provided.
-    if ($.isFunction(callback)) {
-      var ret = callback.apply($.fn[id].Constructor, [this.settings]);
-      if ($.isPlainObject(ret)) {
-        $.extend(true, $.fn[id].Constructor, ret);
-      }
+  BootstrapLite.createPlugin = function (id, plugin, noConflict) {
+    // Immediately return if plugin doesn't exist.
+    if ($.fn[id] !== void 0) {
+      return this.fatal('Specified jQuery plugin identifier already exists: @id. Use Drupal.bootstrap_lite.replacePlugin() instead.', {'@id': id});
     }
 
-    // Add a jQuery UI like option getter/setter method.
-    if ($.fn[id].Constructor.prototype.option === void(0)) {
-      $.fn[id].Constructor.prototype.option = this.option;
+    // Immediately return if plugin isn't a function.
+    if (typeof plugin !== 'function') {
+      return this.fatal('You must provide a constructor function to create a jQuery plugin "@id": @plugin', {'@id': id, '@plugin':  plugin});
     }
 
-    return $.fn[id].Constructor;
+    // Add a ".noConflict()" helper method.
+    this.pluginNoConflict(id, plugin, noConflict);
+
+    $.fn[id] = plugin;
   };
 
   /**
-   * Replaces a Bootstrap Lite jQuery plugin definition.
+   * Diff object properties.
    *
-   * @param {string} id
-   *   A Bootstrap Lite plugin identifier located in $.fn.
-   * @param {function} [callback]
-   *   A callback to replace the jQuery plugin definition. The callback must
-   *   return a function that is used to construct a jQuery plugin.
+   * @param {...Object} objects
+   *   Two or more objects. The first object will be used to return properties
+   *   values.
    *
-   * @return {function|boolean}
-   *   The Bootstrap Lite jQuery plugin definition or FALSE if the plugin does not
-   *   exist.
+   * @return {Object}
+   *   Returns the properties of the first passed object that are not present
+   *   in all other passed objects.
    */
-  Drupal.bootstrap_lite.replacePlugin = function (id, callback) {
-    // Immediately return if plugin does not exist or not a valid callback.
-    if (!$.fn[id] || !$.fn[id].Constructor || !$.isFunction(callback)) return false;
-    var constructor = $.fn[id].Constructor;
-
-    var plugin = callback.apply(constructor);
-    if ($.isFunction(plugin)) {
-      plugin.Constructor = constructor;
-
-      var old = $.fn[id];
-      plugin.noConflict = function () {
-        $.fn[id] = old;
-        return this;
-      };
-      $.fn[id] = plugin;
-    }
+  BootstrapLite.diffObjects = function (objects) {
+    var args = Array.prototype.slice.call(arguments);
+    return _.pick(args[0], _.difference.apply(_, _.map(args, function (obj) {
+      return Object.keys(obj);
+    })));
   };
 
   /**
@@ -99,11 +84,270 @@
    *
    * @type {Object<Event|MouseEvent|KeyboardEvent|TouchEvent,RegExp>}
    */
-  Drupal.bootstrap_lite.eventMap = {
+  BootstrapLite.eventMap = {
     Event: /^(?:load|unload|abort|error|select|change|submit|reset|focus|blur|resize|scroll)$/,
     MouseEvent: /^(?:click|dblclick|mouse(?:down|enter|leave|up|over|move|out))$/,
     KeyboardEvent: /^(?:key(?:down|press|up))$/,
     TouchEvent: /^(?:touch(?:start|end|move|cancel))$/
+  };
+
+  /**
+   * Extends a jQuery Plugin.
+   *
+   * @param {String} id
+   *   A jQuery plugin identifier located in $.fn.
+   * @param {Function} callback
+   *   A constructor function used to initialize the for the jQuery plugin.
+   *
+   * @return {Function|Boolean}
+   *   The jQuery plugin constructor or FALSE if the plugin does not exist.
+   */
+  BootstrapLite.extendPlugin = function (id, callback) {
+    // Immediately return if plugin doesn't exist.
+    if (typeof $.fn[id] !== 'function') {
+      return this.fatal('Specified jQuery plugin identifier does not exist: @id', {'@id':  id});
+    }
+
+    // Immediately return if callback isn't a function.
+    if (typeof callback !== 'function') {
+      return this.fatal('You must provide a callback function to extend the jQuery plugin "@id": @callback', {'@id': id, '@callback':  callback});
+    }
+
+    // Determine existing plugin constructor.
+    var constructor = $.fn[id] && $.fn[id].Constructor || $.fn[id];
+    var proto = constructor.prototype;
+
+    var obj = callback.apply(constructor, [this.settings]);
+    if (!$.isPlainObject(obj)) {
+      return this.fatal('Returned value from callback is not a plain object that can be used to extend the jQuery plugin "@id": @obj', {'@obj':  obj});
+    }
+
+    // Add a jQuery UI like option getter/setter method.
+    var option = this.option;
+    if (proto.option === void(0)) {
+      proto.option = function () {
+        return option.apply(this, arguments);
+      };
+    }
+
+    // Handle prototype properties separately.
+    if (obj.prototype !== void 0) {
+      for (var key in obj.prototype) {
+        if (!obj.prototype.hasOwnProperty(key)) continue;
+        var value = obj.prototype[key];
+        if (typeof value === 'function') {
+          proto[key] = this.superWrapper(proto[key] || function () {}, value);
+        }
+        else {
+          proto[key] = $.isPlainObject(value) ? $.extend(true, {}, proto[key], value) : value;
+        }
+      }
+    }
+    delete obj.prototype;
+
+    // Handle static properties.
+    for (key in obj) {
+      if (!obj.hasOwnProperty(key)) continue;
+      value = obj[key];
+      if (typeof value === 'function') {
+        constructor[key] = this.superWrapper(constructor[key] || function () {}, value);
+      }
+      else {
+        constructor[key] = $.isPlainObject(value) ? $.extend(true, {}, constructor[key], value) : value;
+      }
+    }
+
+    return $.fn[id];
+  };
+
+  BootstrapLite.superWrapper = function (parent, fn) {
+    return function () {
+      var previousSuper = this.super;
+      this.super = parent;
+      var ret = fn.apply(this, arguments);
+      if (previousSuper) {
+        this.super = previousSuper;
+      }
+      else {
+        delete this.super;
+      }
+      return ret;
+    };
+  };
+
+  /**
+   * Provide a helper method for displaying when something is went wrong.
+   *
+   * @param {String} message
+   *   The message to display.
+   * @param {Object} [args]
+   *   An arguments to use in message.
+   *
+   * @return {Boolean}
+   *   Always returns FALSE.
+   */
+  BootstrapLite.fatal = function (message, args) {
+    if (this.settings.dev && console.warn) {
+      for (var name in args) {
+        if (args.hasOwnProperty(name) && typeof args[name] === 'object') {
+          args[name] = JSON.stringify(args[name]);
+        }
+      }
+      Drupal.throwError(new Error(Drupal.formatString(message, args)));
+    }
+    return false;
+  };
+
+  /**
+   * Intersects object properties.
+   *
+   * @param {...Object} objects
+   *   Two or more objects. The first object will be used to return properties
+   *   values.
+   *
+   * @return {Object}
+   *   Returns the properties of first passed object that intersects with all
+   *   other passed objects.
+   */
+  BootstrapLite.intersectObjects = function (objects) {
+    var args = Array.prototype.slice.call(arguments);
+    return _.pick(args[0], _.intersection.apply(_, _.map(args, function (obj) {
+      return Object.keys(obj);
+    })));
+  };
+
+  /**
+   * An object based once plugin (similar to jquery.once, but without the DOM).
+   *
+   * @param {String} id
+   *   A unique identifier.
+   * @param {Function} callback
+   *   The callback to invoke if the identifier has not yet been seen.
+   *
+   * @return {BootstrapLite}
+   */
+  BootstrapLite.once = function (id, callback) {
+    // Immediately return if identifier has already been processed.
+    if (this.processedOnce[id]) {
+      return this;
+    }
+    callback.call(this, this.settings);
+    this.processedOnce[id] = true;
+    return this;
+  };
+ 
+  /**
+   * Provide jQuery UI like ability to get/set options for Bootstrap Lite plugins.
+   *
+   * @param {string|object} key
+   *   A string value of the option to set, can be dot like to a nested key.
+   *   An object of key/value pairs.
+   * @param {*} [value]
+   *   (optional) A value to set for key.
+   *
+   * @returns {*}
+   *   - Returns nothing if key is an object or both key and value parameters
+   *   were provided to set an option.
+   *   - Returns the a value for a specific setting if key was provided.
+   *   - Returns an object of key/value pairs of all the options if no key or
+   *   value parameter was provided.
+   *
+   * @see https://github.com/jquery/jquery-ui/blob/master/ui/widget.js
+   */
+  BootstrapLite.option = function (key, value) {
+    var options = $.isPlainObject(key) ? $.extend({}, key) : {};
+
+    // Get all options (clone so it doesn't reference the internal object).
+    if (arguments.length === 0) {
+      return $.extend({}, this.options);
+    }
+
+    // Get/set single option.
+    if (typeof key === "string") {
+      // Handle nested keys in dot notation.
+      // e.g., "foo.bar" => { foo: { bar: true } }
+      var parts = key.split('.');
+      key = parts.shift();
+      var obj = options;
+      if (parts.length) {
+        for (var i = 0; i < parts.length - 1; i++) {
+          obj[parts[i]] = obj[parts[i]] || {};
+          obj = obj[parts[i]];
+        }
+        key = parts.pop();
+      }
+
+      // Get.
+      if (arguments.length === 1) {
+        return obj[key] === void 0 ? null : obj[key];
+      }
+
+      // Set.
+      obj[key] = value;
+    }
+
+    // Set multiple options.
+    $.extend(true, this.options, options);
+  };
+
+  /**
+   * Adds a ".noConflict()" helper method if needed.
+   *
+   * @param {String} id
+   *   A jQuery plugin identifier located in $.fn.
+   * @param {Function} plugin
+   * @param {Function} plugin
+   *   A constructor function used to initialize the for the jQuery plugin.
+   * @param {Boolean} [noConflict]
+   *   Flag indicating whether or not to create a ".noConflict()" helper method
+   *   for the plugin.
+   */
+  BootstrapLite.pluginNoConflict = function (id, plugin, noConflict) {
+    if (plugin.noConflict === void 0 && (noConflict === void 0 || noConflict)) {
+      var old = $.fn[id];
+      plugin.noConflict = function () {
+        $.fn[id] = old;
+        return this;
+      };
+    }
+  };
+
+  /**
+   * Replaces a Bootstrap Lite jQuery plugin definition.
+   *
+   * @param {String} id
+   *   A jQuery plugin identifier located in $.fn.
+   * @param {Function} callback
+   *   A callback function that is immediately invoked and must return a
+   *   function that will be used as the plugin constructor.
+   * @param {Boolean} [noConflict]
+   *   Flag indicating whether or not to create a ".noConflict()" helper method
+   *   for the plugin.
+   */
+  BootstrapLite.replacePlugin = function (id, callback, noConflict) {
+    // Immediately return if plugin doesn't exist.
+    if (typeof $.fn[id] !== 'function') {
+      return this.fatal('Specified jQuery plugin identifier does not exist: @id', {'@id':  id});
+    }
+
+    // Immediately return if callback isn't a function.
+    if (typeof callback !== 'function') {
+      return this.fatal('You must provide a valid callback function to replace a jQuery plugin: @callback', {'@callback': callback});
+    }
+
+    // Determine existing plugin constructor.
+    var constructor = $.fn[id] && $.fn[id].Constructor || $.fn[id];
+    var plugin = callback.apply(constructor, [this.settings]);
+
+    // Immediately return if plugin isn't a function.
+    if (typeof plugin !== 'function') {
+      return this.fatal('Returned value from callback is not a usable function to replace a jQuery plugin "@id": @plugin', {'@id': id, '@plugin': plugin});
+    }
+
+    // Add a ".noConflict()" helper method.
+    this.pluginNoConflict(id, plugin, noConflict);
+
+    $.fn[id] = plugin;
   };
 
   /**
@@ -125,7 +369,7 @@
    *   object here. This allows, if the browser supports it, to be a truly
    *   simulated event.
    */
-  Drupal.bootstrap_lite.simulate = function (element, type, options) {
+  BootstrapLite.simulate = function (element, type, options) {
     // Defer to the jQuery.simulate plugin, if it's available.
     if (typeof $.simulate === 'function') {
       new $.simulate(element, type, options);
@@ -133,8 +377,8 @@
     }
     var event;
     var ctor;
-    for (var name in Drupal.bootstrap_lite.eventMap) {
-      if (Drupal.bootstrap_lite.eventMap[name].test(type)) {
+    for (var name in this.eventMap) {
+      if (this.eventMap[name].test(type)) {
         ctor = name;
         break;
       }
@@ -171,67 +415,30 @@
   };
 
   /**
-   * Provide jQuery UI like ability to get/set options for Bootstrap Lite plugins.
+   * Provide a helper method for displaying when something is unsupported.
    *
-   * @param {string|object} key
-   *   A string value of the option to set, can be dot like to a nested key.
-   *   An object of key/value pairs.
+   * @param {String} type
+   *   The type of unsupported object, e.g. method or option.
+   * @param {String} name
+   *   The name of the unsupported object.
    * @param {*} [value]
-   *   (optional) A value to set for key.
-   *
-   * @returns {*}
-   *   - Returns nothing if key is an object or both key and value parameters
-   *   were provided to set an option.
-   *   - Returns the a value for a specific setting if key was provided.
-   *   - Returns an object of key/value pairs of all the options if no key or
-   *   value parameter was provided.
-   *
-   * @see https://github.com/jquery/jquery-ui/blob/master/ui/widget.js
-   *
-   * @todo This isn't fully working since Bootstrap Lite plugins don't allow
-   * methods to return values.
+   *   The value of the unsupported object.
    */
-  Drupal.bootstrap_lite.option = function (key, value) {
-    var options = key;
-    var parts, curOption, i;
-
-    // Don't return a reference to the internal hash.
-    if (arguments.length === 0) {
-      return $.extend({}, this.options);
+  BootstrapLite.unsupported = function (type, name, value) {
+    if (this.settings.dev && console.warn) {
+      console.warn(Drupal.formatString('Unsupported Drupal Bootstrap Lite Modal @type: @name -> @value', {
+        '@type': type,
+        '@name': name,
+        '@value': typeof value === 'object' ? JSON.stringify(value) : value
+      }));
     }
-
-    // Handle a specific option.
-    if (typeof key === "string") {
-      // Handle nested keys, e.g., "foo.bar" => { foo: { bar: ___ } }
-      options = {};
-      parts = key.split(".");
-      key = parts.shift();
-      if (parts.length) {
-        curOption = options[key] = $.extend({}, this.options[key]);
-        for (i = 0; i < parts.length - 1; i++) {
-          curOption[parts[i]] = curOption[parts[i]] || {};
-          curOption = curOption[parts[i]];
-        }
-        key = parts.pop();
-        if (arguments.length === 1) {
-          return curOption[key] === undefined ? null : curOption[key];
-        }
-        curOption[key] = value;
-      }
-      else {
-        if (arguments.length === 1) {
-          return this.options[key] === undefined ? null : this.options[key];
-        }
-        options[key] = value;
-      }
-    }
-
-    // Set the new option(s).
-    for (key in options) {
-      if (!options.hasOwnProperty(key)) continue;
-      this.options[key] = options[key];
-    }
-    return this;
   };
 
-})(window.jQuery, window.Drupal, window.drupalSettings);
+  /**
+   * Add Bootstraplite to the global Drupal object.
+   *
+   * @type {BootstrapLite}
+   */
+  Drupal.bootstrap_lite = Drupal.bootstrap_lite || BootstrapLite;
+
+})(window._, window.jQuery, window.Drupal, window.drupalSettings);

@@ -48,6 +48,18 @@ modal:
   dependencies:
     - bootstrap_lite/theme
 
+modal.jquery.ui.bridge:
+  js:
+    js/modal.jquery.ui.bridge.js: {}
+  dependencies:
+    - bootstrap_lite/modal
+    - core/jquery.ui
+    - core/jquery.ui.widget
+    - core/jquery.ui.draggable
+    - core/jquery.ui.mouse
+    - core/jquery.ui.position
+    - core/jquery.ui.resizable
+
 popover:
   js:
     js/popover.js: {}
@@ -68,6 +80,10 @@ drupal.ajax:
 drupal.autocomplete:
   js:
     js/misc/autocomplete.js: {}
+
+drupal.dialog.ajax:
+  js:
+    js/misc/dialog.ajax.js: {}
 
 drupal.form:
   js:
@@ -104,19 +120,6 @@ drupal.batch:
     - core/drupal.ajax
     - core/drupal.progress
     - core/jquery.once
-
-drupal.dialog:
-  js:
-    js/misc/dialog.js: {}
-  dependencies:
-    - bootstrap_lite/modal
-
-drupal.dialog.ajax:
-  js:
-    js/misc/dialog.ajax.js: {}
-  dependencies:
-    - core/drupal.ajax
-    - bootstrap_lite/drupal.dialog
 
 drupal.filter:
   version: VERSION
