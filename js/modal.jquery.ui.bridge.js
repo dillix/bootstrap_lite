@@ -92,6 +92,8 @@
      * Extend the Bootstrap Lite Modal plugin constructor class.
      */
     BootstrapLite.extendPlugin('modal', function () {
+      var Modal = this;
+
       return {
         DEFAULTS: {
           // By default, this option is disabled. It's only flagged when a modal
@@ -104,7 +106,20 @@
            * Handler for $.fn.dialog('close').
            */
           close: function () {
+            var _this = this;
+
             this.hide.apply(this, arguments);
+
+            // For some reason (likely due to the transition event not being
+            // registered properly), the backdrop doesn't always get removed
+            // after the above "hide" method is invoked . Instead, ensure the
+            // backdrop is removed after the transition duration by manually
+            // invoking the internal "hideModal" method shortly thereafter.
+            setTimeout(function () {
+              if (!_this.isShown && _this.$backdrop) {
+                _this.hideModal();
+              }
+            }, (Modal.TRANSITION_DURATION !== void 0 ? Modal.TRANSITION_DURATION : 300) + 10);
           },
 
           /**
