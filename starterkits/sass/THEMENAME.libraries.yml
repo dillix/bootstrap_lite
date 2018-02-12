@@ -1,9 +1,7 @@
-global-styling:
+framework:
   css:
     theme:
       css/style.css: {}
-
-bootstrap-scripts:
   js:
     bootstrap/assets/javascripts/bootstrap/alert.js: {}
     bootstrap/assets/javascripts/bootstrap/button.js: {}

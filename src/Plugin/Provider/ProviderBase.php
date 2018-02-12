@@ -74,7 +74,6 @@ class ProviderBase extends PluginBase implements ProviderInterface {
         $data = [
           'data' => $asset,
           'type' => 'external',
-          'weight' => -19.999,
         ];
         // CSS library assets use "SMACSS" categorization, assign it to "base".
         if ($type === 'css') {
