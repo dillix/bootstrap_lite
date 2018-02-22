@@ -35,7 +35,7 @@
       {%
         set item_classes = [
           item.is_expanded? 'expanded',
-          item.is_expanded and menu_level == 0 ? 'dropdown' : 'nav-item',
+          item.is_expanded and menu_level == 0 ? 'dropdown nav-item' : 'nav-item',
           item.in_active_trail ? 'active',
         ]
       %}
@@ -46,7 +46,7 @@
       %}
       {% if menu_level == 0 and item.is_expanded %}
         <li{{ item.attributes.addClass(item_classes) }}>
-        <a href="{{ item.url }}" class="dropdown-toggle" data-target="#" data-toggle="dropdown">{{ item.title }} <span class="caret"></span></a>
+        <a href="{{ item.url }}" class="dropdown-toggle nav-link" data-target="#" data-toggle="dropdown">{{ item.title }} <span class="caret"></span></a>
       {% else %}
         <li{{ item.attributes.addClass(item_classes) }}>
         {{ link(item.title, item.url, item.attributes.addClass(link_classes).removeClass(item_classes)) }}
