@@ -14,6 +14,7 @@ use Drupal\bootstrap_lite\Utility\Storage;
 use Drupal\bootstrap_lite\Utility\StorageItem;
 use Drupal\Core\Extension\Extension;
 use Drupal\Core\Extension\ThemeHandlerInterface;
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
 
@@ -336,7 +337,7 @@ class Theme {
     $hash = Crypt::generateHash($mask, $path, $options);
 
     if (!$files->has($hash)) {
-      $files->set($hash, file_scan_directory($path, $mask, $options));
+      $files->set($hash, \Drupal::service('file_system')->scanDirectory($path, $mask, $options));
     }
     return $files->get($hash, []);
   }
@@ -645,7 +646,7 @@ class Theme {
     if (!isset($includes[$include])) {
       $includes[$include] = !!@include_once $include;
       if (!$includes[$include]) {
-        drupal_set_message(t('Could not include file: @include', ['@include' => $include]), 'error');
+        $this->messenger()->addError(t('Could not include file: @include', ['@include' => $include]));
       }
     }
     return $includes[$include];

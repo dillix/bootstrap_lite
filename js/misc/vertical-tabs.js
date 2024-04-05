@@ -2,8 +2,9 @@
  * @file
  * Overrides core/misc/vertical-tabs.js.
  */
+//$, window, Drupal, drupalSettings
 
-(function ($, window, Drupal, drupalSettings) {
+(function (Drupal, $, window, drupalSettings, once) {
   "use strict";
 
   /**
@@ -26,7 +27,7 @@
         return;
       }
 
-      $(context).find('[data-vertical-tabs-panes]').once('vertical-tabs').each(function () {
+      $(once('vertical-tabs', '[data-vertical-tabs-panes]', context)).each(function () {
         var $this = $(this).addClass('tab-content vertical-tabs-panes');
 
         var focusID = $(':hidden.vertical-tabs__active-tab', this).val();
@@ -88,7 +89,7 @@
 
       // Provide some Bootstrap tab/Drupal integration.
       // @todo merge this into the above code from core.
-      $(context).find('.tabbable').once('bootstrap-tabs').each(function () {
+      $(once('bootstrap-tabs', '.tabbable', context)).each(function () {
         var $wrapper = $(this);
         var $tabs = $wrapper.find('.nav-tabs');
         var $content = $wrapper.find('.tab-content');
@@ -264,4 +265,4 @@
     return tab;
   };
 
-})(jQuery, this, Drupal, drupalSettings);
+}(Drupal, jQuery, this, drupalSettings, once));

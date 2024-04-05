@@ -15,6 +15,7 @@ use Drupal\bootstrap_lite\Utility\Element;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Annotation\Translation;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\File\FileSystemInterface;
 
 /**
  * The "cdn_provider" theme setting.
@@ -189,16 +190,16 @@ class CdnProvider extends SettingBase {
   private function importProviderData(FormStateInterface $form_state) {
     if ($form_state->getValue('clicked_button') === t('Save provider data')->render()) {
       $provider_path = ProviderManager::FILE_PATH;
-      file_prepare_directory($provider_path, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS);
+      \Drupal::service('file_system')->prepareDirectory($provider_path, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
 
       $provider = $form_state->getValue('cdn_provider', $this->theme->getSetting('cdn_provider'));
       $file = "$provider_path/$provider.json";
 
       if ($import_data = $form_state->getValue('cdn_provider_import_data', FALSE)) {
-        file_unmanaged_save_data($import_data, $file, FILE_EXISTS_REPLACE);
+        \Drupal::service('file_system')->saveData($import_data, $file, FileSystemInterface::EXISTS_REPLACE);
       }
       elseif ($file && file_exists($file)) {
-        file_unmanaged_delete($file);
+        \Drupal::service('file_system')->delete($file);
       }
 
       // Clear the cached definitions so they can get rebuilt.

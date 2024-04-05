@@ -3,7 +3,7 @@
  * Text behaviors.
  */
 
-(function ($) {
+(function (Drupal, $, once) {
 
   'use strict';
 
@@ -17,7 +17,7 @@
    */
   Drupal.behaviors.textSummary = {
     attach: function (context, settings) {
-      $(context).find('.js-text-summary').once('text-summary').each(function () {
+      $(once('text-summary', '.js-text-summary', context)).each(function () {
         var $widget = $(this).closest('.js-text-format-wrapper');
 
         var $summary = $widget.find('.js-text-summary-wrapper');
@@ -62,4 +62,4 @@
     }
   };
 
-})(jQuery);
+}(Drupal, jQuery, once));

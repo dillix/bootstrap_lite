@@ -6,6 +6,7 @@
 
 namespace Drupal\bootstrap_lite\Plugin\Prerender;
 
+use Drupal\Core\Security\TrustedCallbackInterface;
 use Drupal\bootstrap_lite\Utility\Element;
 
 /**
@@ -13,7 +14,7 @@ use Drupal\bootstrap_lite\Utility\Element;
  *
  * @ingroup plugins_prerender
  */
-class PrerenderBase implements PrerenderInterface {
+class PrerenderBase implements PrerenderInterface, TrustedCallbackInterface {
 
   /**
    * {@inheritdoc}
@@ -30,5 +31,12 @@ class PrerenderBase implements PrerenderInterface {
    *   The element object.
    */
   public static function preRenderElement(Element $element) {}
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function trustedCallbacks() {
+    return ['preRender', 'preRenderElement'];
+  }
 
 }

@@ -53,8 +53,8 @@ class BootstrapDropdown extends PreprocessBase implements PreprocessInterface {
    */
   protected function preprocessLinks(Variables $variables) {
     // Convert "dropbutton" theme suggestion variables.
-    if (Unicode::strpos($variables->theme_hook_original, 'links__dropbutton') !== FALSE && !empty($variables->links)) {
-      $operations = !!Unicode::strpos($variables->theme_hook_original, 'operations');
+    if (mb_strpos($variables->theme_hook_original, 'links__dropbutton') !== FALSE && !empty($variables->links)) {
+      $operations = !!mb_strpos($variables->theme_hook_original, 'operations');
 
       // Normal dropbutton links are not actually render arrays, convert them.
       foreach ($variables->links as &$element) {

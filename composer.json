@@ -1,13 +1,13 @@
 {
-  "name": "drupal/bootstrap_lite",
+  "name": "dillix/bootstrap_lite",
   "description": "Built to use Bootstrap, a sleek, intuitive, and powerful front-end framework for faster and easier web development.",
   "type": "drupal-theme",
   "license": "GPL-2.0",
-  "homepage": "http://drupal.org/project/bootstrap_lite",
+  "homepage": "https://github.com/dillix/bootstrap_lite",
   "authors": [
     {
       "name": "Mikhail Khasaya (dillix)",
-      "homepage": "https://www.drupal.org/u/markcarver",
+      "homepage": "https://github.com/dillix",
       "role": "Maintainer"
     }
   ],
@@ -16,5 +16,17 @@
     "issues": "https://www.drupal.org/project/issues/bootstrap_lite",
     "irc": "irc://irc.freenode.org/drupal-bootstrap",
     "source": "http://cgit.drupalcode.org/bootstrap_lite"
+  },
+  "require": {
+    "drupal/core": "^9.5 || ^10",
+    "php": ">=8.1.0",
+    "drupal/jquery_ui": "^1.6",
+    "drupal/jquery_ui_draggable": "^2.0",
+    "drupal/jquery_ui_resizable": "^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Drupal\\bootstrap\\": "src"
+    }
   }
 }

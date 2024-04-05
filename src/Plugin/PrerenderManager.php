@@ -6,6 +6,7 @@
 
 namespace Drupal\bootstrap_lite\Plugin;
 
+use Drupal\Core\Security\TrustedCallbackInterface;
 use Drupal\bootstrap_lite\Theme;
 use Drupal\bootstrap_lite\Utility\Element;
 
@@ -14,7 +15,7 @@ use Drupal\bootstrap_lite\Utility\Element;
  *
  * @ingroup plugins_prerender
  */
-class PrerenderManager extends PluginManager {
+class PrerenderManager extends PluginManager implements TrustedCallbackInterface {
 
   /**
    * Constructs a new \Drupal\bootstrap_lite\Plugin\PrerenderManager object.
@@ -51,6 +52,13 @@ class PrerenderManager extends PluginManager {
     $e->smartDescription();
 
     return $element;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function trustedCallbacks() {
+    return ['preRender'];
   }
 
 }

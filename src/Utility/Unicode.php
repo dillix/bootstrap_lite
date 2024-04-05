@@ -57,9 +57,9 @@ class Unicode extends \Drupal\Component\Utility\Unicode {
       $callback = implode('::', $callback);
     }
     if ($callback[0] === '\\') {
-      $callback = self::substr($callback, 1);
+      $callback = mb_substr($callback, 1);
     }
-    if ($array && self::strpos($callback, '::') !== FALSE) {
+    if ($array && mb_strpos($callback, '::') !== FALSE) {
       $callback = explode('::', $callback);
     }
     return $callback;

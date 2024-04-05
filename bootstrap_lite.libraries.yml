@@ -3,7 +3,7 @@ attributes:
     js/attributes.js: {}
   dependencies:
     - core/jquery
-    - core/underscore
+    - core/internal.underscore
 
 # This is automatically extended with JavaScript and CSS for CDN based themes.
 # If sub-theme uses a starterkit like LESS or SASS, then it should extend this
@@ -21,6 +21,7 @@ drupal.bootstrap_lite:
     - core/jquery
     - core/drupal
     - core/drupalSettings
+    - core/internal.underscore
     - bootstrap_lite/framework
 
 # Create a library placeholder for livereload.
@@ -42,7 +43,7 @@ theme-settings:
     js/theme-settings.js: {}
   dependencies:
     - core/jquery
-    - core/jquery.once
+    - core/once
     - core/drupal
     - core/drupalSettings
 
@@ -56,6 +57,7 @@ modal:
   js:
     js/modal.js: {}
   dependencies:
+    - core/internal.underscore
     - bootstrap_lite/theme
 
 modal.jquery.ui.bridge:
@@ -63,12 +65,9 @@ modal.jquery.ui.bridge:
     js/modal.jquery.ui.bridge.js: {}
   dependencies:
     - bootstrap_lite/modal
-    - core/jquery.ui
-    - core/jquery.ui.widget
-    - core/jquery.ui.draggable
-    - core/jquery.ui.mouse
-    - core/jquery.ui.position
-    - core/jquery.ui.resizable
+    - jquery_ui/jquery_ui
+    - jquery_ui_draggable/draggable
+    - jquery_ui_resizable/resizable
 
 popover:
   js:
@@ -129,7 +128,7 @@ drupal.batch:
     - bootstrap_lite/theme
     - core/drupal.ajax
     - core/drupal.progress
-    - core/jquery.once
+    - core/once
 
 drupal.filter:
   version: VERSION
@@ -138,14 +137,14 @@ drupal.filter:
   dependencies:
     - core/jquery
     - core/drupal
-    - core/jquery.once
+    - core/once
 
 drupal.text:
   js:
     js/text/text.js: {}
   dependencies:
     - core/jquery
-    - core/jquery.once
+    - core/once
     - core/drupal
 
 drupal.vertical-tabs:
@@ -153,6 +152,5 @@ drupal.vertical-tabs:
     js/misc/vertical-tabs.js: {}
   dependencies:
     - bootstrap_lite/theme
-    - core/jquery.once
+    - core/once
     - core/drupal.form
-    - core/matchmedia

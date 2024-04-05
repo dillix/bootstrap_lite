@@ -103,6 +103,13 @@ class BootstrapLite {
   const PROJECT_PAGE = 'https://www.drupal.org/project/bootstrap_lite';
 
   /**
+   * The File System service, if it exists.
+   *
+   * @var \Drupal\Core\File\FileSystemInterface|false
+   */
+  protected static $fileSystem;
+
+  /**
    * Adds a callback to an array.
    *
    * @param array $callbacks
@@ -389,7 +396,7 @@ class BootstrapLite {
             break;
 
           case 'contains':
-            if (strpos(Unicode::strtolower($string), Unicode::strtolower($text)) !== FALSE) {
+            if (strpos(mb_strtolower($string), mb_strtolower($text)) !== FALSE) {
               return $class;
             }
             break;
@@ -417,6 +424,23 @@ class BootstrapLite {
       'icon_position' => 'before',
       'icon_only' => FALSE,
     ];
+  }
+
+  /**
+   * Retrieves the File System service, if it exists.
+   *
+   * @return \Drupal\Core\File\FileSystemInterface
+   *   The File System service, if it exists.
+   *
+   * @deprecated in bootstrap:8.x-3.22 and is removed from bootstrap:5.0.0.
+   *   Use the "file_system" service instead.
+   * @see https://www.drupal.org/project/bootstrap/issues/3096963
+   */
+  public static function fileSystem() {
+    if (!isset(static::$fileSystem)) {
+      static::$fileSystem = \Drupal::hasService('file_system') ? \Drupal::service('file_system') : FALSE;
+    }
+    return static::$fileSystem;
   }
 
   /**
@@ -575,17 +599,31 @@ class BootstrapLite {
         ];
       }
       else {
-        $icon = [
-          '#type' => 'html_tag',
-          '#tag' => 'span',
-          '#value' => '',
-          '#attributes' => [
-            'class' => ['icon', 'glyphicon', 'glyphicon-' . $name],
-            'aria-hidden' => 'true',
-          ],
-        ];
+        if(in_array($name, ['search'])){
+          // Use fontawesome icons
+          $icon = [
+            '#type' => 'html_tag',
+            '#tag' => 'i',
+            '#value' => '',
+            '#attributes' =>  [
+              'class' => ['fa','fa-'.$name],
+              'aria-hidden' => 'true',
+            ],
+          ];
+        }
+        else {
+          $icon = [
+            '#type' => 'html_tag',
+            '#tag' => 'span',
+            '#value' => '',
+            '#attributes' => [
+              'class' => ['icon', 'glyphicon', 'glyphicon-' . $name],
+              'aria-hidden' => 'true',
+            ],
+          ];
+        }
       }
-    }
+    } //dpm($icon);
 
     return $icon ?: $default;
   }
@@ -664,7 +702,7 @@ class BootstrapLite {
             break;
 
           case 'contains':
-            if (strpos(Unicode::strtolower($string), Unicode::strtolower($text)) !== FALSE) {
+            if (strpos(mb_strtolower($string), mb_strtolower($text)) !== FALSE) {
               return self::glyphicon($icon, $default);
             }
             break;

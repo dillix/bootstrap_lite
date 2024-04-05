@@ -38,7 +38,7 @@
     /**
      * Proxy $.fn.dialog to $.fn.modal.
      */
-    BootstrapLite.createPlugin('dialog', function (options) {
+    BootstrapLite.createPlugin('dialog', function (options) { console.log(options);
       // When only options are passed, jQuery UI dialog treats this like a
       // initialization method. Destroy any existing Bootstrap Lite modal and
       // recreate it using the contents of the dialog HTML.
@@ -127,6 +127,7 @@
            */
           createButtons: function () {
             this.$footer.find('.modal-buttons').remove();
+console.log('buttons off');
             var buttons = this.options.dialogOptions && this.options.dialogOptions.buttons || [];
             if (buttons.length) {
               var $buttons = $('<div class="modal-buttons"/>').appendTo(this.$footer);
@@ -145,6 +146,7 @@
            * Initializes the Bootstrap Lite Modal.
            */
           init: function () {
+console.log('init');
             // Relay necessary events.
             if (this.options.jQueryUiBridge) {
               this.$element.on('hide.bs.modal',   relayEvent(this.$element, 'dialogbeforeclose', false));
@@ -371,7 +373,7 @@
                   break;
 
                 case 'title':
-                  dialogOptions.title = options.title;
+                  dialogOptions.title = options.title; console.log(options.title);
                   this.$dialog.find('.modal-title').text(options.title);
                   break;
 

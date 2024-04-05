@@ -33,14 +33,14 @@ function drush_bootstrap_lite_generate_docs($type = 'all') {
     if (function_exists($function)) {
       $ret = $function(Bootstrap::getTheme('bootstrap'));
       if ($ret) {
-        drush_log('Successfully generated documentation for: ' . $type, 'success');
+        \Drupal::logger('Successfully generated documentation for: ' . $type, 'success');
       }
       else {
-        drush_log('Unable to generate documentation for: ' . $type, 'error');
+        \Drupal::logger('Unable to generate documentation for: ' . $type, 'error');
       }
     }
     else {
-      drush_log('Invalid documentation type: ' . $type, 'error');
+      \Drupal::logger('Invalid documentation type: ' . $type, 'error');
     }
   }
 }

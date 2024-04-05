@@ -61,7 +61,7 @@
        * Initialize the modal.
        */
       Modal.prototype.init = function () {
-        if (this.options.remote) {
+        if (this.options.remote) { console.log(this.options.remote);
           this.$content.load(this.options.remote, $.proxy(function () {
             this.$element.trigger('loaded.bs.modal');
           }, this));
@@ -167,7 +167,7 @@
        * @return {string}
        *   The HTML for the modal.
        */
-      bootstrapLiteModal: function (variables) {
+      bootstrapLiteModal: function (variables) { //console.log(variables);
         var output = '';
         var settings = drupalSettings.bootstrap_lite || {};
         var defaults = {
@@ -194,11 +194,11 @@
             },
             content: Drupal.t('Loading...'),
             html: false,
-            tag: 'h4'
+            tag: 'h5'
           }
-        };
+        }; //onsole.log(variables);
         variables = $.extend(true, {}, defaults, variables);
-
+//console.log(variables);
         var attributes = Attributes.create(defaults.attributes).merge(variables.attributes);
         attributes.set('id', attributes.get('id', variables.id));
 
@@ -353,7 +353,7 @@
         }
 
         output += '</div>';
-
+console.log(description.content);
         return output;
       },
 
@@ -436,7 +436,7 @@
             attributes: {
               class: ['modal-title']
             },
-            content: Drupal.t('Loading...'),
+            content: '77'+Drupal.t('Loading...'),
             html: false,
             tag: 'h4'
           }
@@ -454,11 +454,11 @@
 
           output += '<div' + attributes + '>';
 
+          output += '<' + Drupal.checkPlain(title.tag) + Attributes.create(defaults.title.attributes).merge(title.attributes) + '>' + (title.html ? title.content : Drupal.checkPlain(title.content)) + '</' + Drupal.checkPlain(title.tag) + '>';
+
           if (variables.closeButton) {
             output += Drupal.theme('bootstrapLiteModalClose', _.omit(variables, 'attributes'));
           }
-
-          output += '<' + Drupal.checkPlain(title.tag) + Attributes.create(defaults.title.attributes).merge(title.attributes) + '>' + (title.html ? title.content : Drupal.checkPlain(title.content)) + '</' + Drupal.checkPlain(title.tag) + '>';
 
           output += '</div>';
         }

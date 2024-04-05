@@ -6,9 +6,11 @@
 
 namespace Drupal\bootstrap_lite\Plugin\Provider;
 
+use Drupal\bootstrap_lite\BootstrapLite;
 use Drupal\bootstrap_lite\Plugin\PluginBase;
 use Drupal\bootstrap_lite\Plugin\ProviderManager;
 use Drupal\Component\Serialization\Json;
+use Drupal\Core\File\FileSystemInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
@@ -135,7 +137,10 @@ class ProviderBase extends PluginBase implements ProviderInterface {
    */
   public function processDefinition(array &$definition, $plugin_id) {
     $provider_path = ProviderManager::FILE_PATH;
-    file_prepare_directory($provider_path, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS);
+    
+    if ($fileSystem = \Drupal::service('file_system')) {
+      $fileSystem->prepareDirectory($provider_path, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
+    }
 
     // Process API data.
     if ($api = $this->getApi()) {
