@@ -110,7 +110,7 @@
     attach: function (context) {
       var $context = $(context);
       var $preview = $context.find('#bootstrap-lite-theme-preview');
-      $preview.once('bootstrap-lite-theme-preview').each(function () {
+      $(once('bootstrap-lite-theme-preview', $preview)).each(function () {
         // Construct the "Bootstrap Lite Theme" preview here since it's not actually
         // a Bootswatch theme, but rather one provided by Bootstrap itself.
         // Unfortunately getbootstrap.com does not have HTTPS enabled, so the
@@ -149,7 +149,7 @@
     attach: function (context) {
       var $context = $(context);
       var $container = $context.find('#edit-container');
-      $container.once('container-preview').each(function () {
+      $(once('container-preview', $container)).each(function () {
         $container.find('[name="fluid_container"]').on('change.bootstrap_lite', function () {
           if ($(this).is(':checked')) {
             $context.find('.container').removeClass('container').addClass('container-fluid');
@@ -169,7 +169,7 @@
     attach: function (context) {
       var $context = $(context);
       var $preview = $context.find('#edit-navbar');
-      $preview.once('navbar').each(function () {
+      $(once('navbar', $preview)).each(function () {
         var $body = $context.find('body');
         var $navbar = $context.find('#navbar.navbar');
         $preview.find('select[name="navbar_position"]').bind('change', function () {

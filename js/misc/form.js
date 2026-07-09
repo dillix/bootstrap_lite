@@ -12,7 +12,7 @@
     attach: function (context) {
       if (drupalSettings.bootstrap_lite && drupalSettings.bootstrap_lite.forms_has_error_value_toggle) {
         var $context = $(context);
-        $context.find('.form-item.has-error:not(.form-type-password.has-feedback)').once('error').each(function () {
+        $(once('error', $context.find('.form-item.has-error:not(.form-type-password.has-feedback)'))).each(function () {
           var $formItem = $(this);
           var $input = $formItem.find(':input');
           $input.on('keyup focus blur', function () {

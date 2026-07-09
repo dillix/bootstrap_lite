@@ -99,6 +99,7 @@ drupal.form:
     js/misc/form.js: {}
   dependencies:
     - bootstrap_lite/theme
+    - core/once
 
 drupal.progress:
   js:
