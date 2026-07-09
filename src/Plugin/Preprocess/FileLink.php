@@ -10,9 +10,11 @@ use Drupal\bootstrap_lite\Annotation\BootstrapPreprocess;
 use Drupal\bootstrap_lite\BootstrapLite;
 use Drupal\bootstrap_lite\Utility\Element;
 use Drupal\bootstrap_lite\Utility\Variables;
+use Drupal\file\Entity\File;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
-use Drupal\file\Entity\File;
+use Drupal\Core\StringTranslation\ByteSizeMarkup;
+use Drupal\file\IconMimeTypes;
 
 /**
  * Pre-processes variables for the "file_link" theme hook.
@@ -51,7 +53,7 @@ class FileLink extends PreprocessBase {
     }
 
     // Retrieve the generic mime type from core (mislabeled as "icon_class").
-    $generic_mime_type = file_icon_class($mime_type);
+    $generic_mime_type = IconMimeTypes::getIconClass($mime_type);
 
     // Map the generic mime types to an icon and state.
     $mime_map = [
@@ -113,7 +115,7 @@ class FileLink extends PreprocessBase {
     $variables['link'] = Link::fromTextAndUrl($link_text, Url::fromUri($url, $options));
 
     // Add the file size as a variable.
-    $variables->file_size = format_size($file_size);
+    $variables->file_size = ByteSizeMarkup::create($file_size);
 
     // Preprocess attributes.
     $this->preprocessAttributes();

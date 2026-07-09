@@ -16,6 +16,7 @@ use Drupal\Component\Utility\Html;
 use Drupal\Core\Annotation\Translation;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\File\FileSystemInterface;
+use Drupal\Core\File\FileExists;
 
 /**
  * The "cdn_provider" theme setting.
@@ -196,7 +197,7 @@ class CdnProvider extends SettingBase {
       $file = "$provider_path/$provider.json";
 
       if ($import_data = $form_state->getValue('cdn_provider_import_data', FALSE)) {
-        \Drupal::service('file_system')->saveData($import_data, $file, FileSystemInterface::EXISTS_REPLACE);
+        \Drupal::service('file_system')->saveData($import_data, $file, FileExists::Rename);
       }
       elseif ($file && file_exists($file)) {
         \Drupal::service('file_system')->delete($file);

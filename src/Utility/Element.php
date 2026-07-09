@@ -552,8 +552,7 @@ class Element extends DrupalAttributes {
    */
   public function renderPlain() {
     /** @var \Drupal\Core\Render\Renderer $renderer */
-    $renderer = \Drupal::service('renderer');
-    return $renderer->renderPlain($this->array);
+    return \Drupal::service('renderer')->renderInIsolation($this->array);
   }
 
   /**

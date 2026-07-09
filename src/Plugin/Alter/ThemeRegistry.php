@@ -7,6 +7,7 @@
 // Name of the base theme must be lowercase for it to be autoload discoverable.
 namespace Drupal\bootstrap_lite\Plugin\Alter;
 
+use Composer\Semver\Comparator;
 use Drupal\bootstrap_lite\Annotation\BootstrapAlter;
 use Drupal\bootstrap_lite\BootstrapLite;
 use Drupal\bootstrap_lite\Plugin\PreprocessManager;
@@ -47,15 +48,33 @@ class ThemeRegistry extends Registry implements AlterInterface {
       $configuration['theme'] = BootstrapLite::getTheme();
     }
     $this->currentTheme = $configuration['theme'];
-    parent::__construct(
-      \Drupal::root(),
-      \Drupal::service('cache.default'),
-      \Drupal::service('lock'),
-      \Drupal::service('module_handler'),
-      \Drupal::service('theme_handler'),
-      \Drupal::service('theme.initialization'),
-      $this->currentTheme->getName()
-    );
+    if (Comparator::greaterThanOrEqualTo(\Drupal::VERSION, '10.3.0-dev')) {
+      parent::__construct(
+        \Drupal::root(),
+        \Drupal::service('cache.default'),
+        \Drupal::service('lock'),
+        \Drupal::service('module_handler'),
+        \Drupal::service('theme_handler'),
+        \Drupal::service('theme.initialization'),
+        \Drupal::service('cache.bootstrap'),
+        \Drupal::service('extension.list.module'),
+        \Drupal::service('kernel'),
+        $this->currentTheme->getName(),
+      );
+    }
+    else {
+      parent::__construct(
+        \Drupal::root(),
+        \Drupal::service('cache.default'),
+        \Drupal::service('lock'),
+        \Drupal::service('module_handler'),
+        \Drupal::service('theme_handler'),
+        \Drupal::service('theme.initialization'),
+        \Drupal::service('cache.bootstrap'),
+        \Drupal::service('extension.list.module'),
+        $this->currentTheme->getName(),
+      );
+    }
     $this->setThemeManager(\Drupal::service('theme.manager'));
     $this->init();
   }

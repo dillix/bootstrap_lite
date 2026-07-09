@@ -14,6 +14,7 @@ use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Field\FieldFilteredMarkup;
 use Drupal\Core\Url;
+use Drupal\Core\StringTranslation\ByteSizeMarkup;
 
 /**
  * Pre-processes variables for the "file_upload_help" theme hook.
@@ -48,7 +49,7 @@ class FileUploadHelp extends PreprocessBase implements PreprocessInterface {
 
     $upload_validators = $variables['upload_validators'];
     if (isset($upload_validators['file_validate_size'])) {
-      $descriptions[] = t('@size limit.', ['@size' => format_size($upload_validators['file_validate_size'][0])]);
+      $descriptions[] = t('@size limit.', ['@size' => ByteSizeMarkup::create($upload_validators['file_validate_size'][0])]);
     }
     if (isset($upload_validators['file_validate_extensions'])) {
       $extensions = new FormattableMarkup('<code>@extensions</code>', [
