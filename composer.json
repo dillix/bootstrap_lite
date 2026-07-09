@@ -18,7 +18,7 @@
     "source": "http://cgit.drupalcode.org/bootstrap_lite"
   },
   "require": {
-    "drupal/core": "^9.5 || ^10 || ^11",
+    "drupal/core": "^10 || ^11",
     "php": ">=8.1.0",
     "drupal/jquery_ui": "^1.6",
     "drupal/jquery_ui_draggable": "^2.0",
