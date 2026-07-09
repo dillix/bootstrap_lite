@@ -161,7 +161,7 @@ class ProviderBase extends PluginBase implements ProviderInterface {
           $response = new Response(400);
         }
       }
-      $contents = $response->getBody(TRUE)->getContents();
+      $contents = $response->getBody()->getContents();
       $json = Json::decode($contents) ?: [];
       $this->processApi($json, $definition);
     }
