@@ -130,7 +130,7 @@
             }
           },
           complete: function () {
-            $preview.parent().find('select[name="cdn_jsdelivr_theme"]').bind('change', function () {
+            $preview.parent().find('select[name="cdn_jsdelivr_theme"]').on('change', function () {
               $preview.find('.bootswatch-preview').addClass('visually-hidden');
               if ($(this).val().length) {
                 $preview.find('#bootstrap-lite-theme-preview-' + $(this).val()).removeClass('visually-hidden');
@@ -172,7 +172,7 @@
       $(once('navbar', $preview)).each(function () {
         var $body = $context.find('body');
         var $navbar = $context.find('#navbar.navbar');
-        $preview.find('select[name="navbar_position"]').bind('change', function () {
+        $preview.find('select[name="navbar_position"]').on('change', function () {
           var $position = $(this).find(':selected').val();
           $navbar.removeClass('navbar-fixed-bottom navbar-fixed-top navbar-static-top container');
           if ($position.length) {
@@ -197,7 +197,7 @@
               break;
           }
         });
-        $preview.find('input[name="navbar_inverse"]').bind('change', function () {
+        $preview.find('input[name="navbar_inverse"]').on('change', function () {
           $navbar.toggleClass('navbar-inverse navbar-default');
         });
       });

@@ -5,7 +5,7 @@
 (function($) {
 
   // Unbind core state.js from document first so we can then override below.
-  $(document).unbind('state:disabled');
+  $(document).off('state:disabled');
 
   /**
    * Global state change handlers. These are bound to "document" to cover all
@@ -13,7 +13,7 @@
    * bubble up to these handlers. We use this system so that themes and modules
    * can override these state change handlers for particular parts of a page.
    */
-  $(document).bind('state:disabled', function(e) {
+  $(document).on('state:disabled', function(e) {
     // Only act when this change was triggered by a dependency and not by the
     // element monitoring itself.
     if (e.trigger) {
