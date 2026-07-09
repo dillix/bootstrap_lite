@@ -15,6 +15,7 @@ use Drupal\bootstrap_lite\Utility\StorageItem;
 use Drupal\Core\Extension\Extension;
 use Drupal\Core\Extension\ThemeHandlerInterface;
 use Drupal\Core\File\FileSystemInterface;
+use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
 
@@ -24,6 +25,8 @@ use Drupal\Core\Url;
  * @ingroup utility
  */
 class Theme {
+
+  use MessengerTrait;
 
   /**
    * Ignores the following directories during file scans of a theme.
@@ -733,7 +736,7 @@ class Theme {
     static $themes = [];
     $name = $this->getName();
     if (!isset($themes[$name])) {
-      $themes[$name] = new ThemeSettings($this, $this->themeHandler);
+      $themes[$name] = new ThemeSettings($this);
     }
     return $themes[$name];
   }
