@@ -65,9 +65,6 @@ modal.jquery.ui.bridge:
     js/modal.jquery.ui.bridge.js: {}
   dependencies:
     - bootstrap_lite/modal
-    - jquery_ui/jquery_ui
-    - jquery_ui_draggable/draggable
-    - jquery_ui_resizable/resizable
 
 popover:
   js:
@@ -89,10 +86,6 @@ drupal.ajax:
 drupal.autocomplete:
   js:
     js/misc/autocomplete.js: {}
-
-drupal.dialog.ajax:
-  js:
-    js/misc/dialog.ajax.js: {}
 
 drupal.form:
   js:

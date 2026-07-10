@@ -5,8 +5,6 @@ name: 'Bootstrap Lite'
 description: 'Built to use Bootstrap, a sleek, intuitive, and powerful front-end framework for faster and easier web development.'
 package: 'Bootstrap'
 core_version_requirement: ^10.3 || ^11
-dependencies:
-  - jquery_ui:jquery_ui
 
 regions:
   navigation: 'Navigation'
@@ -29,8 +27,6 @@ libraries-extend:
     - bootstrap_lite/drupal.ajax
   core/drupal.autocomplete:
     - bootstrap_lite/drupal.autocomplete
-  core/drupal.dialog.ajax:
-    - bootstrap_lite/drupal.dialog.ajax
   core/drupal.form:
     - bootstrap_lite/drupal.form
   core/drupal.progress:
