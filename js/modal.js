@@ -11,150 +11,6 @@
   BootstrapLite.once('modal', function (settings) {
 
     /**
-     * Replace the Bootstrap Lite Modal jQuery plugin definition.
-     *
-     * This adds a little bit of functionality so it works better with Drupal.
-     */
-    BootstrapLite.replacePlugin('modal', function () {
-      var BootstrapLiteModal = this;
-
-      // Override the Modal constructor.
-      var Modal = function (element, options) {
-        this.options             = options;
-        this.$body               = $(document.body);
-        this.$element            = $(element);
-        this.$dialog             = this.$element.find('.modal-dialog');
-        this.$header             = this.$dialog.find('.modal-header');
-        this.$close              = this.$header.find('.close');
-        this.$footer             = this.$dialog.find('.modal-footer');
-        this.$content            = this.$dialog.find('.modal-content');
-        this.$dialogBody         = this.$content.find('.modal-body');
-        this.$backdrop           = null;
-        this.isShown             = null;
-        this.originalBodyPad     = null;
-        this.scrollbarWidth      = 0;
-        this.ignoreBackdropClick = false;
-      };
-
-      // Extend defaults to take into account for theme settings.
-      Modal.DEFAULTS = $.extend({}, BootstrapLiteModal.DEFAULTS, {
-        animation: !!settings.modal_animation,
-        backdrop: settings.modal_backdrop === 'static' ? 'static' : !!settings.modal_backdrop,
-        keyboard: !!settings.modal_keyboard,
-        show: !!settings.modal_show,
-        size: settings.modal_size
-      });
-
-      // Copy over the original prototype methods.
-      Modal.prototype = BootstrapLiteModal.prototype;
-
-      /**
-       * Handler for $.fn.modal('destroy').
-       */
-      Modal.prototype.destroy = function () {
-        this.hide();
-        Drupal.detachBehaviors(this.$element[0]);
-        this.$element.removeData('bs.modal').remove();
-      };
-
-      /**
-       * Initialize the modal.
-       */
-      Modal.prototype.init = function () {
-        if (this.options.remote) { console.log(this.options.remote);
-          this.$content.load(this.options.remote, $.proxy(function () {
-            this.$element.trigger('loaded.bs.modal');
-          }, this));
-        }
-      };
-
-      // Modal jQuery Plugin Definition.
-      var Plugin = function () {
-        // Extract the arguments.
-        var args = Array.prototype.slice.call(arguments);
-        var method = args.shift();
-        var options = {};
-        if ($.isPlainObject(method)) {
-          options = method;
-          method = null;
-        }
-        var ret = void 0;
-        this.each(function () {
-          var $this   = $(this);
-          var data    = $this.data('bs.modal');
-          var initialize = false;
-
-          options = $.extend({}, Modal.DEFAULTS, data && data.options, $this.data(), options);
-          if (!data) {
-            // When initializing the Bootstrap Lite Modal, only pass the "supported"
-            // options by intersecting the default options. This allows plugins
-            // like the jQuery UI bridge to properly detect when options have
-            // changed when they're set below as a global "option" method.
-            $this.data('bs.modal', (data = new Modal(this, BootstrapLite.intersectObjects(options, Modal.DEFAULTS))));
-            initialize = true;
-          }
-
-          // If no method or arguments, treat it like it's initializing the modal.
-          if (!method && !args.length) {
-            data.option(options);
-            initialize = true;
-          }
-
-          // Initialize the modal.
-          if (initialize) {
-            data.init();
-          }
-
-          if (method) {
-            if (typeof data[method] === 'function') {
-              try {
-                ret = data[method].apply(data, args);
-              }
-              catch (e) {
-                Drupal.throwError(e);
-              }
-            }
-            else {
-              BootstrapLite.unsupported('method', method);
-            }
-          }
-        });
-
-        // If just one element and there was a result returned for the option passed,
-        // then return the result. Otherwise, just return the jQuery object.
-        return this.length === 1 && ret !== void 0 ? ret : this;
-      };
-
-      // Replace the plugin constructor with the new Modal constructor.
-      Plugin.Constructor = Modal;
-
-      // Replace the data API so that it calls $.fn.modal rather than Plugin.
-      // This allows sub-themes to replace the jQuery Plugin if they like with
-      // out having to redo all this boilerplate.
-      $(document)
-        .off('click.bs.modal.data-api')
-        .on('click.bs.modal.data-api', '[data-toggle="modal"]', function (e) {
-          var $this   = $(this);
-          var href    = $this.attr('href');
-          var $target = $($this.attr('data-target') || (href && href.replace(/.*(?=#[^\s]+$)/, ''))); // strip for ie7
-          var option  = $target.data('bs.modal') ? 'toggle' : $.extend({ remote: !/#/.test(href) && href }, $target.data(), $this.data());
-
-          if ($this.is('a')) e.preventDefault();
-
-          $target.one('show.bs.modal', function (showEvent) {
-            // Only register focus restorer if modal will actually get shown.
-            if (showEvent.isDefaultPrevented()) return;
-            $target.one('hidden.bs.modal', function () {
-              $this.is(':visible') && $this.trigger('focus');
-            });
-          });
-          $target.modal(option, this);
-        });
-
-      return Plugin;
-    });
-
-    /**
      * Extend Drupal theming functions.
      */
     $.extend(Drupal.theme, /** @lend Drupal.theme */ {
@@ -167,7 +23,7 @@
        * @return {string}
        *   The HTML for the modal.
        */
-      bootstrapLiteModal: function (variables) { //console.log(variables);
+      bootstrapLiteModal: function (variables) {
         var output = '';
         var settings = drupalSettings.bootstrap_lite || {};
         var defaults = {
@@ -196,9 +52,8 @@
             html: false,
             tag: 'h5'
           }
-        }; //onsole.log(variables);
+        };
         variables = $.extend(true, {}, defaults, variables);
-//console.log(variables);
         var attributes = Attributes.create(defaults.attributes).merge(variables.attributes);
         attributes.set('id', attributes.get('id', variables.id));
 
@@ -353,7 +208,7 @@
         }
 
         output += '</div>';
-console.log(description.content);
+
         return output;
       },
 
@@ -436,7 +291,7 @@ console.log(description.content);
             attributes: {
               class: ['modal-title']
             },
-            content: '77'+Drupal.t('Loading...'),
+            content: Drupal.t('Loading...'),
             html: false,
             tag: 'h4'
           }
