@@ -8,26 +8,27 @@ var Drupal = Drupal || {};
 (function ($, Drupal, BootstrapLite) {
   "use strict";
 
-  /**
-   * Extend the Bootstrap Lite Popover plugin constructor class.
-   */
-  BootstrapLite.extendPlugin('popover', function (settings) {
-    return {
-      DEFAULTS: {
-        animation: !!settings.popover_animation,
-        enabled: settings.popover_enabled,
-        html: !!settings.popover_html,
-        placement: settings.popover_placement,
-        selector: settings.popover_selector,
-        trigger: settings.popover_trigger,
-        triggerAutoclose: !!settings.popover_trigger_autoclose,
-        title: settings.popover_title,
-        content: settings.popover_content,
-        delay: parseInt(settings.popover_delay, 10),
-        container: settings.popover_container
-      }
-    };
-  });
+  // Popover defaults, computed from the theme settings exposed on
+  // drupalSettings (BootstrapLite.settings) rather than from the Popover
+  // plugin's constructor. Bootstrap 4 renamed BS3's assignable
+  // `Constructor.DEFAULTS` to a getter-only `Constructor.Default` that carries
+  // none of Drupal's invented `enabled`/`triggerAutoclose` keys, and
+  // drupalSettings is parsed independently of Bootstrap's own load timing, so
+  // this is the reliable source for the Drupal-specific popover options.
+  var popoverSettings = BootstrapLite.settings || {};
+  var popoverDefaults = {
+    animation: !!popoverSettings.popover_animation,
+    enabled: popoverSettings.popover_enabled,
+    html: !!popoverSettings.popover_html,
+    placement: popoverSettings.popover_placement,
+    selector: popoverSettings.popover_selector,
+    trigger: popoverSettings.popover_trigger,
+    triggerAutoclose: !!popoverSettings.popover_trigger_autoclose,
+    title: popoverSettings.popover_title,
+    content: popoverSettings.popover_content,
+    delay: parseInt(popoverSettings.popover_delay, 10),
+    container: popoverSettings.popover_container
+  };
 
   /**
    * Bootstrap Lite Popovers.
@@ -36,13 +37,15 @@ var Drupal = Drupal || {};
    */
   Drupal.behaviors.bootstrapLitePopovers = {
     attach: function (context) {
-      // Immediately return if popovers are not available.
-      if (!$.fn.popover || !$.fn.popover.Constructor.DEFAULTS.enabled) {
+      // Immediately return if popovers are not available or disabled. `enabled`
+      // is a Drupal-only option and lives on popoverDefaults, not on Bootstrap
+      // 4's native Constructor.Default.
+      if (!$.fn.popover || !popoverDefaults.enabled) {
         return;
       }
 
       // Popover autoclose.
-      if ($.fn.popover.Constructor.DEFAULTS.triggerAutoclose) {
+      if (popoverDefaults.triggerAutoclose) {
         var $currentPopover = null;
         $(document)
           .on('show.bs.popover', '[data-toggle=popover]', function () {
@@ -71,7 +74,10 @@ var Drupal = Drupal || {};
       var elements = $(context).find('[data-toggle=popover]').toArray();
       for (var i = 0; i < elements.length; i++) {
         var $element = $(elements[i]);
-        var options = $.extend({}, $.fn.popover.Constructor.DEFAULTS, $element.data());
+        // Merge Bootstrap 4's real native defaults (template, offset, etc.)
+        // first, then the theme's popoverDefaults (enabled/placement/trigger/
+        // etc.), then the per-element data attributes.
+        var options = $.extend({}, $.fn.popover.Constructor.Default, popoverDefaults, $element.data());
 
         // Store the original trigger.
         options.originalTrigger = options.trigger;
@@ -107,16 +113,23 @@ var Drupal = Drupal || {};
       }
     },
     detach: function (context) {
-      // Immediately return if popovers are not available.
-      if (!$.fn.popover || !$.fn.popover.Constructor.DEFAULTS.enabled) {
+      // Immediately return if popovers are not available or disabled.
+      if (!$.fn.popover || !popoverDefaults.enabled) {
         return;
       }
 
-      // Destroy all popovers.
-      $(context).find('[data-toggle="popover"]')
-        .off('click.drupal.bootstrap_lite.popover')
-        .popover('destroy')
-      ;
+      // Destroy all popovers. Bootstrap 4 renamed BS3's 'destroy' method to
+      // 'dispose' ('destroy' throws TypeError via BS4's _jQueryInterface on an
+      // initialized popover). Only dispose elements that were actually
+      // initialized: BS4.0.0's popover interface whitelists /destroy|hide/
+      // (not 'dispose') for uninitialized elements, so a bare
+      // .popover('dispose') would needlessly instantiate them first.
+      $(context).find('[data-toggle="popover"]').each(function () {
+        var $element = $(this).off('click.drupal.bootstrap_lite.popover');
+        if ($element.data('bs.popover')) {
+          $element.popover('dispose');
+        }
+      });
     }
   };
 
