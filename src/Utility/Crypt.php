@@ -16,8 +16,7 @@ class Crypt extends \Drupal\Component\Utility\Crypt {
   /**
    * Generates a unique hash name.
    *
-   * @param ...
-   *   All arguments passed will be serialized and used to generate the hash.
+   * All arguments passed will be serialized and used to generate the hash.
    *
    * @return string
    *   The generated hash identifier.
