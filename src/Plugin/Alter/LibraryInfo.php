@@ -85,16 +85,53 @@ class LibraryInfo extends PluginBase implements AlterInterface {
         // Replace dependencies if using bridge so jQuery UI is not loaded
         // and remove dialog.jquery-ui.js since the dialog widget isn't loaded.
         if ($this->theme->getSetting('modal_jquery_ui_bridge')) {
-          // Remove core's jquery.ui.dialog dependency.
+          // Remove core's jquery.ui.dialog dependency (merged away in D10, so
+          // this is usually a no-op, but harmless to keep for older minors).
           $key = array_search('core/jquery.ui.dialog', $libraries['drupal.dialog']['dependencies']);
           if ($key !== FALSE) {
             unset($libraries['drupal.dialog']['dependencies'][$key]);
           }
 
-          // Remove core's dialog.jquery-ui.js.
-          unset($libraries['drupal.dialog']['js']['misc/dialog/dialog.jquery-ui.js']);
+          // The bridge provides its own $.fn.dialog backed by a Bootstrap
+          // modal, so strip core's jQuery UI dialog implementation entirely:
+          // its glue (dialog.jquery-ui.js / dialog.position.js) and the jQuery
+          // UI widget assets now vendored directly inside core/drupal.dialog.
+          // Leaving the dialog widget in place would register a competing
+          // $.fn.dialog and make the bridge's createPlugin('dialog') fatal.
+          $strip_js = [
+            'misc/dialog/dialog.jquery-ui.js',
+            'misc/dialog/dialog.position.js',
+            'assets/vendor/jquery.ui/ui/widgets/dialog-min.js',
+            'assets/vendor/jquery.ui/ui/widgets/button-min.js',
+            'assets/vendor/jquery.ui/ui/widgets/checkboxradio-min.js',
+            'assets/vendor/jquery.ui/ui/widgets/draggable-min.js',
+            'assets/vendor/jquery.ui/ui/widgets/resizable-min.js',
+            'assets/vendor/jquery.ui/ui/widgets/controlgroup-min.js',
+            'assets/vendor/jquery.ui/ui/widgets/mouse-min.js',
+            'assets/vendor/jquery.ui/ui/form-reset-mixin-min.js',
+          ];
+          foreach ($strip_js as $file) {
+            unset($libraries['drupal.dialog']['js'][$file]);
+          }
 
-          // Add the Modal jQuery UI Bridge.
+          // Strip the jQuery UI base-theme CSS that styled the dialog widget.
+          $strip_css = [
+            'assets/vendor/jquery.ui/themes/base/dialog.css',
+            'assets/vendor/jquery.ui/themes/base/button.css',
+            'assets/vendor/jquery.ui/themes/base/checkboxradio.css',
+            'assets/vendor/jquery.ui/themes/base/resizable.css',
+            'assets/vendor/jquery.ui/themes/base/controlgroup.css',
+          ];
+          foreach ($strip_css as $file) {
+            unset($libraries['drupal.dialog']['css']['component'][$file]);
+          }
+
+          // Attach the bridge to core/drupal.dialog itself (not just the ajax
+          // layer) so $.fn.dialog is registered for every front-end consumer of
+          // the dialog library, whether or not they also load
+          // core/drupal.dialog.ajax. Load order relative to dialog.js no longer
+          // matters: the bridge registers $.fn.dialog at eval time and no
+          // longer writes into drupalSettings.dialog.
           $libraries['drupal.dialog']['dependencies'][] = 'bootstrap_lite/modal.jquery.ui.bridge';
         }
         // Otherwise, just append the modal.

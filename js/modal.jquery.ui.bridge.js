@@ -1,457 +1,289 @@
 /**
  * @file
- * Bootstrap Lite Modals.
+ * Bootstrap Lite dialog bridge.
+ *
+ * Provides a `$.fn.dialog` implementation, backed by a native Bootstrap 4
+ * modal, so Drupal's dialog API renders ajax dialogs as Bootstrap modals.
+ *
+ * Drupal core drives the lifecycle: core/misc/dialog/dialog.js's
+ * `Drupal.dialog(el, options).showModal()` calls `$element.dialog(settings)`
+ * (init) and `$element.dialog('close')`, and dispatches the native
+ * `dialog:beforecreate` / `dialog:aftercreate` / `dialog:beforeclose` /
+ * `dialog:afterclose` CustomEvents itself. This bridge therefore only needs to
+ * implement the `$.fn.dialog` method surface core calls — it does NOT listen
+ * for or relay any dialog:* events. It replaces the jQuery UI dialog widget
+ * (which LibraryInfo::alter() strips from core/drupal.dialog), and never uses
+ * jQuery UI's draggable/resizable (removed with the jquery_ui dependency).
  */
 (function ($, Drupal, BootstrapLite, Attributes, drupalSettings) {
   'use strict';
 
-  /**
-   * Only process this once.
-   */
   BootstrapLite.once('modal.jquery.ui.bridge', function (settings) {
-    // RTL support.
-    var rtl = document.documentElement.getAttribute('dir').toLowerCase() === 'rtl';
-
-    // Override drupal.dialog button classes. This must be done on DOM ready
-    // since core/drupal.dialog technically depends on this file and has not
-    // yet set their default settings.
-    $(function () {
-      drupalSettings.dialog.buttonClass = 'btn';
-      drupalSettings.dialog.buttonPrimaryClass = 'btn-primary';
-    });
-
-    var relayEvent = function ($element, name, stopPropagation) {
-      return function (e) {
-        if (stopPropagation === void 0 || stopPropagation) {
-          e.stopPropagation();
-        }
-        var parts = name.split('.').filter(Boolean);
-        var type = parts.shift();
-        e.target = $element[0];
-        e.currentTarget = $element[0];
-        e.namespace = parts.join('.');
-        e.type = type;
-        $element.trigger(e);
-      };
-    };
+    var dir = document.documentElement.getAttribute('dir');
+    var rtl = dir ? dir.toLowerCase() === 'rtl' : false;
 
     /**
-     * Proxy $.fn.dialog to $.fn.modal.
+     * (Re)renders the dialog buttons into the modal footer.
      */
-    BootstrapLite.createPlugin('dialog', function (options) { console.log(options);
-      // When only options are passed, jQuery UI dialog treats this like a
-      // initialization method. Destroy any existing Bootstrap Lite modal and
-      // recreate it using the contents of the dialog HTML.
-      if (arguments.length === 1 && typeof options === 'object') {
-        this.each(function () {
-          // This part gets a little tricky. Core can potentially already
-          // semi-process this "dialog" if was created using an Ajax command
-          // (i.e. prepareDialogButtons in drupal.ajax.js). Because of this,
-          // we cannot simply dump the existing dialog content into a newly
-          // created modal because that would destroy any existing event
-          // bindings. Instead, we have to create this in steps and "move"
-          // (append) the existing content as needed.
-          var $this = $(this);
+    function renderButtons($el, buttons) {
+      var $footer = $el.find('.modal-footer');
+      // The modal template only emits a footer when it has content, so create
+      // one on demand (after the body) the first time buttons are rendered.
+      if (!$footer.length) {
+        $footer = $(Drupal.theme('bootstrapLiteModalFooter', {}, true));
+        $el.find('.modal-body').after($footer);
+      }
+      $footer.find('.modal-buttons').remove();
+      if (buttons && buttons.length) {
+        var $buttons = $('<div class="modal-buttons"/>').appendTo($footer);
+        for (var i = 0, l = buttons.length; i < l; i++) {
+          var button = buttons[i];
+          var $button = $(Drupal.theme('bootstrapLiteModalDialogButton', button));
+          if (typeof button.click === 'function') {
+            $button.on('click', button.click);
+          }
+          $buttons.append($button);
+        }
+        $footer.show();
+      }
+      else {
+        $footer.hide();
+      }
+    }
 
-          // Create a new modal to get a complete template.
-          var $modal = $(Drupal.theme('bootstrapLiteModal', {attributes: Attributes.create(this).remove('style')}));
+    /**
+     * Returns a per-element instance shim.
+     *
+     * Core's dialog.ajax.js reaches for `dialog('instance')._focusedElement`
+     * and `dialog('instance')._focusTabbable()` when a form inside a dialog is
+     * rebuilt (e.g. after a validation error). Provide just enough for that.
+     */
+    function getInstance($el) {
+      var instance = $el.data('bsDialog.instance');
+      if (!instance) {
+        instance = {
+          _focusedElement: null,
+          _focusTabbable: function () {
+            var $focusable = $el
+              .find('a[href], area[href], button:not([disabled]), input:not([disabled]):not([type=hidden]), select:not([disabled]), textarea:not([disabled]), iframe, [tabindex]:not([tabindex="-1"])')
+              .filter(':visible');
+            if (this._focusedElement && $.contains($el[0], this._focusedElement)) {
+              this._focusedElement.focus();
+            }
+            else if ($focusable.length) {
+              $focusable[0].focus();
+            }
+            else {
+              $el.attr('tabindex', -1)[0].focus();
+            }
+          }
+        };
+        $el.data('bsDialog.instance', instance);
+      }
+      return instance;
+    }
 
-          // Store a reference to the content inside the existing dialog.
-          // This references the actual DOM node elements which will allow
-          // jQuery to "move" then when appending below. Using $.fn.children()
-          // does not return any text nodes present and $.fn.html() only returns
-          // a string representation of the content, which effectively destroys
-          // any prior event bindings or processing.
-          var $existing = $this.contents();
+    /**
+     * Runs Drupal's dialog-close teardown exactly once per open.
+     *
+     * jQuery UI invokes the dialog's `close` option callback whenever the
+     * dialog closes by any means; core relies on that callback (which it wraps
+     * in dialog.ajax.js) to detach behaviors and remove the element. Bootstrap
+     * fires `hidden.bs.modal` for programmatic and user-initiated closes alike,
+     * so relay it to the stored `close` callback. A guard flag prevents the
+     * re-entrant close (the callback calls Drupal.dialog(el).close() again,
+     * which re-invokes $.fn.dialog('close') -> modal('hide'), a no-op once the
+     * modal is already hidden).
+     */
+    function closeTeardown($el) {
+      if ($el.data('bsDialog.tornDown')) {
+        return;
+      }
+      $el.data('bsDialog.tornDown', true);
+      var options = $el.data('bsDialog.options') || {};
+      if (typeof options.close === 'function') {
+        options.close({ target: $el[0] });
+      }
+    }
 
-          // Destroy any existing Bootstrap Lite Modal data that may have been saved.
-          $this.removeData('bs.modal');
+    /**
+     * Handler for $.fn.dialog('option', ...).
+     *
+     * Supports the getter form dialog('option', name) and the setter forms
+     * dialog('option', name, value) / dialog('option', {..}). Buttons and title
+     * are re-applied to the live modal; core calls the buttons setter on every
+     * dialogButtonsChange (in-dialog form rebuild).
+     */
+    function handleOption($el, args) {
+      var options = $el.data('bsDialog.options') || {};
 
-          // Set the attributes of the dialog to that of the newly created modal.
-          $this.attr(Attributes.create($modal).toPlainObject());
-
-          // Append the newly created modal markup.
-          $this.append($modal.html());
-
-          // Move the existing HTML into the modal markup that was just appended.
-          $this.find('.modal-body').append($existing);
-        });
-
-        // Indicate that the modal is a jQuery UI dialog bridge.
-        options.jQueryUiBridge = true;
-
-        // Proxy just the options to the Bootstrap Lite Modal plugin.
-        return $.fn.modal.apply(this, [options]);
+      // Getter.
+      if (args.length === 1 && typeof args[0] === 'string') {
+        return options[args[0]];
       }
 
-      // Otherwise, proxy all arguments to the Bootstrap Lite Modal plugin.
-      return $.fn.modal.apply(this, arguments);
-    });
+      // Setter(s).
+      var updates = {};
+      if (args.length >= 2 && typeof args[0] === 'string') {
+        updates[args[0]] = args[1];
+      }
+      else if (args.length && typeof args[0] === 'object' && args[0]) {
+        updates = args[0];
+      }
+      $.extend(options, updates);
+      $el.data('bsDialog.options', options);
+
+      if ('buttons' in updates) {
+        renderButtons($el, options.buttons || []);
+      }
+      if ('title' in updates) {
+        $el.find('.modal-title').text(options.title == null ? '' : options.title);
+      }
+      return $el;
+    }
 
     /**
-     * Extend the Bootstrap Lite Modal plugin constructor class.
+     * Initializes (and shows) a Bootstrap modal for a dialog element.
      */
-    BootstrapLite.extendPlugin('modal', function () {
-      var Modal = this;
+    function initDialog($el, options) {
+      // Build a complete modal skeleton, then move the existing dialog content
+      // (the ajax-inserted markup, with its event bindings intact) into the
+      // modal body. Setting $el's own attributes to the modal wrapper's makes
+      // $el itself the .modal element.
+      var $modal = $(Drupal.theme('bootstrapLiteModal', {
+        attributes: Attributes.create($el[0]).remove('style'),
+        title: options.title
+      }));
+      var $existing = $el.contents();
+      $el.removeData('bs.modal');
+      $el.attr(Attributes.create($modal).toPlainObject());
+      $el.append($modal.html());
+      $el.find('.modal-body').append($existing);
 
-      return {
-        DEFAULTS: {
-          // By default, this option is disabled. It's only flagged when a modal
-          // was created using $.fn.dialog above.
-          jQueryUiBridge: false
-        },
-        prototype: {
-
-          /**
-           * Handler for $.fn.dialog('close').
-           */
-          close: function () {
-            var _this = this;
-
-            this.hide.apply(this, arguments);
-
-            // For some reason (likely due to the transition event not being
-            // registered properly), the backdrop doesn't always get removed
-            // after the above "hide" method is invoked . Instead, ensure the
-            // backdrop is removed after the transition duration by manually
-            // invoking the internal "hideModal" method shortly thereafter.
-            setTimeout(function () {
-              if (!_this.isShown && _this.$backdrop) {
-                _this.hideModal();
-              }
-            }, (Modal.TRANSITION_DURATION !== void 0 ? Modal.TRANSITION_DURATION : 300) + 10);
-          },
-
-          /**
-           * Creates any necessary buttons from dialog options.
-           */
-          createButtons: function () {
-            this.$footer.find('.modal-buttons').remove();
-console.log('buttons off');
-            var buttons = this.options.dialogOptions && this.options.dialogOptions.buttons || [];
-            if (buttons.length) {
-              var $buttons = $('<div class="modal-buttons"/>').appendTo(this.$footer);
-              for (var i = 0, l = buttons.length; i < l; i++) {
-                var button = buttons[i];
-                var $button = $(Drupal.theme('bootstrapLiteModalDialogButton', button));
-                if (typeof button.click === 'function') {
-                  $button.on('click', button.click);
-                }
-                $buttons.append($button);
-              }
-            }
-          },
-
-          /**
-           * Initializes the Bootstrap Lite Modal.
-           */
-          init: function () {
-console.log('init');
-            // Relay necessary events.
-            if (this.options.jQueryUiBridge) {
-              this.$element.on('hide.bs.modal',   relayEvent(this.$element, 'dialogbeforeclose', false));
-              this.$element.on('hidden.bs.modal', relayEvent(this.$element, 'dialogclose', false));
-              this.$element.on('show.bs.modal',   relayEvent(this.$element, 'dialogcreate', false));
-              this.$element.on('shown.bs.modal',  relayEvent(this.$element, 'dialogopen', false));
-            }
-
-            // Create a footer if one doesn't exist.
-            // This is necessary in case dialog.ajax.js decides to add buttons.
-            if (!this.$footer[0]) {
-              this.$footer = $(Drupal.theme('bootstrapLiteModalFooter', {}, true)).insertAfter(this.$dialogBody);
-            }
-
-            // Create buttons.
-            this.createButtons();
-
-            // Hide the footer if there are no children.
-            if (!this.$footer.children()[0]) {
-              this.$footer.hide();
-            }
-
-            // Now call the parent init method.
-            this.super();
-
-            // Handle autoResize option (this is a drupal.dialog option).
-            if (this.options.dialogOptions && this.options.dialogOptions.autoResize && this.options.dialogOptions.position) {
-              this.position(this.options.dialogOptions.position);
-            }
-
-            // If show is enabled and currently not shown, show it.
-            if (this.options.show && !this.isShown) {
-              this.show();
-            }
-          },
-
-          /**
-           * Handler for $.fn.dialog('instance').
-           */
-          instance: function () {
-            BootstrapLite.unsupported('method', 'instance', arguments);
-          },
-
-          /**
-           * Handler for $.fn.dialog('isOpen').
-           */
-          isOpen: function () {
-            return !!this.isShown;
-          },
-
-          /**
-           * Maps dialog options to the modal.
-           *
-           * @param {Object} options
-           *   The options to map.
-           */
-          mapDialogOptions: function (options) {
-            var dialogOptions = {};
-            var mappedOptions = {};
-
-            // Handle CSS properties.
-            var cssUnitRegExp = /^([+-]?(?:\d+|\d*\.\d+))([a-z]*|%)?$/;
-            var parseCssUnit = function (value, defaultUnit) {
-              var parts = ('' + value).match(cssUnitRegExp);
-              return parts && parts[1] !== void 0 ? parts[1] + (parts[2] || defaultUnit || 'px') : null;
-            };
-            var styles = {};
-            var cssProperties = ['height', 'maxHeight', 'maxWidth', 'minHeight', 'minWidth', 'width'];
-            for (var i = 0, l = cssProperties.length; i < l; i++) {
-              var prop = cssProperties[i];
-              if (options[prop] !== void 0) {
-                var value = parseCssUnit(options[prop]);
-                if (value) {
-                  dialogOptions[prop] = value;
-                  styles[prop] = value;
-                }
-              }
-            }
-
-            // Apply mapped CSS styles to the modal-content container.
-            this.$content.css(styles);
-
-            // Handle deprecated "dialogClass" option by merging it with "classes".
-            var classesMap = {
-              'ui-dialog': 'modal-content',
-              'ui-dialog-titlebar': 'modal-header',
-              'ui-dialog-title': 'modal-title',
-              'ui-dialog-titlebar-close': 'close',
-              'ui-dialog-content': 'modal-body',
-              'ui-dialog-buttonpane': 'modal-footer'
-            };
-            if (options.dialogClass) {
-              if (options.classes === void 0) {
-                options.classes = {};
-              }
-              if (options.classes['ui-dialog'] === void 0) {
-                options.classes['ui-dialog'] = '';
-              }
-              var dialogClass = options.classes['ui-dialog'].split(' ');
-              dialogClass.push(options.dialogClass);
-              options.classes['ui-dialog'] = dialogClass.join(' ');
-              delete options.dialogClass;
-            }
-
-            // Bind events.
-            var events = [
-              'beforeClose', 'close',
-              'create',
-              'drag', 'dragStart', 'dragStop',
-              'focus',
-              'open',
-              'resize', 'resizeStart', 'resizeStop'
-            ];
-            for (i = 0, l = events.length; i < l; i++) {
-              var event = events[i].toLowerCase();
-              if (options[event] === void 0 || typeof options[event] !== 'function') continue;
-              this.$element.on('dialog' + event, options[event]);
-            }
-
-            // Handle the reset of the options.
-            for (var name in options) {
-              if (!options.hasOwnProperty(name) || options[name] === void 0) continue;
-
-              switch (name) {
-                case 'appendTo':
-                  BootstrapLite.unsupported('option', name, options.appendTo);
-                  break;
-
-                case 'autoOpen':
-                  mappedOptions.show = !!options.autoOpen;
-                  break;
-
-                // This is really a drupal.dialog option, not jQuery UI.
-                case 'autoResize':
-                  dialogOptions.autoResize = !!options.autoResize;
-                  break;
-
-                case 'buttons':
-                  dialogOptions.buttons = options.buttons;
-                  break;
-
-                case 'classes':
-                  dialogOptions.classes = options.classes;
-                  for (var key in options.classes) {
-                    if (options.classes.hasOwnProperty(key) && classesMap[key] !== void 0) {
-                      // Run through Attributes to sanitize classes.
-                      var attributes = Attributes.create().addClass(options.classes[key]).toPlainObject();
-                      var selector = '.' + classesMap[key];
-                      this.$element.find(selector).addClass(attributes['class']);
-                    }
-                  }
-                  break;
-
-                case 'closeOnEscape':
-                  dialogOptions.closeOnEscape = options.closeOnEscape;
-                  mappedOptions.keyboard = !!options.closeOnEscape;
-                  this.$close[options.closeOnEscape ? 'show' : 'hide']();
-                  if (!options.closeOnEscape && options.modal) {
-                    mappedOptions.backdrop = options.modal = 'static';
-                  }
-                  break;
-
-                case 'closeText':
-                  BootstrapLite.unsupported('option', name, options.closeText);
-                  break;
-
-                case 'draggable':
-                  dialogOptions.draggable = options.draggable;
-                  this.$content
-                    .draggable({
-                      handle: '.modal-header',
-                      drag: relayEvent(this.$element, 'dialogdrag'),
-                      start: relayEvent(this.$element, 'dialogdragstart'),
-                      end: relayEvent(this.$element, 'dialogdragend')
-                    })
-                    .draggable(options.draggable ? 'enable' : 'disable');
-                  break;
-
-                case 'hide':
-                  if (options.hide === false || options.hide === true) {
-                    this.$element[options.hide ? 'addClass' : 'removeClass']('fade');
-                    mappedOptions.animation = options.hide;
-                  }
-                  else {
-                    BootstrapLite.unsupported('option', name + ' (complex animation)', options.hide);
-                  }
-                  break;
-
-                case 'modal':
-                  mappedOptions.backdrop = options.modal;
-                  dialogOptions.modal = !!options.modal;
-
-                  // If not a modal and no initial position, center it.
-                  if (!options.modal && !options.position) {
-                    this.position({ my: 'center', of: window });
-                  }
-                  break;
-
-                case 'position':
-                  dialogOptions.position = options.position;
-                  this.position(options.position);
-                  break;
-
-                // Resizable support (must initialize first).
-                case 'resizable':
-                  dialogOptions.resizeable = options.resizable;
-                  this.$content
-                    .resizable({
-                      resize: relayEvent(this.$element, 'dialogresize'),
-                      start: relayEvent(this.$element, 'dialogresizestart'),
-                      end: relayEvent(this.$element, 'dialogresizeend')
-                    })
-                    .resizable(options.resizable ? 'enable' : 'disable');
-                  break;
-
-                case 'show':
-                  if (options.show === false || options.show === true) {
-                    this.$element[options.show ? 'addClass' : 'removeClass']('fade');
-                    mappedOptions.animation = options.show;
-                  }
-                  else {
-                    BootstrapLite.unsupported('option', name + ' (complex animation)', options.show);
-                  }
-                  break;
-
-                case 'title':
-                  dialogOptions.title = options.title; console.log(options.title);
-                  this.$dialog.find('.modal-title').text(options.title);
-                  break;
-
-              }
-            }
-
-            // Add the supported dialog options to the mapped options.
-            mappedOptions.dialogOptions = dialogOptions;
-
-            return mappedOptions;
-          },
-
-          /**
-           * Handler for $.fn.dialog('moveToTop').
-           */
-          moveToTop: function () {
-            BootstrapLite.unsupported('method', 'moveToTop', arguments);
-          },
-
-          /**
-           * Handler for $.fn.dialog('option').
-           */
-          option: function () {
-            var clone = {options: $.extend({}, this.options)};
-
-            // Apply the parent option method to the clone of current options.
-            this.super.apply(clone, arguments);
-
-            // Merge in the cloned mapped options.
-            $.extend(true, this.options, this.mapDialogOptions(clone.options));
-          },
-
-          position: function(position) {
-            // Reset modal styling.
-            this.$element.css({
-              bottom: 'initial',
-              overflow: 'visible',
-              right: 'initial'
-            });
-
-            // Position the modal.
-            this.$element.position(position);
-          },
-
-          /**
-           * Handler for $.fn.dialog('open').
-           */
-          open: function () {
-            this.show.apply(this, arguments);
-          },
-
-          /**
-           * Handler for $.fn.dialog('widget').
-           */
-          widget: function () {
-            return this.$element;
-          }
+      // Optional width -> modal-dialog max-width.
+      if (options.width) {
+        var width = parseInt(options.width, 10);
+        if (!isNaN(width)) {
+          $el.find('.modal-dialog').css('max-width', width + 'px');
         }
+      }
+      // Optional dialogClass -> extra classes on the modal.
+      if (options.dialogClass) {
+        $el.addClass(options.dialogClass);
+      }
+
+      // Persist options for later 'option' calls and close teardown.
+      $el.data('bsDialog.options', options);
+      $el.data('bsDialog.tornDown', false);
+
+      // Render any initial buttons.
+      renderButtons($el, options.buttons || []);
+
+      // Relay Bootstrap's close to Drupal's dialog-close teardown (once).
+      $el
+        .off('hidden.bs.modal.bsDialog')
+        .on('hidden.bs.modal.bsDialog', function () {
+          closeTeardown($el);
+        });
+
+      // Map dialog options to Bootstrap modal options.
+      var modalOptions = {
+        backdrop: options.modal ? true : false,
+        keyboard: options.closeOnEscape !== false,
+        show: options.autoOpen !== false
       };
+      // A non-dismissable modal keeps a static backdrop.
+      if (options.closeOnEscape === false && options.modal) {
+        modalOptions.backdrop = 'static';
+      }
+
+      // Initialize (and, per modalOptions.show, display) the real BS4 modal.
+      $el.modal(modalOptions);
+    }
+
+    /**
+     * $.fn.dialog: a Bootstrap-modal-backed replacement for jQuery UI's dialog.
+     */
+    BootstrapLite.createPlugin('dialog', function () {
+      var args = Array.prototype.slice.call(arguments);
+      var first = args[0];
+
+      // Method form: $el.dialog('close' | 'option' | 'instance' | ...).
+      if (typeof first === 'string') {
+        var method = first;
+        var methodArgs = args.slice(1);
+        var ret;
+        this.each(function () {
+          var $el = $(this);
+          switch (method) {
+            case 'open':
+              $el.modal('show');
+              break;
+
+            case 'close':
+              if ($el.data('bs.modal')) {
+                $el.modal('hide');
+              }
+              else {
+                // Never shown; run teardown directly.
+                closeTeardown($el);
+              }
+              break;
+
+            case 'destroy':
+              if ($el.data('bs.modal')) {
+                $el.modal('hide');
+              }
+              break;
+
+            case 'option':
+              ret = handleOption($el, methodArgs);
+              break;
+
+            case 'instance':
+              ret = getInstance($el);
+              break;
+
+            case 'isOpen':
+              var data = $el.data('bs.modal');
+              ret = !!(data && data._isShown);
+              break;
+
+            case 'widget':
+              ret = $el;
+              break;
+
+            case 'moveToTop':
+              // No stacking management needed for Bootstrap modals.
+              break;
+
+            default:
+              BootstrapLite.unsupported('method', method, methodArgs);
+          }
+        });
+        return ret !== void 0 ? ret : this;
+      }
+
+      // Initialization form: $el.dialog(options).
+      var options = first || {};
+      return this.each(function () {
+        initDialog($(this), options);
+      });
     });
 
     /**
-     * Extend Drupal theming functions.
+     * Renders a jQuery UI Dialog compatible button element.
+     *
+     * @param {Object} button
+     *   The button object passed in the dialog options.
+     *
+     * @return {String}
+     *   The modal dialog button markup.
+     *
+     * @see http://api.jqueryui.com/dialog/#option-buttons
+     * @see http://api.jqueryui.com/button/
      */
     $.extend(Drupal.theme, /** @lend Drupal.theme */ {
-
-      /**
-       * Renders a jQuery UI Dialog compatible button element.
-       *
-       * @param {Object} button
-       *   The button object passed in the dialog options.
-       *
-       * @return {String}
-       *   The modal dialog button markup.
-       *
-       * @see http://api.jqueryui.com/dialog/#option-buttons
-       * @see http://api.jqueryui.com/button/
-       */
       bootstrapLiteModalDialogButton: function (button) {
         var attributes = Attributes.create();
 
@@ -465,26 +297,52 @@ console.log('init');
           icon = '<span' + iconAttributes + '></span>';
         }
 
-        // Value.
+        // Value (label).
         var value = button.text;
         attributes.set('value', iconPosition === 'before' ? icon + value : value + icon);
 
         // Handle disabled.
-        attributes[button.disabled ? 'set' :'remove']('disabled', 'disabled');
+        attributes[button.disabled ? 'set' : 'remove']('disabled', 'disabled');
 
+        // Keep the descriptor's original classes (harmless in Bootstrap 4, and
+        // useful as selectors — core's dialog.ajax.js finds the cancel button
+        // via .dialog-cancel, which arrives in these classes).
+        var classString = '';
         if (button.classes) {
-          attributes.addClass(Object.values(button.classes));
+          var classValues = Object.values(button.classes);
+          attributes.addClass(classValues);
+          classString += ' ' + classValues.join(' ');
         }
         if (button['class']) {
           attributes.addClass(button['class']);
+          classString += ' ' + button['class'];
         }
+
+        // Map to a Bootstrap 4 button context so the footer button is styled in
+        // both scenarios: form-derived descriptors (core classes like
+        // 'button'/'button--primary') and option-defined descriptors (core
+        // confirm dialogs / contrib, which may carry a primary flag or
+        // 'button--primary'). Drupal.theme.button turns 'context' into
+        // btn + btn-<context>; setting it here avoids its BS3-era btn-default
+        // fallback, which is unstyled in Bootstrap 4.
+        if (!attributes.get('context')) {
+          var isPrimary = button.primary === true || /(^|\s)button--primary(\s|$)/.test(classString);
+          attributes.set('context', isPrimary ? 'primary' : 'secondary');
+        }
+
+        // Pass through data-* attributes from the descriptor (notably
+        // data-once, which core's dialog.ajax.js sets so it can avoid
+        // rebinding button click handlers on every form rebuild).
+        Object.keys(button).forEach(function (key) {
+          if (key.indexOf('data-') === 0 && button[key] != null && button[key] !== '') {
+            attributes.set(key, button[key]);
+          }
+        });
 
         return Drupal.theme('button', attributes);
       }
-
     });
 
   });
-
 
 })(window.jQuery, window.Drupal, window.Drupal.bootstrap_lite, window.Attributes, window.drupalSettings);
