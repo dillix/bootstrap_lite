@@ -197,7 +197,7 @@ class CdnProvider extends SettingBase {
       $file = "$provider_path/$provider.json";
 
       if ($import_data = $form_state->getValue('cdn_provider_import_data', FALSE)) {
-        \Drupal::service('file_system')->saveData($import_data, $file, FileExists::Rename);
+        \Drupal::service('file_system')->saveData($import_data, $file, FileExists::Replace);
       }
       elseif ($file && file_exists($file)) {
         \Drupal::service('file_system')->delete($file);
