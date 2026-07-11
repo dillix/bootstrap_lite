@@ -63,6 +63,9 @@ modal:
 modal.jquery.ui.bridge:
   js:
     js/modal.jquery.ui.bridge.js: {}
+  css:
+    component:
+      css/modal.jquery.ui.bridge.css: {}
   dependencies:
     - bootstrap_lite/modal
 

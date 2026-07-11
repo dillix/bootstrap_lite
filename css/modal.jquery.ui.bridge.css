@@ -1,0 +1,36 @@
+/**
+ * @file
+ * Dialog bridge stacking fix.
+ *
+ * core/misc/dialog/dialog.ajax.js sets class="ui-front" on every dialog
+ * element it creates (for jQuery-UI-widget-over-dialog stacking, e.g. an
+ * autocomplete menu inside a dialog form -- core/drupal.autocomplete is
+ * still jQuery UI based in D11). The bridge's initDialog() (see
+ * js/modal.jquery.ui.bridge.js) turns that same element into the Bootstrap
+ * .modal wrapper, so it keeps carrying "ui-front" -- that's load-bearing,
+ * not a leftover: stripping it breaks autocomplete's append-target lookup
+ * (closest .ui-front) for any jQuery UI widget rendered inside a bridged
+ * dialog. See https://www.drupal.org/project/bootstrap/issues/3282241 for
+ * the same root cause reported upstream.
+ *
+ * core/internal.jquery_ui -- still a live dependency of core/drupal.dialog
+ * for widget-factory/position utilities unrelated to the dialog widget the
+ * bridge replaces -- ships its own core.css, defining
+ * `.ui-front { z-index: 100; }`. That file loads dynamically via the ajax
+ * add_css command the moment a dialog opens, landing in <head> AFTER the
+ * theme's own Bootstrap CSS (already present since page load). Same
+ * specificity (single class selector) as Bootstrap's own
+ * `.modal { z-index: 1050; }`, but later in the cascade, so jQuery UI's
+ * rule wins the tiebreak: the modal's *effective* z-index silently drops
+ * from 1050 to 100, behind .modal-backdrop's 1040. The markup is never
+ * wrong -- the modal (header included) is simply rendered behind an opaque
+ * backdrop.
+ *
+ * Fix at the specificity layer instead of the class layer: a compound
+ * .modal.ui-front selector outranks jQuery UI's single-class .ui-front
+ * rule regardless of stylesheet load order, so this wins no matter when
+ * core.css is injected. 1050 matches Bootstrap 4's $zindex-modal.
+ */
+.modal.ui-front {
+  z-index: 1050;
+}
