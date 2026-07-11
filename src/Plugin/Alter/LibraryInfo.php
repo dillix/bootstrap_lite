@@ -109,6 +109,16 @@ class LibraryInfo extends PluginBase implements AlterInterface {
             'assets/vendor/jquery.ui/ui/widgets/controlgroup-min.js',
             'assets/vendor/jquery.ui/ui/widgets/mouse-min.js',
             'assets/vendor/jquery.ui/ui/form-reset-mixin-min.js',
+            // ckeditor5_library_info_alter() injects this directly into
+            // core/drupal.dialog's own js list (not via libraries-extend), to
+            // override jQuery UI dialog's `_allowInteraction()` focus trap so
+            // CKEditor 5 balloons inside a dialog keep focus. It's specific to
+            // the jQuery UI dialog widget we just stripped above ($.ui.dialog
+            // no longer exists once dialog-min.js is gone) and moot for the
+            // Bootstrap-modal bridge, which has no focus-trap/balloon conflict
+            // of its own. Left in place, it fatals at file-execution time
+            // (`$.widget('ui.dialog', $.ui.dialog, ...)` on undefined).
+            'modules/ckeditor5/js/ckeditor5.dialog.fix.js',
           ];
           foreach ($strip_js as $file) {
             unset($libraries['drupal.dialog']['js'][$file]);
@@ -121,6 +131,11 @@ class LibraryInfo extends PluginBase implements AlterInterface {
             'assets/vendor/jquery.ui/themes/base/checkboxradio.css',
             'assets/vendor/jquery.ui/themes/base/resizable.css',
             'assets/vendor/jquery.ui/themes/base/controlgroup.css',
+            // Companion CSS to the ckeditor5.dialog.fix.js stripped above
+            // (z-index rule between CKEditor 5 and jQuery UI); not fatal like
+            // its JS counterpart, but equally moot without the jQuery UI
+            // dialog widget.
+            'modules/ckeditor5/css/ckeditor5.dialog.fix.css',
           ];
           foreach ($strip_css as $file) {
             unset($libraries['drupal.dialog']['css']['component'][$file]);
