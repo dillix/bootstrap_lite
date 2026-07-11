@@ -82,10 +82,6 @@ tooltip:
     - bootstrap_lite/theme
 
 # libraries-extend
-drupal.ajax:
-  js:
-    js/misc/ajax.js: {}
-
 drupal.autocomplete:
   js:
     js/misc/autocomplete.js: {}

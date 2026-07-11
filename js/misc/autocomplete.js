@@ -15,22 +15,4 @@
     $(e.target).trigger('change.formUpdated');
   });
 
-  // Extend ui.autocomplete widget so it triggers the glyphicon throbber.
-  $.widget('ui.autocomplete', $.ui.autocomplete, {
-    _search: function (value) {
-      this.pending++;
-      Drupal.Ajax.prototype.glyphiconStart(this.element);
-      this.cancelSearch = false;
-      this.source({term: value}, this._response());
-    },
-    _response: function () {
-      var index = ++this.requestIndex;
-      return $.proxy(function (content) {
-        if (index === this.requestIndex) this.__response(content);
-        this.pending--;
-        if (!this.pending) Drupal.Ajax.prototype.glyphiconStop(this.element);
-      }, this);
-    }
-  });
-
 })(jQuery, Drupal);

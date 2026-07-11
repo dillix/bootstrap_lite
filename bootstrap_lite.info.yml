@@ -23,8 +23,6 @@ libraries:
   - 'bootstrap_lite/theme'
 
 libraries-extend:
-  core/drupal.ajax:
-    - bootstrap_lite/drupal.ajax
   core/drupal.autocomplete:
     - bootstrap_lite/drupal.autocomplete
   core/drupal.form:
