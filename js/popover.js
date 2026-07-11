@@ -15,18 +15,46 @@ var Drupal = Drupal || {};
   // none of Drupal's invented `enabled`/`triggerAutoclose` keys, and
   // drupalSettings is parsed independently of Bootstrap's own load timing, so
   // this is the reliable source for the Drupal-specific popover options.
+  // Bootstrap 4's Popover (like Tooltip) only understands a single
+  // placement token (auto|top|bottom|left|right, see its AttachmentMap) and
+  // does `placement.toUpperCase()` unguarded against undefined. BS3 allowed
+  // compound values like "auto left" ("prefer left, auto-flip if no room"),
+  // which have no AttachmentMap entry; feeding one through crashes
+  // dynamically inside popper.min.js (`e.indexOf` on undefined) the first
+  // time the popover is actually shown. Collapse a BS3 "auto <direction>"
+  // value to its direction token, whitelist the result, and OMIT the key
+  // entirely (not fall back to a guess) if it's still not valid, so
+  // Constructor.Default's 'right' wins instead.
+  var VALID_PLACEMENTS = ['auto', 'top', 'right', 'bottom', 'left'];
+  function sanitizePlacement(placement) {
+    if (typeof placement !== 'string') {
+      return void 0;
+    }
+    var parts = placement.split(' ');
+    var candidate = parts.length > 1 && parts[0] === 'auto' ? parts[1] : placement;
+    return VALID_PLACEMENTS.indexOf(candidate) !== -1 ? candidate : void 0;
+  }
+
+  // A cleared theme setting is an empty string; parseInt('', 10) is NaN,
+  // which Bootstrap would otherwise happily assign as the delay. Omit the
+  // key (rather than pass NaN through) so Constructor.Default wins.
+  function sanitizeDelay(delay) {
+    var parsed = parseInt(delay, 10);
+    return isNaN(parsed) ? void 0 : parsed;
+  }
+
   var popoverSettings = BootstrapLite.settings || {};
   var popoverDefaults = {
     animation: !!popoverSettings.popover_animation,
     enabled: popoverSettings.popover_enabled,
     html: !!popoverSettings.popover_html,
-    placement: popoverSettings.popover_placement,
+    placement: sanitizePlacement(popoverSettings.popover_placement),
     selector: popoverSettings.popover_selector,
     trigger: popoverSettings.popover_trigger,
     triggerAutoclose: !!popoverSettings.popover_trigger_autoclose,
     title: popoverSettings.popover_title,
     content: popoverSettings.popover_content,
-    delay: parseInt(popoverSettings.popover_delay, 10),
+    delay: sanitizeDelay(popoverSettings.popover_delay),
     container: popoverSettings.popover_container
   };
 
@@ -52,8 +80,10 @@ var Drupal = Drupal || {};
             var $trigger = $(this);
             var popover = $trigger.data('bs.popover');
 
-            // Only keep track of clicked triggers that we're manually handling.
-            if (popover.options.originalTrigger === 'click') {
+            // Only keep track of clicked triggers that we're manually
+            // handling. Bootstrap 4 stores the resolved options on the
+            // instance as `.config`, not BS3's `.options`.
+            if (popover.config.originalTrigger === 'click') {
               if ($currentPopover && !$currentPopover.is($trigger)) {
                 $currentPopover.popover('hide');
               }
