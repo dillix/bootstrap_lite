@@ -236,7 +236,11 @@
    */
   Attributes.prototype.removeClass = function (className) {
     var remove = this.sanitizeClasses(Array.prototype.slice.apply(arguments));
-    this.data['class'] = _.without(this.getClasses(), remove);
+    // _.without() compares against individual values, not an array of values
+    // to exclude; _.difference() is the array-vs-array set operation this
+    // needs (removeClass('a', 'b') / removeClass(['a', 'b']) both flatten
+    // into a single `remove` array via sanitizeClasses() above).
+    this.data['class'] = _.difference(this.getClasses(), remove);
     return this;
   };
 
