@@ -31,8 +31,6 @@ libraries-extend:
     - bootstrap_lite/drupal.form
   core/drupal.progress:
     - bootstrap_lite/drupal.progress
-  core/drupal.states:
-    - bootstrap_lite/drupal.states
   core/drupal.tabledrag:
     - bootstrap_lite/drupal.tabledrag
   image_widget_crop/cropper.integration:

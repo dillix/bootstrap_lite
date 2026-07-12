@@ -101,10 +101,6 @@ drupal.progress:
   js:
     js/misc/progress.js: {}
 
-drupal.states:
-  js:
-    js/misc/states.js: {}
-
 drupal.tabledrag:
   js:
     js/misc/tabledrag.js: {}
