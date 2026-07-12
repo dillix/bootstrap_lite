@@ -319,15 +319,43 @@
         }
 
         // Map to a Bootstrap 4 button context so the footer button is styled in
-        // both scenarios: form-derived descriptors (core classes like
-        // 'button'/'button--primary') and option-defined descriptors (core
-        // confirm dialogs / contrib, which may carry a primary flag or
-        // 'button--primary'). Drupal.theme.button turns 'context' into
-        // btn + btn-<context>; setting it here avoids its BS3-era btn-default
-        // fallback, which is unstyled in Bootstrap 4.
+        // both scenarios: form-derived descriptors (bootstrap_lite's own
+        // button theming already renders these with a 'btn-<context>' class,
+        // not Drupal's semantic 'button--primary') and option-defined
+        // descriptors (core confirm dialogs / contrib, which may carry a
+        // primary flag or the semantic 'button--primary' class instead).
+        // Drupal.theme.button turns 'context' into btn + btn-<context>;
+        // setting it here avoids its BS3-era btn-default fallback, which is
+        // unstyled in Bootstrap 4.
+        //
+        // If the descriptor's own classes already carry one or more
+        // 'btn-<context>' classes (kept above, harmless-by-default), the
+        // first one is authoritative -- it's what the theme actually
+        // rendered -- so strip all of them and re-emit only the first via
+        // 'context', keeping exactly one source of truth for the btn-*
+        // class. Only derive a context from scratch when none is present
+        // (e.g. a cancel link or a core-confirm-dialog descriptor using the
+        // semantic 'button--primary' class).
         if (!attributes.get('context')) {
-          var isPrimary = button.primary === true || /(^|\s)button--primary(\s|$)/.test(classString);
-          attributes.set('context', isPrimary ? 'primary' : 'secondary');
+          var btnContextRe = /(?:^|\s)btn-(primary|secondary|success|info|warning|danger|light|dark|link)(?=\s|$)/g;
+          var foundContexts = [];
+          var contextMatch;
+          while ((contextMatch = btnContextRe.exec(classString))) {
+            foundContexts.push(contextMatch[1]);
+          }
+
+          var context;
+          if (foundContexts.length) {
+            context = foundContexts[0];
+            foundContexts.forEach(function (foundContext) {
+              attributes.removeClass('btn-' + foundContext);
+            });
+          }
+          else {
+            var isPrimary = button.primary === true || /(^|\s)button--primary(\s|$)/.test(classString);
+            context = isPrimary ? 'primary' : 'secondary';
+          }
+          attributes.set('context', context);
         }
 
         // Pass through data-* attributes from the descriptor (notably
