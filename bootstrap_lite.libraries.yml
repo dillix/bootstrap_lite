@@ -123,15 +123,6 @@ drupal.batch:
     - core/drupal.progress
     - core/once
 
-drupal.filter:
-  version: VERSION
-  js:
-    js/modules/filter/filter.js: {}
-  dependencies:
-    - core/jquery
-    - core/drupal
-    - core/once
-
 drupal.text:
   js:
     js/text/text.js: {}
