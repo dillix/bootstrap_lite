@@ -86,6 +86,10 @@ drupal.autocomplete:
   js:
     js/misc/autocomplete.js: {}
 
+dialog.buttons:
+  js:
+    js/misc/dialog.buttons.js: {}
+
 drupal.form:
   js:
     js/misc/form.js: {}

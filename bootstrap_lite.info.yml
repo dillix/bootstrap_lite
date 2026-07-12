@@ -25,6 +25,8 @@ libraries:
 libraries-extend:
   core/drupal.autocomplete:
     - bootstrap_lite/drupal.autocomplete
+  core/drupal.dialog.ajax:
+    - bootstrap_lite/dialog.buttons
   core/drupal.form:
     - bootstrap_lite/drupal.form
   core/drupal.progress:
