@@ -165,4 +165,14 @@ class ThemeRegistry extends Registry implements AlterInterface {
     $this->postProcessExtension($cache, $this->theme);
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  protected function mergePreprocessFunctions($destination_hook_name, $source_hook_name, $parent_hook, array &$cache) {
+    if (isset($cache[$source_hook_name]) && !isset($cache[$source_hook_name]['preprocess functions'])) {
+      $cache[$source_hook_name]['preprocess functions'] = [];
+    }
+    parent::mergePreprocessFunctions($destination_hook_name, $source_hook_name, $parent_hook, $cache);
+  }
+
 }
