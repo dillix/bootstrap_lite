@@ -8,6 +8,29 @@
   "use strict";
 
   /**
+   * Shows the parent vertical tab pane of a targeted page fragment.
+   *
+   * In order to make sure a targeted element inside a vertical tab pane is
+   * visible on a hash change or fragment link click, focus all parent
+   * panes. core/misc/form.js triggers 'formFragmentLinkClickOrHashChange'
+   * on body; ported from core/misc/vertical-tabs.js, adapted from core's
+   * `.vertical-tabs__pane` BEM class to this widget's `.vertical-tabs-pane`.
+   *
+   * @param {jQuery.Event} e
+   *   The event triggered.
+   * @param {jQuery} $target
+   *   The targeted node as a jQuery object.
+   */
+  function handleFragmentLinkClickOrHashChange(e, $target) {
+    $target.parents('.vertical-tabs-pane').each(function () {
+      var verticalTab = $(this).data('verticalTab');
+      if (verticalTab) {
+        verticalTab.focus();
+      }
+    });
+  }
+
+  /**
    * This script transforms a set of details into a stack of vertical
    * tabs. Another tab pane can be selected by clicking on the respective
    * tab.
@@ -26,6 +49,14 @@
       if (window.matchMedia(mq).matches) {
         return;
       }
+
+      // Bind a listener to handle fragment link clicks and URL hash
+      // changes. core/drupal.form is a declared dependency of this
+      // library, so core/misc/form.js's emitter is guaranteed to be loaded.
+      $(once('vertical-tabs-fragments', 'body')).on(
+        'formFragmentLinkClickOrHashChange.verticalTabs',
+        handleFragmentLinkClickOrHashChange
+      );
 
       $(once('vertical-tabs', '[data-vertical-tabs-panes]', context)).each(function () {
         var $this = $(this).addClass('tab-content vertical-tabs-panes');
@@ -84,6 +115,16 @@
         }
         if (tab_focus.length) {
           tab_focus.data('verticalTab').focus();
+        }
+      });
+
+      // If a validation error is within a vertical tab pane that isn't the
+      // currently active one, open that tab.
+      $(context).find('.vertical-tabs-pane .form-item .error').each(function () {
+        var $pane = $(this).closest('.vertical-tabs-pane');
+        var verticalTab = $pane.data('verticalTab');
+        if (verticalTab && !$pane.hasClass('active')) {
+          verticalTab.focus();
         }
       });
 
