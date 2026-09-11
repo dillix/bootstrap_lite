@@ -172,7 +172,7 @@
       this.details
         .siblings('.vertical-tabs-pane')
         .each(function () {
-          $(this).removeClass('active').find('> div').removeClass('in');
+          $(this).removeClass('active').find('> div').removeClass('show');
           var tab = $(this).data('verticalTab');
           tab.item.removeClass('selected');
         })
@@ -180,7 +180,11 @@
         .addClass('active')
         .siblings(':hidden.vertical-tabs-active-tab')
         .val(this.details.attr('id'));
-      this.details.find('> div').addClass('in');
+      // BS4's compiled .collapse/.fade CSS reveals via '.show', not BS3's
+      // '.in' - the pane's card-body carries both 'collapse' and 'fade'
+      // (bootstrap-lite-card.html.twig), so a single '.show' handles both
+      // display (.collapse.show) and opacity (.fade.show).
+      this.details.find('> div').addClass('show');
       this.details.data('verticalTab').item.find('a').tab('show');
       this.item.addClass('selected');
       // Mark the active tab for screen readers.
